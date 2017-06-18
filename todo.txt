@@ -1,0 +1,15 @@
+-alle warnings fixen
+-skalierung bei graph
+-an verschiedene displaygrößen anpassen
+-edittexts hübscher machen
+-about, help und übersetzungshilfe einfügen
+-keyboard verschönern (enter größer wie marvin will?)
+-übersetzungen vervollständigen
+-werbung einblenden
+-beschreibung, screenshots und screenvideos machen
+
+Optionales:
+-schöneres App-Icon
+-an style guide anpassen?
+-pannen und zoomen bei graph ermöglichen
+-immer wenn faktoren = 1 oder summanden = 0 ausblenden

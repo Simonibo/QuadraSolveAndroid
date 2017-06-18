@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="apex">"Apex: "</string>
+    <string name="calculate_roots">Calculate roots</string>
+    <string name="clear_history">Clear history</string>
+    <string name="complexroots">"Complex roots: "</string>
+    <string name="curpoint">"Cursor: "</string>
+    <string name="enter">Enter value</string>
+    <string name="firstroot">"1st root: "</string>
+    <string name="graph">Graph</string>
+    <string name="histempty">No recent calculations</string>
+    <string name="history">History</string>
+    <string name="secondroot">"2nd root: "</string>
+</resources>

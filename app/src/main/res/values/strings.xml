@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="enter">Enter value</string>
+    <string name="equal" translatable="false">=</string>
+    <string name="c" translatable="false">c</string>
+    <string name="defaultb" translatable="false">2</string>
+    <string name="b" translatable="false">b</string>
+    <string name="defaulta" translatable="false">3</string>
+    <string name="a" translatable="false">a</string>
+    <string name="equalszero" translatable="false">= 0</string>
+    <string name="xplus" translatable="false">x +</string>
+    <string name="spaceb" translatable="false">b</string>
+    <string name="xsquaredplus" translatable="false">x² +</string>
+    <string name="defaultc" translatable="false">-6</string>
+    <string name="calculate_roots">Calculate roots</string>
+    <string name="twoconcat" translatable="false">%1$s%2$s</string>
+    <string name="fourconcat" translatable="false">%1$s%2$s%3$s%4$s</string>
+    <string name="fiveconcat" translatable="false">%1$s%2$s%3$s%4$s%5$s</string>
+    <string name="firstroot">1st root:\u0020</string>
+    <string name="secondroot">2nd root:\u0020</string>
+    <string name="apex">Apex:\u0020</string>
+    <string name="clear_history">Clear history</string>
+    <string name="history">History</string>
+    <string name="semicolon" translatable="false">;\u0020</string>
+    <string name="complexroots">"Complex roots: "</string>
+    <string name="spaceplusminus" translatable="false">\u0020±\u0020</string>
+    <string name="plusminus" translatable="false">±\u0020</string>
+    <string name="i" translatable="false">i</string>
+    <string name="graph">Graph</string>
+    <string name="fofxequals" translatable="false">f(x) =\u0020</string>
+    <string name="xsquared" translatable="false">x²</string>
+    <string name="plus" translatable="false">\u0020+\u0020</string>
+    <string name="minus" translatable="false">\u0020-\u0020</string>
+    <string name="x" translatable="false">x</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="curpoint">"Cursor: "</string>
+    <string name="histempty">No recent calculations</string>
+</resources>

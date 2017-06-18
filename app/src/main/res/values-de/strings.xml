@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apex">"Scheitelpunkt: "</string>
+    <string name="calculate_roots">Nullstellen berechnen</string>
+    <string name="clear_history">Verlauf löschen</string>
+    <string name="complexroots">"Komplexe Nullstellen: "</string>
+    <string name="curpoint">"Aktueller Punkt: "</string>
+    <string name="enter">Wert eingeben</string>
+    <string name="firstroot">"Linke Nullstelle: "</string>
+    <string name="graph">Graph</string>
+    <string name="histempty">Der Verlauf ist leer</string>
+    <string name="history">Verlauf</string>
+    <string name="secondroot">"Rechte Nullstelle: "</string>
+    <string name="app_name">QuadraSolve</string>
+</resources>
