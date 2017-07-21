@@ -141,7 +141,8 @@
                 android:text="@string/defaulta"
                 android:textColor="#ffffff"
                 android:textColorHint="#616161"
-                android:textSize="@dimen/textSizeMain" />
+                android:textSize="@dimen/textSizeMain"
+                android:focusableInTouchMode="true" />
         </TableRow>
 
         <TableRow
@@ -185,7 +186,8 @@
                 android:text="@string/defaultb"
                 android:textColor="#ffffff"
                 android:textColorHint="#616161"
-                android:textSize="@dimen/textSizeMain" />
+                android:textSize="@dimen/textSizeMain"
+                android:focusableInTouchMode="true" />
         </TableRow>
 
         <TableRow
@@ -228,7 +230,8 @@
                 android:text="@string/defaultc"
                 android:textColor="#ffffff"
                 android:textColorHint="#616161"
-                android:textSize="@dimen/textSizeMain" />
+                android:textSize="@dimen/textSizeMain"
+                android:focusableInTouchMode="true" />
         </TableRow>
     </TableLayout>
 

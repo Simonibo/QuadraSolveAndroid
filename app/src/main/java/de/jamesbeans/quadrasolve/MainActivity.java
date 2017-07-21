@@ -88,7 +88,18 @@ public class MainActivity extends AppCompatActivity {
                         if( editable!=null && start>0 ) editable.delete(start - 1, start);
                         break;
                     case 66:
-                        //select next edittext?
+                        if(focusCurrent == aval) {
+                            //select aval
+                            bval.setFocusableInTouchMode(true);
+                            bval.requestFocus();
+                        } else if (focusCurrent == bval) {
+                            //select cval
+                            cval.setFocusableInTouchMode(true);
+                            cval.requestFocus();
+                        } else if (focusCurrent == cval) {
+                            //compute
+                            calculate();
+                        }
                         break;
                     case 46:
                         if(!editable.toString().contains(String.valueOf(sym.getDecimalSeparator()))) editable.insert(start, String.valueOf(sym.getDecimalSeparator()));
