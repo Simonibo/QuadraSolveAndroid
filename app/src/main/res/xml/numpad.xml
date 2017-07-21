@@ -15,7 +15,7 @@
         <Key android:codes="52" android:keyIcon="@mipmap/digit4big" android:keyEdgeFlags="left" />
         <Key android:codes="53" android:keyIcon="@mipmap/digit5big" />
         <Key android:codes="54" android:keyIcon="@mipmap/digit6big" />
-        <Key android:codes="66" android:keyHeight="75%p" android:keyEdgeFlags="right"/>
+        <Key android:codes="66" android:keyIcon="@mipmap/ic_subdirectory_arrow_left_black_48dp" android:keyHeight="75%" android:keyEdgeFlags="right"/>
     </Row>
     <Row>
         <Key android:codes="55" android:keyIcon="@mipmap/digit7big" android:keyEdgeFlags="left" />

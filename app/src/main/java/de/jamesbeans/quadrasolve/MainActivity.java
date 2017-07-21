@@ -151,15 +151,6 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        TextView.OnEditorActionListener calc = new TextView.OnEditorActionListener(){
-            public boolean onEditorAction(TextView exampleView, int actionId, KeyEvent event) {
-                if (actionId == 6) {
-                    calculate();
-                }
-                return true;
-            }
-        };
-
         Toolbar maintoolbar = (Toolbar) findViewById(R.id.maintoolbar);
         setSupportActionBar(maintoolbar);
 
@@ -174,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
             bval.setText(vals.getString("btext", "2"));
             cval.setText(vals.getString("ctext", "-6"));
         }
-        cval.setOnEditorActionListener(calc);
-        cval.setImeActionLabel("", KeyEvent.KEYCODE_NUMPAD_COMMA);
     }
 
     @Override public void onBackPressed() {
@@ -228,6 +217,18 @@ public class MainActivity extends AppCompatActivity {
         astr = aval.getText().toString();
         bstr = bval.getText().toString();
         cstr = cval.getText().toString();
+        if(astr.charAt(0) == ',') {
+            displayErrorDialog("a must be a number!");
+            return;
+        }
+        if(bstr.charAt(0) == ',') {
+            displayErrorDialog("b must be a number!");
+            return;
+        }
+        if(cstr.charAt(0) == ',') {
+            displayErrorDialog("c must be a number!");
+            return;
+        }
         try {
             a = Double.parseDouble(astr.replace(",", "."));
         } catch(NumberFormatException nfe) {

@@ -28,9 +28,9 @@ public class NumpadKeyboardView extends KeyboardView {
     public void init() {
         paint = new Paint();
         paintpressed = new Paint();
-        paint.setColor(Color.LTGRAY);
-        paintpressed.setColor(Color.DKGRAY);
-        retu = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ic_keyboard_return_black_24dp);
+        paint.setColor(Color.rgb(236, 239, 241));
+        paintpressed.setColor(Color.rgb(219, 224, 225));
+        retu = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_subdirectory_arrow_left_black_48dp);
     }
 
     @Override
