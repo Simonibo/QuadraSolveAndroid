@@ -15,6 +15,9 @@ import java.util.List;
 public class NumpadKeyboardView extends KeyboardView {
     Paint paint, paintpressed;
     Bitmap retu;
+    int posx, posy;
+    boolean initialized = false;
+
     public NumpadKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -36,13 +39,22 @@ public class NumpadKeyboardView extends KeyboardView {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Keyboard.Key enterkey = getKeyboard().getKeys().get(7);
+        Keyboard kb = getKeyboard();
+        List<Keyboard.Key> keys = kb.getKeys();
+        Keyboard.Key enterkey = keys.get(7);
+        Keyboard.Key back = keys.get(3);
+
+        if(!initialized) {
+            initialized = true;
+            posx = enterkey.x + (int) ((enterkey.width - retu.getWidth()) / 2.0);
+            posy = enterkey.y + (int) ((kb.getHeight() - back.height - retu.getHeight()) / 2.0);
+        }
+
         if(enterkey.pressed) {
             canvas.drawRect(enterkey.x, enterkey.y, enterkey.x + enterkey.width, enterkey.y + enterkey.height, paintpressed);
-            canvas.drawBitmap(retu, enterkey.x, enterkey.y, paintpressed);
         } else {
             canvas.drawRect(enterkey.x, enterkey.y, enterkey.x + enterkey.width, enterkey.y + enterkey.height, paint);
-            canvas.drawBitmap(retu, enterkey.x, enterkey.y, paint);
         }
+        canvas.drawBitmap(retu, posx, posy, paint);
     }
 }
