@@ -29,12 +29,8 @@ public class MainActivity extends AppCompatActivity {
     //Holds the last inputs
     private SharedPreferences vals;
     //The coefficients of the function
-    private EditText aval;
-    private EditText bval;
-    private EditText cval;
-    private String astr;
-    private String bstr;
-    private String cstr;
+    private EditText aval, bval, cval;
+    private String astr, bstr, cstr;
     private double a, b, c;
     //The left (or only) root
     private static double x1;
@@ -85,9 +81,11 @@ public class MainActivity extends AppCompatActivity {
                 int start = edittext.getSelectionStart();
                 switch(primaryCode) {
                     case 67:
+                        //delete
                         if( editable!=null && start>0 ) editable.delete(start - 1, start);
                         break;
                     case 66:
+                        //enter
                         if(focusCurrent == aval) {
                             //select aval
                             bval.setFocusableInTouchMode(true);
@@ -102,7 +100,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case 46:
-                        if(!editable.toString().contains(String.valueOf(sym.getDecimalSeparator()))) editable.insert(start, String.valueOf(sym.getDecimalSeparator()));
+                        //Komma oder Punkt
+                        assert editable != null;
+                        if(!editable.toString().contains(String.valueOf(sym.getDecimalSeparator()))) {
+                            if(sym.getDecimalSeparator() == '.') {
+                                editable.insert(start, ".");
+                            } else if(start > 1 || (start == 1 && Character.isDigit(editable.toString().charAt(0)))){
+                                editable.insert(start, ",");
+                            }
+                        }
                         break;
                     case 45:
                         if(start == 0 && !editable.toString().contains("-")) editable.insert(0, "-");
@@ -201,57 +207,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void calculate() {
-        //All the possible errors
-        if(aval.getText().toString().isEmpty()) {
-            displayErrorDialog("You need to enter a value for a!");
-            return;
-        }
-        if(bval.getText().toString().isEmpty()) {
-            displayErrorDialog("You need to enter a value for b!");
-            return;
-        }
-        if(cval.getText().toString().isEmpty()) {
-            displayErrorDialog("You need to enter a value for c!");
-            return;
-        }
-        astr = aval.getText().toString();
-        bstr = bval.getText().toString();
-        cstr = cval.getText().toString();
-        if(astr.charAt(0) == ',') {
-            displayErrorDialog("a must be a number!");
-            return;
-        }
-        if(bstr.charAt(0) == ',') {
-            displayErrorDialog("b must be a number!");
-            return;
-        }
-        if(cstr.charAt(0) == ',') {
-            displayErrorDialog("c must be a number!");
-            return;
-        }
-        try {
-            a = Double.parseDouble(astr.replace(",", "."));
-        } catch(NumberFormatException nfe) {
-            displayErrorDialog("a must be a number!");
-            return;
-        }
-        try {
-            b = Double.parseDouble(bstr.replace(",", "."));
-        } catch(NumberFormatException nfe) {
-            displayErrorDialog("b must be a number!");
-            return;
-        }
-        try {
-            c = Double.parseDouble(cstr.replace(",", "."));
-        } catch(NumberFormatException nfe) {
-            displayErrorDialog("c must be a number!");
-            return;
-        }
+        a = reallyIsNumber(aval.getText().toString(), "a");
+        if(a == -1) return;
+        b = reallyIsNumber(bval.getText().toString(), "b");
+        if(b == -1) return;
+        c = reallyIsNumber(cval.getText().toString(), "c");
+        if(c == -1) return;
 
         if(a == 0) {
             displayErrorDialog("a may not be zero!");
             return;
         }
+
+        astr = aval.getText().toString();
+        bstr = bval.getText().toString();
+        cstr = cval.getText().toString();
+
         //Calculation of p/2, because only that is needed in the calculations
         double phalbe = (b / a) / 2.0;
         //calculation of q as preparation for the p-q-formula
@@ -376,5 +347,23 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean isCustomKeyboardVisible() {
         return keyboardView.getVisibility() == View.VISIBLE;
+    }
+
+    public double reallyIsNumber(String str, String name) {
+        //All the possible errors
+        if(str.isEmpty()) {
+            displayErrorDialog("You need to enter a value for " + name + "!");
+            return -1;
+        }
+        if(str.charAt(0) == ',' || (str.length() > 1 && str.substring(0, 2).equals("-,"))) {
+            displayErrorDialog(name + " must be a number!");
+            return -1;
+        }
+        try {
+            return Double.parseDouble(str.replace(",", "."));
+        } catch(NumberFormatException nfe) {
+            displayErrorDialog("a must be a number!");
+            return -1;
+        }
     }
 }
