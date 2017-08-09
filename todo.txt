@@ -1,7 +1,5 @@
 1.0:
-1. "-,9" verbieten
 2. icon ecken transparent machen
-3. immer wenn faktoren = 1 oder summanden = 0 ausblenden
 4. skalierung bei graph
 5. edittexts hübscher machen
 6. übersetzungen vervollständigen

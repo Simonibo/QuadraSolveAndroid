@@ -77,12 +77,18 @@ public class Graph extends AppCompatActivity {
         CharSequence formula;
         if(a == 1) {
             formula = res.getString(R.string.fofxequals) + res.getString(R.string.xsquared);
+        } else if(a == -1) {
+            formula = "f(x) = -x²";
         } else {
             formula = res.getString(R.string.fofxequals) + astr + res.getString(R.string.xsquared);
         }
         //prepare the different parts of the displayed formula regarding signs and integerness
         if(b != 0) {
-            if(b > 0) {
+            if(b == 1) {
+                formula = formula + " + x";
+            } else if(b == -1) {
+                formula = formula + " - x";
+            } else if(b > 0) {
                 formula = formula + " + " + bstr + res.getString(R.string.x);
             } else {
                 formula = formula + " - " + bstr.substring(1) + res.getString(R.string.x);

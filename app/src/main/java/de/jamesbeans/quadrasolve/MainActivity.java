@@ -207,12 +207,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void calculate() {
-        a = reallyIsNumber(aval.getText().toString(), "a");
-        if(a == -1) return;
-        b = reallyIsNumber(bval.getText().toString(), "b");
-        if(b == -1) return;
-        c = reallyIsNumber(cval.getText().toString(), "c");
-        if(c == -1) return;
+        try { a = reallyIsNumber(aval.getText().toString(), "a");
+        } catch (Error e) {
+            return;
+        }
+        try { b = reallyIsNumber(bval.getText().toString(), "b");
+        } catch (Error e) {
+            return;
+        }
+        try { c = reallyIsNumber(cval.getText().toString(), "c");
+        } catch (Error e) {
+            return;
+        }
 
         if(a == 0) {
             displayErrorDialog("a may not be zero!");
@@ -349,21 +355,21 @@ public class MainActivity extends AppCompatActivity {
         return keyboardView.getVisibility() == View.VISIBLE;
     }
 
-    public double reallyIsNumber(String str, String name) {
+    public double reallyIsNumber(String str, String name) throws Error {
         //All the possible errors
         if(str.isEmpty()) {
             displayErrorDialog("You need to enter a value for " + name + "!");
-            return -1;
+            throw new Error();
         }
         if(str.charAt(0) == ',' || (str.length() > 1 && str.substring(0, 2).equals("-,"))) {
             displayErrorDialog(name + " must be a number!");
-            return -1;
+            throw new Error();
         }
         try {
             return Double.parseDouble(str.replace(",", "."));
         } catch(NumberFormatException nfe) {
             displayErrorDialog("a must be a number!");
-            return -1;
+            throw new Error();
         }
     }
 }
