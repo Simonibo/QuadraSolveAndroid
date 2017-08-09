@@ -1,5 +1,4 @@
 1.0:
-2. icon ecken transparent machen
 4. skalierung bei graph
 5. edittexts hübscher machen
 6. übersetzungen vervollständigen
