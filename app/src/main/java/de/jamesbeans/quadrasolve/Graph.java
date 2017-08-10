@@ -22,6 +22,7 @@ public class Graph extends AppCompatActivity {
     static double x2;
     static int roots;
     static double scheitelx, scheitely;
+    static boolean inited;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class Graph extends AppCompatActivity {
 
         setTitle(getResources().getString(R.string.graph));
         //get the different views
-        GraphView g = (GraphView) findViewById(R.id.parabel);
+        GraphView g = (GraphView)findViewById(R.id.parabel);
         TextView function = (TextView) findViewById(R.id.function);
         TextView root1 = (TextView) findViewById(R.id.root1);
         TextView root2 = (TextView) findViewById(R.id.root2);
@@ -45,6 +46,7 @@ public class Graph extends AppCompatActivity {
 
         scheitely = c - (b * b) / (4 * a);
         scheitelx = -b / (2 * a);
+        inited = true;
 
         //Pass the TextViews to the GraphView for easy access
         g.rootTextView1 = root1;

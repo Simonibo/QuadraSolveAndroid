@@ -9,14 +9,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -340,22 +338,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void hideCustomKeyboard() {
+    private void hideCustomKeyboard() {
         keyboardView.setVisibility(View.GONE);
         keyboardView.setEnabled(false);
     }
 
-    public void showCustomKeyboard( View v ) {
+    private void showCustomKeyboard(View v) {
         keyboardView.setVisibility(View.VISIBLE);
         keyboardView.setEnabled(true);
         if( v!=null ) ((InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
-    public boolean isCustomKeyboardVisible() {
+    private boolean isCustomKeyboardVisible() {
         return keyboardView.getVisibility() == View.VISIBLE;
     }
 
-    public double reallyIsNumber(String str, String name) throws Error {
+    private double reallyIsNumber(String str, String name) throws Error {
         //All the possible errors
         if(str.isEmpty()) {
             displayErrorDialog("You need to enter a value for " + name + "!");

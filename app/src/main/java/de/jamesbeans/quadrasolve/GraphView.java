@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -15,22 +16,16 @@ import java.text.DecimalFormat;
 import static java.lang.Math.sqrt;
 
 public class GraphView extends View {
-    public TextView rootTextView1;
-    public TextView rootTextView2;
-    public TextView apexTextView;
-    public TextView cursor;
-    public TextView curpoint;
+    public TextView rootTextView1, rootTextView2, apexTextView, cursor, curpoint;
     private final Paint whiteline = new Paint();
     private final Paint whitePoints = new Paint();
     private final Paint graphPoints = new Paint();
-    private int canvasWidth;
-    private int canvasHeight;
+    private int canvasWidth, canvasHeight;
     private boolean drawPoint = false;
     private float touchX;
-    private double xmin;
-    private double xmax;
-    private double ymin;
-    private double ymax;
+    private double xmin, xmax, ymin, ymax;
+    private double a, b, c, x1, x2, roots, scheitelx, scheitely;
+    private boolean inited;
 
     public GraphView(Context context) {
         super(context);
@@ -59,35 +54,19 @@ public class GraphView extends View {
     }
 
     protected void onDraw(Canvas canvas) {
-        //get the different values from the graph class for easier handling
-        double x1 = Graph.x1;
-        double x2 = Graph.x2;
-        double a = Graph.a;
-        double b = Graph.b;
-        double c = Graph.c;
-        double roots = Graph.roots;
-        double scheitelx = Graph.scheitelx;
-        double scheitely = Graph.scheitely;
         super.onDraw(canvas);
-        canvasWidth = canvas.getWidth();
-        canvasHeight = canvas.getHeight();
-        if(drawPoint) {
-            //get the current state of the canvas
-            Bitmap bi = getDrawingCache();
-            canvas.drawBitmap(bi, 0, 0, whitePoints);
-            //Get the touch points' coordinates in the graph's coordinate system
-            double curx = lirp(touchX, 0, canvas.getWidth(), xmin, xmax);
-            double cury = Graph.a * Math.pow(curx, 2) + Graph.b * curx + Graph.c;
-            if(cury > ymin && cury < ymax) {
-                canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvas.getHeight(), 0), 10, whitePoints);
-            }
-            DecimalFormat df = new DecimalFormat("#.####");
-            if(curpoint.getVisibility() == INVISIBLE) {
-                curpoint.setVisibility(VISIBLE);
-            }
-            cursor.setText(df.format(curx) + getResources().getString(R.string.semicolon) + df.format(cury));
-            drawPoint = false;
-        } else {
+        if(!inited) {
+            inited = true;
+            //get the different values from the graph class for easier handling
+            Log.d("Graphing", "Inited?:" + Graph.inited);
+            x1 = Graph.x1;
+            x2 = Graph.x2;
+            a = Graph.a;
+            b = Graph.b;
+            c = Graph.c;
+            roots = Graph.roots;
+            scheitelx = Graph.scheitelx;
+            scheitely = Graph.scheitely;
             //Calculate xmin, xmax, ymin and ymax
             if (roots == 2) {
                 xmin = 1.5 * x1 - 0.5 * x2;
@@ -112,11 +91,29 @@ public class GraphView extends View {
                     xmax = -b / (2 * a) + Math.sqrt(Math.pow(b / (2 * a), 2) - (c - ymin) / a);
                 }
             }
-
+        }
+        canvasWidth = canvas.getWidth();
+        canvasHeight = canvas.getHeight();
+        if(drawPoint) {
+            //get the current state of the canvas
+            Bitmap bi = getDrawingCache();
+            canvas.drawBitmap(bi, 0, 0, whitePoints);
+            //Get the touch points' coordinates in the graph's coordinate system
+            double curx = lirp(touchX, 0, canvas.getWidth(), xmin, xmax);
+            double cury = Graph.a * Math.pow(curx, 2) + Graph.b * curx + Graph.c;
+            if(cury > ymin && cury < ymax) {
+                canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvas.getHeight(), 0), 10, whitePoints);
+            }
+            DecimalFormat df = new DecimalFormat("#.####");
+            if(curpoint.getVisibility() == INVISIBLE) {
+                curpoint.setVisibility(VISIBLE);
+            }
+            cursor.setText(df.format(curx) + getResources().getString(R.string.semicolon) + df.format(cury));
+            drawPoint = false;
+        } else {
             //calculate the increment for the x-value per pixel
             double xincr = (xmax - xmin) / canvas.getWidth();
-            double xval;
-            double yval;
+            double xval, yval;
             //Draw the function
             for (int x = 0; x < canvas.getWidth(); x++) {
                 xval = xmin + x * xincr;

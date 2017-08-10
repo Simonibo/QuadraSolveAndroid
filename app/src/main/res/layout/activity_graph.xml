@@ -23,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/function"
-        android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:id="@+id/root1"
         android:visibility="gone"
@@ -35,7 +34,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/root1"
-        android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:id="@+id/root2"
         android:visibility="gone"
@@ -47,7 +45,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/root2"
-        android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:id="@+id/apex"
         android:textSize="18sp"
@@ -74,7 +71,6 @@
         android:layout_marginStart="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginEnd="15dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView

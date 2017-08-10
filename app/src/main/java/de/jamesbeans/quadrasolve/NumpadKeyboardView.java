@@ -13,10 +13,12 @@ import android.util.AttributeSet;
 import java.util.List;
 
 public class NumpadKeyboardView extends KeyboardView {
-    Paint paint, paintpressed;
-    Bitmap retu;
-    int posx, posy;
-    boolean initialized = false;
+    private Paint paint;
+    private Paint paintpressed;
+    private Bitmap retu;
+    private int posx;
+    private int posy;
+    private boolean initialized = false;
 
     public NumpadKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -28,7 +30,7 @@ public class NumpadKeyboardView extends KeyboardView {
         init();
     }
 
-    public void init() {
+    private void init() {
         paint = new Paint();
         paintpressed = new Paint();
         paint.setColor(Color.rgb(236, 239, 241));

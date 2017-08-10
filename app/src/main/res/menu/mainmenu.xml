@@ -6,6 +6,5 @@
         android:icon="@mipmap/ic_history_48px"
         android:title="@string/history"
         app:showAsAction="ifRoom">
-
     </item>
 </menu>
