@@ -24,6 +24,7 @@ import java.util.Locale;
  */
 
 public class HistoryActivity extends AppCompatActivity {
+    //todolater Nullstellen im Verlauf anzeigen
     private ListView history;
 
     @Override

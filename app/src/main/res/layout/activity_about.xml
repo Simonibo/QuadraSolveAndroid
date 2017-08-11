@@ -16,4 +16,6 @@
         app:popupTheme="@style/Theme.AppCompat.Light"
         app:title="@string/helpandabout"
         app:titleTextColor="@android:color/background_light" />
+
+    <!--todo about layout vervollstndigen-->
 </android.support.constraint.ConstraintLayout>

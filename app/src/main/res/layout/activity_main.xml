@@ -6,6 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="de.jamesbeans.quadrasolve.MainActivity" >
 
+    <!--todolater an styleguide anpassen?-->
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/maintoolbar"
         android:layout_width="match_parent"
@@ -126,6 +128,7 @@
                 android:textColor="#ffffff"
                 android:textSize="@dimen/textSizeMain" />
 
+            <!--todo edittexts schöner machen-->
             <EditText
                 android:id="@+id/aval"
                 android:layout_width="0px"
@@ -245,4 +248,5 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_alignParentBottom="true"/>
+    <!--todolater werbung einbauen-->
 </RelativeLayout>

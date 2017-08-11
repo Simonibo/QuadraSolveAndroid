@@ -27,6 +27,8 @@ public class GraphView extends View {
     private boolean inited;
     private ArrayList<Double> gridPosHori, gridPosVerti;
 
+    //todolater pannen und zoomen ermöglichen
+
     public GraphView(Context context) {
         super(context);
         init();
@@ -192,6 +194,7 @@ public class GraphView extends View {
         return true;
     }
 
+    //todo gridlines-methode schreiben
     private void drawGridLines(Canvas canvas) {
         double xspan = xmax - xmin;
         double yspan = ymax - ymin;
@@ -208,6 +211,7 @@ public class GraphView extends View {
         }
     }
 
+    //todo drawAxisLabels schreiben
     private void drawAxisLabels(Canvas canvas) {
 
     }
