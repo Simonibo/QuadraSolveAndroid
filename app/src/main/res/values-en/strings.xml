@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QuadraSolve</string>
     <string name="apex">"Apex: "</string>
     <string name="calculate_roots">Calculate roots</string>
     <string name="clear_history">Clear history</string>
@@ -12,4 +11,5 @@
     <string name="histempty">No recent calculations</string>
     <string name="history">History</string>
     <string name="secondroot">"2nd root: "</string>
+    <string name="app_name">QuadraSolve</string>
 </resources>

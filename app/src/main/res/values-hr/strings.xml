@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="apex">Vertex:</string>
+    <string name="calculate_roots">izračunati nula</string>
+    <string name="clear_history">Očisti povijest</string>
+    <string name="complexroots">Kompleksni korijeni:</string>
+    <string name="curpoint">Trenutno točka:</string>
+    <string name="enter">unijeti vrijednost</string>
+    <string name="firstroot">Lijevo nula:</string>
+    <string name="graph">grafikon</string>
+    <string name="histempty">Tečaj je prazna</string>
+    <string name="history">naravno</string>
+    <string name="secondroot">Prava nula:</string>
+</resources>

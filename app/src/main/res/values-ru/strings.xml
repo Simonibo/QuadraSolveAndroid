@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="apex">вершина</string>
+    <string name="calculate_roots">вычислить нули</string>
+    <string name="clear_history">Очистить историю</string>
+    <string name="complexroots">"Комплексные корни: "</string>
+    <string name="curpoint">"Текущая точка: "</string>
+    <string name="enter">введите значение</string>
+    <string name="firstroot">"Оставшись нулю: "</string>
+    <string name="graph">график</string>
+    <string name="histempty">Курс пуст</string>
+    <string name="history">курс</string>
+    <string name="secondroot">Права нуля:</string>
+</resources>

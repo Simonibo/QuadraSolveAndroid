@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QuadraSolve</string>
     <string name="apex">"Sommet: "</string>
     <string name="calculate_roots">calculer zéros</string>
-    <string name="clear_history">calculer zéros</string>
-    <string name="complexroots">"Effacer l'historique: "</string>
+    <string name="clear_history">Effacer l\'historique</string>
+    <string name="complexroots">racines complexes:</string>
     <string name="curpoint">"Curseur: "</string>
     <string name="enter">entrer la valeur</string>
     <string name="firstroot">"Zéro gauche: "</string>
@@ -12,4 +11,5 @@
     <string name="histempty">Pas de calculs récent</string>
     <string name="history">cours</string>
     <string name="secondroot">"Zéro droits: "</string>
+    <string name="app_name">QuadraSolve</string>
 </resources>

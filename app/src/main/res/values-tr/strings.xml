@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="apex">köşe:</string>
+    <string name="calculate_roots">sıfırları hesaplamak</string>
+    <string name="clear_history">Geçmişi temizle</string>
+    <string name="complexroots">Kompleks kökler:</string>
+    <string name="curpoint">Güncel nokta:</string>
+    <string name="enter">değeri girin</string>
+    <string name="firstroot">Sıfır Sol:</string>
+    <string name="graph">grafik</string>
+    <string name="histempty">Elbette boş</string>
+    <string name="history">kurs</string>
+    <string name="secondroot">Hak sıfır:</string>
+</resources>

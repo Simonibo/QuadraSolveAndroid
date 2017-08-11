@@ -12,20 +12,20 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import static java.lang.Math.sqrt;
 
 public class GraphView extends View {
     public TextView rootTextView1, rootTextView2, apexTextView, cursor, curpoint;
-    private final Paint whiteline = new Paint();
-    private final Paint whitePoints = new Paint();
-    private final Paint graphPoints = new Paint();
+    private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint();
     private int canvasWidth, canvasHeight;
     private boolean drawPoint = false;
     private float touchX;
     private double xmin, xmax, ymin, ymax;
     private double a, b, c, x1, x2, roots, scheitelx, scheitely;
     private boolean inited;
+    private ArrayList<Double> gridPosHori, gridPosVerti;
 
     public GraphView(Context context) {
         super(context);
@@ -44,13 +44,17 @@ public class GraphView extends View {
 
     private void init() {
         setDrawingCacheEnabled(true);
-        //initialize the different paint
+        gridPosHori = new ArrayList<>();
+        gridPosVerti = new ArrayList<>();
+        //configure the different paints
         whiteline.setColor(Color.WHITE);
         whiteline.setStrokeWidth(6); //should be 4
         whitePoints.setColor(Color.WHITE);
         whitePoints.setStrokeWidth(20);
         graphPoints.setColor(Color.argb(255, 48, 63, 159));
         graphPoints.setStrokeWidth(6); //should be 4
+        gridLines.setColor(Color.DKGRAY);
+        gridLines.setStrokeWidth(2);
     }
 
     protected void onDraw(Canvas canvas) {
@@ -111,6 +115,7 @@ public class GraphView extends View {
             cursor.setText(df.format(curx) + getResources().getString(R.string.semicolon) + df.format(cury));
             drawPoint = false;
         } else {
+            drawGridLines(canvas);
             //calculate the increment for the x-value per pixel
             double xincr = (xmax - xmin) / canvas.getWidth();
             double xval, yval;
@@ -185,5 +190,25 @@ public class GraphView extends View {
             invalidate();
         }
         return true;
+    }
+
+    private void drawGridLines(Canvas canvas) {
+        double xspan = xmax - xmin;
+        double yspan = ymax - ymin;
+        int magordx = (int) Math.floor(Math.log10(xspan));
+        double powx = Math.pow(10, magordx);
+        int magordy = (int) Math.floor(Math.log10(yspan));
+        if(xspan / powx < 4) {
+            double smallpowx = powx / 10;
+            for(double d = smallpowx * Math.ceil(xmin / smallpowx); d <= xmax; d += smallpowx) {
+                gridPosVerti.add(d);
+            }
+        } else {
+
+        }
+    }
+
+    private void drawAxisLabels(Canvas canvas) {
+
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="apex">顶点：</string>
+    <string name="calculate_roots">计算零</string>
+    <string name="clear_history">清除历史记录</string>
+    <string name="complexroots">复根：</string>
+    <string name="curpoint">当前点：</string>
+    <string name="enter">输入值</string>
+    <string name="firstroot">左零：</string>
+    <string name="graph">图形</string>
+    <string name="histempty">该课程是空的</string>
+    <string name="history">课程</string>
+    <string name="secondroot">版权零：</string>
+</resources>

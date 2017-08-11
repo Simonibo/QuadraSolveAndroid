@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="apex">頂点：</string>
+    <string name="calculate_roots">ゼロを計算します</string>
+    <string name="clear_history">履歴のクリア</string>
+    <string name="complexroots">複素根：</string>
+    <string name="curpoint">現在のポイント：</string>
+    <string name="enter">値を入力してください</string>
+    <string name="firstroot">左ゼロ：</string>
+    <string name="graph">グラフ</string>
+    <string name="histempty">コースは空です</string>
+    <string name="history">コース</string>
+    <string name="secondroot">権利ゼロ：</string>
+</resources>

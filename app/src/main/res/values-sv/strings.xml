@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="apex">Vertex:</string>
+    <string name="calculate_roots">beräkna nollor</string>
+    <string name="clear_history">Rensa historik</string>
+    <string name="complexroots">Komplexa rötter:</string>
+    <string name="curpoint">Aktuella punkten:</string>
+    <string name="enter">ange värdet</string>
+    <string name="firstroot">Vänster noll:</string>
+    <string name="graph">graf</string>
+    <string name="histempty">Kursen är tom</string>
+    <string name="history">Naturligtvis</string>
+    <string name="secondroot">Rights noll:</string>
+</resources>

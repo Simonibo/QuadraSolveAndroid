@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="apex">"Vertex: "</string>
+    <string name="calculate_roots">calcular zeros</string>
+    <string name="clear_history">Limpar Histórico</string>
+    <string name="complexroots">"raízes complexas: "</string>
+    <string name="curpoint">"ponto atual: "</string>
+    <string name="enter">introduzir valor</string>
+    <string name="firstroot">"Esquerda zero: "</string>
+    <string name="graph">gráfico</string>
+    <string name="histempty">O campo está vazia</string>
+    <string name="history">curso</string>
+    <string name="secondroot">Direitos zero:</string>
+</resources>

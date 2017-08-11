@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuadraSolve</string>
+    <string name="apex">قنة:</string>
+    <string name="calculate_roots">حساب الأصفار</string>
+    <string name="clear_history">مسح المحفوظات</string>
+    <string name="complexroots">جذور معقدة:</string>
+    <string name="curpoint">النقطة الحالية:</string>
+    <string name="enter">إدخال قيمة</string>
+    <string name="graph">رسم بياني</string>
+    <string name="firstroot">غادر الصفر:</string>
+    <string name="histempty">وبطبيعة الحال فارغ</string>
+    <string name="history">مجرى النهر</string>
+    <string name="secondroot">حقوق الصفر:</string>
+</resources>
