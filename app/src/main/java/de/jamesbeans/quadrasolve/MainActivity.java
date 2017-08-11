@@ -333,6 +333,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, HistoryActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_help:
+                Intent intent2 = new Intent(this, AboutActivity.class);
+                startActivity(intent2);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -12,4 +12,5 @@
     <string name="history">Verlauf</string>
     <string name="secondroot">"Rechte Nullstelle: "</string>
     <string name="app_name">QuadraSolve</string>
+    <string name="helpandabout">Hilfe und Über</string>
 </resources>

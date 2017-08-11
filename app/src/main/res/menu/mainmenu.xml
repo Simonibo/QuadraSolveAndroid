@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_help"
+        android:icon="@mipmap/ic_help_white_48dp"
+        android:title="@string/helpandabout"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
         android:id="@+id/action_history"
         android:icon="@mipmap/ic_history_white_48dp"
         android:title="@string/history"
