@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_history"
-        android:icon="@mipmap/ic_history_48px"
+        android:icon="@mipmap/ic_history_white_48dp"
         android:title="@string/history"
         app:showAsAction="ifRoom">
     </item>

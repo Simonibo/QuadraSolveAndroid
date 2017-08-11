@@ -1,7 +1,6 @@
 1.0:
 4. skalierung bei graph
 5. edittexts hübscher machen
-6. übersetzungen vervollständigen
 7. about, help und übersetzungshilfe einfügen
 8. an verschiedene displaygrößen anpassen
 9. beschreibung, screenshots und screenvideos machen
