@@ -194,20 +194,39 @@ public class GraphView extends View {
         return true;
     }
 
-    //todo gridlines-methode schreiben
     private void drawGridLines(Canvas canvas) {
         double xspan = xmax - xmin;
         double yspan = ymax - ymin;
         int magordx = (int) Math.floor(Math.log10(xspan));
         double powx = Math.pow(10, magordx);
         int magordy = (int) Math.floor(Math.log10(yspan));
-        if(xspan / powx < 4) {
-            double smallpowx = powx / 10;
-            for(double d = smallpowx * Math.ceil(xmin / smallpowx); d <= xmax; d += smallpowx) {
-                gridPosVerti.add(d);
-            }
+        double powy = Math.pow(10, magordy);
+        double intervsizex, intervsizey;
+        int spandurchpowx = (int) Math.floor(xspan / powx);
+        int spandurchpowy = (int) Math.floor(yspan / powy);
+        if(spandurchpowx == 1) {
+            intervsizex = powx / 5;
+        } else if (spandurchpowx < 5){
+            intervsizex = powx / 2;
         } else {
-
+            intervsizex = powx;
+        }
+        if(spandurchpowy == 1) {
+            intervsizey = powy / 5;
+        } else if (spandurchpowy < 5){
+            intervsizey = powy / 2;
+        } else {
+            intervsizey = powy;
+        }
+        for(double d = intervsizex * Math.ceil(xmin / intervsizex); d <= xmax; d += intervsizex) {
+            gridPosVerti.add(d);
+            long lirped = Math.round(lirp(d, xmin, xmax, 0, canvas.getWidth()));
+            canvas.drawLine(lirped, 0, lirped, canvas.getHeight(), gridLines);
+        }
+        for(double d = intervsizey * Math.ceil(ymin / intervsizey); d <= ymax; d += intervsizey) {
+            gridPosHori.add(d);
+            long lirped = Math.round(lirp(d, ymin, ymax, canvas.getHeight(), 0));
+            canvas.drawLine(0, lirped, canvas.getWidth(), lirped, gridLines);
         }
     }
 
