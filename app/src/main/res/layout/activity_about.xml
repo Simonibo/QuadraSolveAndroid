@@ -102,6 +102,16 @@
                 android:textColor="@color/lightgray"
                 android:text="@string/helptext7"
                 android:textSize="@dimen/textSizeHelpText"/>
+            <Button
+                android:id="@+id/contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/help7"
+                android:layout_marginTop="@dimen/standardMargin"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/contactme"
+                android:textSize="@dimen/textSizeHelpHeaders"
+                android:textAllCaps="false"/>
         </RelativeLayout>
     </android.widget.ScrollView>
 </android.support.constraint.ConstraintLayout>
