@@ -1,5 +1,10 @@
 <resources>
-    <style name="DarkQuadraTheme" parent="Theme.AppCompat.NoActionBar" >
+
+    <style name="DarkQuadraTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:colorBackground">@android:color/background_dark</item>
     </style>
+
+    <style name="DarkQuadraTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="DarkQuadraTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
