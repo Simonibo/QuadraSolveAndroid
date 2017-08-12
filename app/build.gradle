@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "de.jamesbeans.quadrasolve"
-        minSdkVersion 21
+        minSdkVersion 18
         //noinspection OldTargetApi
         targetSdkVersion 25
         versionCode 1

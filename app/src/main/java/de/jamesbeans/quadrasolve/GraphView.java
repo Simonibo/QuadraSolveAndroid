@@ -26,6 +26,7 @@ public class GraphView extends View {
     private double a, b, c, x1, x2, roots, scheitelx, scheitely;
     private boolean inited;
     private ArrayList<Double> gridPosHori, gridPosVerti;
+    private double powx, powy;
 
     //todolater pannen und zoomen ermöglichen
 
@@ -198,9 +199,9 @@ public class GraphView extends View {
         double xspan = xmax - xmin;
         double yspan = ymax - ymin;
         int magordx = (int) Math.floor(Math.log10(xspan));
-        double powx = Math.pow(10, magordx);
+        powx = Math.pow(10, magordx);
         int magordy = (int) Math.floor(Math.log10(yspan));
-        double powy = Math.pow(10, magordy);
+        powy = Math.pow(10, magordy);
         double intervsizex, intervsizey;
         int spandurchpowx = (int) Math.floor(xspan / powx);
         int spandurchpowy = (int) Math.floor(yspan / powy);
@@ -231,7 +232,12 @@ public class GraphView extends View {
     }
 
     //todo drawAxisLabels schreiben
+    /*
     private void drawAxisLabels(Canvas canvas) {
+        double lisx, lisy;
+        for(double d = lisx * Math.ceil(xmin / lisx); d <= xmax; d += lisx) {
 
+        }
     }
+    */
 }

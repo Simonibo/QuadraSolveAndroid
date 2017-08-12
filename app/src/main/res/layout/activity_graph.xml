@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="de.jamesbeans.quadrasolve.Graph" >
 
@@ -50,17 +51,6 @@
         android:textSize="18sp"
         android:textColor="@android:color/white"
         android:paddingBottom="20dp" />
-    <!--
-    <Button
-        android:text="Calculate y-Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/parabel"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/calcY"
-        android:textColor="@android:color/white"
-        android:background="@android:color/black" />
-    -->
 
     <de.jamesbeans.quadrasolve.GraphView
         android:layout_width="match_parent"
