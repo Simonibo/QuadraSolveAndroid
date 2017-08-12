@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@string/a"
             android:id="@+id/textView"
-            android:textSize="40sp"
+            android:textSize="@dimen/textSizeEquations"
             android:textColor="@android:color/holo_red_dark" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="@string/xsquaredplus"
             android:id="@+id/textView2"
-            android:textSize="40sp"
+            android:textSize="@dimen/textSizeEquations"
             android:textColor="#ffffff" />
 
         <TextView
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:text="@string/spaceb"
             android:id="@+id/textView3"
-            android:textSize="40sp"
+            android:textSize="@dimen/textSizeEquations"
             android:textColor="@android:color/holo_orange_dark"
             android:layout_marginStart="10dp"/>
 
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:text="@string/xplus"
             android:id="@+id/textView4"
-            android:textSize="40sp"
+            android:textSize="@dimen/textSizeEquations"
             android:textColor="#ffffff" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:text="@string/c"
             android:id="@+id/textView5"
-            android:textSize="40sp"
+            android:textSize="@dimen/textSizeEquations"
             android:textColor="@android:color/holo_green_dark"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:text="@string/equalszero"
             android:id="@+id/textView6"
-            android:textSize="40sp"
+            android:textSize="@dimen/textSizeEquations"
             android:textColor="#ffffff" />
     </LinearLayout>
 
