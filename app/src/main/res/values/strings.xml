@@ -62,4 +62,6 @@
     <string name="minus" translatable="false">\u0020-\u0020</string>
     <string name="x" translatable="false">x</string>
     <string name="ok" translatable="false">OK</string>
+    <string name="trace">Trace</string>
+    <string name="pan">Pan</string>
 </resources>

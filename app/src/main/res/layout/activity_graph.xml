@@ -37,8 +37,6 @@
         android:textSize="24sp"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
@@ -46,6 +44,7 @@
         android:text="@string/firstroot"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:id="@+id/root1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/function"
@@ -59,6 +58,7 @@
         android:text="@string/secondroot"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/root1"
@@ -79,33 +79,59 @@
         android:id="@+id/apex"
         android:textSize="18sp"
         android:textColor="@android:color/white"
-        android:paddingBottom="20dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
     <de.jamesbeans.quadrasolve.GraphView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/curpoint"
+        app:layout_constraintBottom_toTopOf="@+id/togglePanTrace"
         app:layout_constraintTop_toBottomOf="@+id/apex"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/parabel"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="@dimen/standardMargin"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
+    <info.hoang8f.android.segmented.SegmentedGroup
+        xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/togglePanTrace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standardMargin"
+        app:layout_constraintBottom_toTopOf="@+id/curpoint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/parabel"
+        android:orientation="horizontal"
+        segmentedgroup:sc_border_width="1dp"
+        segmentedgroup:sc_corner_radius="10dp"
+        segmentedgroup:sc_tint_color="@color/white"
+        segmentedgroup:sc_checked_text_color="@color/black">
+
+        <RadioButton
+            android:id="@+id/trace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trace"
+            style="@style/RadioButton" />
+
+        <RadioButton
+            android:id="@+id/pan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pan"
+            style="@style/RadioButton" />
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
     <TextView
         android:id="@+id/curpoint"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standardMargin"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parabel"
+        app:layout_constraintTop_toBottomOf="@+id/togglePanTrace"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@string/curpoint"

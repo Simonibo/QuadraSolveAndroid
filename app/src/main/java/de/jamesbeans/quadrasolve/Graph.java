@@ -2,9 +2,12 @@ package de.jamesbeans.quadrasolve;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -36,12 +39,27 @@ public class Graph extends AppCompatActivity {
 
         setTitle(getResources().getString(R.string.graph));
         //get the different views
-        GraphView g = (GraphView)findViewById(R.id.parabel);
+        final GraphView g = (GraphView)findViewById(R.id.parabel);
         TextView function = (TextView) findViewById(R.id.function);
         TextView root1 = (TextView) findViewById(R.id.root1);
         TextView root2 = (TextView) findViewById(R.id.root2);
         TextView apex = (TextView) findViewById(R.id.apex);
         TextView curpoint = (TextView) findViewById(R.id.curpoint);
+        RadioButton trace = (RadioButton) findViewById(R.id.trace);
+        RadioButton pan = (RadioButton) findViewById(R.id.pan);
+
+        trace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                g.tracing = true;
+            }
+        });
+        pan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                g.tracing = false;
+            }
+        });
 
         scheitely = c - (b * b) / (4 * a);
         scheitelx = -b / (2 * a);

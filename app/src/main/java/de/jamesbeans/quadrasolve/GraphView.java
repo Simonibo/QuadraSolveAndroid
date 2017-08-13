@@ -27,6 +27,8 @@ public class GraphView extends View {
     private boolean inited;
     private ArrayList<Double> gridPosHori, gridPosVerti;
     private double powx, powy;
+    boolean tracing;
+    private double lastx, lasty;
 
     //todolater pannen und zoomen ermöglichen
 
@@ -98,9 +100,9 @@ public class GraphView extends View {
                     xmax = -b / (2 * a) + Math.sqrt(Math.pow(b / (2 * a), 2) - (c - ymin) / a);
                 }
             }
+            canvasWidth = canvas.getWidth();
+            canvasHeight = canvas.getHeight();
         }
-        canvasWidth = canvas.getWidth();
-        canvasHeight = canvas.getHeight();
         if(drawPoint) {
             //get the current state of the canvas
             Bitmap bi = getDrawingCache();
@@ -151,6 +153,7 @@ public class GraphView extends View {
             if (roots == 2) {
                 canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvas.getWidth())), Math.round(lirp(0, ymin, ymax, canvas.getHeight(), 0)), 15, whitePoints);
             }
+            destroyDrawingCache();
             buildDrawingCache();
         }
     }
@@ -164,33 +167,50 @@ public class GraphView extends View {
     @SuppressWarnings("UnusedAssignment")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean nearSomething;
-        //Check, wether the touch was close enough to one of the roots and if so, put highlight on the corresponding textview (Not sure yet which highlight to pick)
-        if(Graph.roots > 0 && sqrt(Math.pow(event.getX() - lirp(Graph.x1, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
-            rootTextView1.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
-            nearSomething = true;
+        if(tracing) {
+            boolean nearSomething;
+            //Check, wether the touch was close enough to one of the roots and if so, put highlight on the corresponding textview (Not sure yet which highlight to pick)
+            if (Graph.roots > 0 && sqrt(Math.pow(event.getX() - lirp(Graph.x1, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
+                rootTextView1.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
+                nearSomething = true;
+            } else {
+                rootTextView1.setTextColor(Color.WHITE); //setTypeface(null, Typeface.NORMAL);
+                nearSomething = false;
+            }
+            if (Graph.roots == 2 && sqrt(Math.pow(event.getX() - lirp(Graph.x2, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
+                rootTextView2.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
+                nearSomething = true;
+            } else {
+                rootTextView2.setTextColor(Color.WHITE);
+                nearSomething = false;
+            }
+            if (sqrt(Math.pow(event.getX() - lirp(Graph.scheitelx, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(Graph.scheitely, ymin, ymax, canvasHeight, 0), 2)) < 50) {
+                apexTextView.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
+                nearSomething = true;
+            } else {
+                apexTextView.setTextColor(Color.WHITE);
+                nearSomething = false;
+            }
+            if (!nearSomething) {
+                touchX = event.getX();
+                drawPoint = true;
+                invalidate();
+            }
         } else {
-            rootTextView1.setTextColor(Color.WHITE); //setTypeface(null, Typeface.NORMAL);
-            nearSomething = false;
-        }
-        if(Graph.roots == 2 && sqrt(Math.pow(event.getX() - lirp(Graph.x2, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
-            rootTextView2.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
-            nearSomething = true;
-        } else {
-            rootTextView2.setTextColor(Color.WHITE);
-            nearSomething = false;
-        }
-        if(sqrt(Math.pow(event.getX() - lirp(Graph.scheitelx, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(Graph.scheitely, ymin, ymax, canvasHeight, 0), 2)) < 50) {
-            apexTextView.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
-            nearSomething = true;
-        } else {
-            apexTextView.setTextColor(Color.WHITE);
-            nearSomething = false;
-        }
-        if(!nearSomething) {
-            touchX = event.getX();
-            drawPoint = true;
-            invalidate();
+            if(event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                lastx = event.getX();
+                lasty = event.getY();
+            } else if(event.getActionMasked() == MotionEvent.ACTION_MOVE || event.getActionMasked() == MotionEvent.ACTION_UP) {
+                double xchange = lirp(event.getX() - lastx, 0, canvasWidth, 0, xmax - xmin);
+                xmin -= xchange;
+                xmax -= xchange;
+                double ychange = lirp(event.getY() - lasty, 0, canvasHeight, 0, ymax - ymin);
+                ymin += ychange;
+                ymax += ychange;
+                lastx = event.getX();
+                lasty = event.getY();
+                invalidate();
+            }
         }
         return true;
     }
