@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import static java.lang.Math.sqrt;
 
 public class GraphView extends View {
-    public TextView rootTextView1, rootTextView2, apexTextView, cursor, curpoint;
+    public TextView rootTextView1, rootTextView2, apexTextView, curpoint;
     private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint();
     private int canvasWidth, canvasHeight;
     private boolean drawPoint = false;
@@ -115,7 +115,7 @@ public class GraphView extends View {
             if(curpoint.getVisibility() == INVISIBLE) {
                 curpoint.setVisibility(VISIBLE);
             }
-            cursor.setText(df.format(curx) + getResources().getString(R.string.semicolon) + df.format(cury));
+            curpoint.setText(getResources().getString(R.string.curpoint) + df.format(curx) + getResources().getString(R.string.semicolon) + df.format(cury));
             drawPoint = false;
         } else {
             drawGridLines(canvas);

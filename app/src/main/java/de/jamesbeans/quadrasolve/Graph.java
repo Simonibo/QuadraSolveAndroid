@@ -41,7 +41,6 @@ public class Graph extends AppCompatActivity {
         TextView root1 = (TextView) findViewById(R.id.root1);
         TextView root2 = (TextView) findViewById(R.id.root2);
         TextView apex = (TextView) findViewById(R.id.apex);
-        TextView cursor = (TextView) findViewById(R.id.cursor);
         TextView curpoint = (TextView) findViewById(R.id.curpoint);
 
         scheitely = c - (b * b) / (4 * a);
@@ -52,7 +51,6 @@ public class Graph extends AppCompatActivity {
         g.rootTextView1 = root1;
         g.rootTextView2 = root2;
         g.apexTextView = apex;
-        g.cursor = cursor;
         g.curpoint = curpoint;
 
         //write the root and apex coordinates into the textviews
