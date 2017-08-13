@@ -85,10 +85,28 @@
                 android:text="@string/helptext5"
                 android:textSize="@dimen/textSizeHelpText"/>
             <TextView
-                android:id="@+id/help6"
+                android:id="@+id/help5a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/help5"
+                android:layout_marginTop="@dimen/standardMargin"
+                android:textColor="@color/white"
+                android:text="@string/helptext5a"
+                android:textSize="@dimen/textSizeHelpHeaders"/>
+            <TextView
+                android:id="@+id/help5b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/help5a"
+                android:layout_marginTop="@dimen/standardMargin"
+                android:textColor="@color/lightgray"
+                android:text="@string/helptext5b"
+                android:textSize="@dimen/textSizeHelpText"/>
+            <TextView
+                android:id="@+id/help6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/help5b"
                 android:layout_marginTop="@dimen/standardMargin"
                 android:textColor="@color/white"
                 android:text="@string/helptext6"
