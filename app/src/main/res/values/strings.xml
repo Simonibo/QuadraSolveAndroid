@@ -30,6 +30,7 @@
     <string name="helptext5b">
         "Because some equations like \"x² + 1 = 0\" don't have any solutions in the real numbers, we invent the so-called imaginary unit \"i\" which has the property i² = -1."
         "Thus, we have created two solutions for this equations (i and -i) which are useful in many scenarios."
+        "All numbers which contain the imaginary unit are called complex numbers."
     </string>
     <string name="helptext6">"About"</string>
     <string name="helptext7">

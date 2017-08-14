@@ -31,6 +31,7 @@
     <string name="helptext5b">
         "Da manche Gleichungen wie z.B. \"x² + 1 = 0\" keine Lösungen in den reellen Zahlen haben, wurde die sogenannte imaginäre Einheit \"i\" mit der Eigenschaft i² = -1 erfunden."
         "Dadurch haben wir zwei Lösungen dieser Gleichung (i und -i) erzeugt, die in vielen Anwendungsbereichen nützlich sind."
+        "Alle Zahlen, die die imaginäre Einheit enthalten, werden komplexe Zahlen genannt."
     </string>
     <string name="helptext6">"Über"</string>
     <string name="helptext7">
