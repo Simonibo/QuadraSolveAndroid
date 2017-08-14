@@ -73,14 +73,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onKey(int primaryCode, int[] keyCodes) {
                 View focusCurrent = MainActivity.this.getWindow().getCurrentFocus();
-                if( focusCurrent==null || !(focusCurrent instanceof EditText)) return;
+                if(null == focusCurrent || !(focusCurrent instanceof EditText)) return;
                 EditText edittext = (EditText) focusCurrent;
                 Editable editable = edittext.getText();
                 int start = edittext.getSelectionStart();
                 switch(primaryCode) {
                     case 67:
                         //delete
-                        if( editable!=null && start>0 ) editable.delete(start - 1, start);
+                        if(null != editable && 0 < start) editable.delete(start - 1, start);
                         break;
                     case 66:
                         //enter
@@ -98,18 +98,19 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case 46:
-                        //Komma oder Punkt
-                        assert editable != null;
+                        //comma or point
+                        assert null != editable;
                         if(!editable.toString().contains(String.valueOf(sym.getDecimalSeparator()))) {
-                            if(sym.getDecimalSeparator() == '.') {
+                            if((int) '.' == (int) sym.getDecimalSeparator()) {
                                 editable.insert(start, ".");
-                            } else if(start > 1 || (start == 1 && Character.isDigit(editable.toString().charAt(0)))){
+                            } else if(1 < start || (1 == start && Character.isDigit(editable.toString().charAt(0)))){
                                 editable.insert(start, ",");
                             }
                         }
                         break;
                     case 45:
-                        if(start == 0 && !editable.toString().contains("-")) editable.insert(0, "-");
+                        //minus
+                        if(0 == start && !editable.toString().contains("-")) editable.insert(0, "-");
                         break;
                     default:
                         editable.insert(start, Character.toString((char) primaryCode));
@@ -218,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if(a == 0) {
+        if((double) 0 == a) {
             displayErrorDialog("a may not be zero!");
             return;
         }
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
         //calculation of q as preparation for the p-q-formula
         double q = c / a;
         //indirect calculation of the number of roots
-        if(phalbe * phalbe - q > 0) {
+        if((double) 0 < phalbe * phalbe - q) {
             //1st root is the left, second the right
             x1 = -phalbe - Math.sqrt(phalbe * phalbe - q);
             x2 = -phalbe + Math.sqrt(phalbe * phalbe - q);
@@ -240,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
             goToGraph();
         } else {
             //check, whether digit1 or 0 roots
-            if(phalbe * phalbe - q == 0) {
+            if((double) 0 == phalbe * phalbe - q) {
                 //p-q-formula simplifies
                 x1 = -phalbe;
                 roots = 1;
@@ -301,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences hist = getSharedPreferences("history", 0);
         int rescount = hist.getInt("rescount", 0);
         String lasta, lastb, lastc;
-        if(rescount > 0) {
+        if(0 < rescount) {
             lasta = hist.getString("a" + (rescount - 1), "digit1");
             lastb = hist.getString("b" + (rescount - 1), "digit1");
             lastc = hist.getString("c" + (rescount - 1), "digit1");
@@ -350,20 +351,21 @@ public class MainActivity extends AppCompatActivity {
     private void showCustomKeyboard(View v) {
         keyboardView.setVisibility(View.VISIBLE);
         keyboardView.setEnabled(true);
-        if( v!=null ) ((InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), 0);
+        if(null != v) ((InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     private boolean isCustomKeyboardVisible() {
-        return keyboardView.getVisibility() == View.VISIBLE;
+        return View.VISIBLE == keyboardView.getVisibility();
     }
 
+    //todo Strings übersetzen!!!
     private double reallyIsNumber(String str, String name) throws Error {
         //All the possible errors
         if(str.isEmpty()) {
             displayErrorDialog("You need to enter a value for " + name + "!");
             throw new Error();
         }
-        if(str.charAt(0) == ',' || (str.length() > 1 && str.substring(0, 2).equals("-,"))) {
+        if((int) ',' == (int) str.charAt(0) || (1 < str.length() && str.substring(0, 2).equals("-,"))) {
             displayErrorDialog(name + " must be a number!");
             throw new Error();
         }

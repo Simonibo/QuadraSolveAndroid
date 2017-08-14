@@ -26,7 +26,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     public TextView rootTextView1, rootTextView2, apexTextView, curpoint;
     private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint(), black = new Paint();
     private int canvasWidth, canvasHeight;
-    boolean drawPoint = false;
+    boolean drawPoint;
     private float touchX;
     private double xmin, xmax, ymin, ymax;
     private double a, b, c, x1, x2, roots, scheitelx, scheitely;
@@ -37,6 +37,9 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     private Bitmap bm, bmlastdraw;
     private Canvas canvas;
     private boolean isFirstDrawPoint;
+    final int arrowSize = 35;
+    final int touchTolerance = 50;
+    final int highlightCircleRadius = 15;
 
     public GraphSurfaceView(Context context) {
         super(context);
@@ -64,14 +67,14 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         activity = "Tracing";
         //configure the different paints
         whiteline.setColor(Color.WHITE);
-        whiteline.setStrokeWidth(6); //should be 4
+        whiteline.setStrokeWidth(6.0F); //should be 4
         whitePoints.setColor(Color.WHITE);
-        whitePoints.setStrokeWidth(20);
+        whitePoints.setStrokeWidth(20.0F);
         graphPoints.setColor(Color.argb(255, 48, 63, 159));
-        graphPoints.setStrokeWidth(6);
+        graphPoints.setStrokeWidth(6.0F);
         graphPoints.setStyle(Paint.Style.STROKE);  //should be 4
         gridLines.setColor(Color.DKGRAY);
-        gridLines.setStrokeWidth(2);
+        gridLines.setStrokeWidth(2.0F);
         black.setColor(Color.BLACK);
     }
 
@@ -99,31 +102,31 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             a = GraphActivity.a;
             b = GraphActivity.b;
             c = GraphActivity.c;
-            roots = GraphActivity.roots;
+            roots = (double) GraphActivity.roots;
             scheitelx = GraphActivity.scheitelx;
             scheitely = GraphActivity.scheitely;
             //Calculate xmin, xmax, ymin and ymax
-            if (roots == 2) {
+            if (2.0 == roots) {
                 xmin = 1.5 * x1 - 0.5 * x2;
                 xmax = 1.5 * x2 - 0.5 * x1;
-                if(a > 0) {
+                if((double) 0 < a) {
                     ymax = a * xmin * xmin + b * xmin + c;
-                    ymin = -ymax / 2;
+                    ymin = -ymax / 2.0;
                 } else {
                     ymin = a * xmin * xmin + b * xmin + c;
-                    ymax = -ymin / 2;
+                    ymax = -ymin / 2.0;
                 }
             } else {
-                if (a > 0) {
+                if ((double) 0 < a) {
                     ymin = scheitely - a;
-                    ymax = scheitely + 3 * a;
-                    xmin = -b / (2 * a) - Math.sqrt(Math.pow(b / (2 * a), 2) - (c - ymax) / a);
-                    xmax = -b / (2 * a) + Math.sqrt(Math.pow(b / (2 * a), 2) - (c - ymax) / a);
+                    ymax = scheitely + 3.0 * a;
+                    xmin = -b / (2.0 * a) - Math.sqrt(Math.pow(b / (2.0 * a), 2.0) - (c - ymax) / a);
+                    xmax = -b / (2.0 * a) + Math.sqrt(Math.pow(b / (2.0 * a), 2.0) - (c - ymax) / a);
                 } else {
                     ymax = scheitely - a;
-                    ymin = scheitely + 3 * a;
-                    xmin = -b / (2 * a) - Math.sqrt(Math.pow(b / (2 * a), 2) - (c - ymin) / a);
-                    xmax = -b / (2 * a) + Math.sqrt(Math.pow(b / (2 * a), 2) - (c - ymin) / a);
+                    ymin = scheitely + 3.0 * a;
+                    xmin = -b / (2.0 * a) - Math.sqrt(Math.pow(b / (2.0 * a), 2.0) - (c - ymin) / a);
+                    xmax = -b / (2.0 * a) + Math.sqrt(Math.pow(b / (2.0 * a), 2.0) - (c - ymin) / a);
                 }
             }
             calculateGridlinePositions();
@@ -134,27 +137,27 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 isFirstDrawPoint = false;
             }
             //get the current state of the canvas
-            canvas.drawBitmap(bmlastdraw, 0, 0, whitePoints);
+            canvas.drawBitmap(bmlastdraw, (float) 0, (float) 0, whitePoints);
             //Get the touch points' coordinates in the graph's coordinate system
-            final double curx = lirp(touchX, 0, canvasWidth, xmin, xmax);
-            final double cury = GraphActivity.a * Math.pow(curx, 2) + GraphActivity.b * curx + GraphActivity.c;
+            final double curx = lirp((double) touchX, (double) 0, (double) canvasWidth, xmin, xmax);
+            final double cury = GraphActivity.a * Math.pow(curx, 2.0) + GraphActivity.b * curx + GraphActivity.c;
             if(cury > ymin && cury < ymax) {
-                canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvasHeight, 0), 10, whitePoints);
+                canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, (double) canvasHeight, (double) 0), 10.0F, whitePoints);
             }
             DecimalFormat df = new DecimalFormat("#.####");
-            if(curpoint.getVisibility() == INVISIBLE) {
+            if(INVISIBLE == curpoint.getVisibility()) {
                 curpoint.setVisibility(VISIBLE);
             }
             curpoint.setText(getResources().getString(R.string.curpoint) + df.format(curx) + getResources().getString(R.string.semicolon) + df.format(cury));
             Canvas screenCanvas = holder.lockCanvas();
-            screenCanvas.drawBitmap(bm, 0, 0, whiteline);
+            screenCanvas.drawBitmap(bm, (float) 0, (float) 0, whiteline);
             holder.unlockCanvasAndPost(screenCanvas);
         } else {
             //Pre-drawing done in worker thread
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    canvas.drawRect(0, 0, canvasWidth, canvasHeight, black);
+                    canvas.drawRect((float) 0, (float) 0, (float) canvasWidth, (float) canvasHeight, black);
                     isFirstDrawPoint = true;
                     if(activity.equals("Zooming")) {
                         calculateGridlinePositions();
@@ -162,37 +165,37 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                     drawGridLines(canvas);
                     //draw the actual function
                     Path p = new Path();
-                    float fofx1 = (float) (a * Math.pow(xmin, 2) + b * xmin + c);
-                    p.moveTo(0, (float) lirp(fofx1, ymin, ymax, canvasHeight, 0));
-                    p.quadTo(canvasWidth / 2, (float) lirp((fofx1 + (2 * xmin * a + b) * (xmax - xmin) / 2), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2) + b * xmax + c), ymin, ymax, canvasHeight, 0));
+                    float fofx1 = (float) (a * Math.pow(xmin, 2.0) + b * xmin + c);
+                    p.moveTo((float) 0, (float) lirp((double) fofx1, ymin, ymax, (double) canvasHeight, (double) 0));
+                    p.quadTo((float) (canvasWidth / 2), (float) lirp(((double) fofx1 + (2.0 * xmin * a + b) * (xmax - xmin) / 2.0), ymin, ymax, (double) canvasHeight, (double) 0), (float) canvasWidth, (float) lirp((a * Math.pow(xmax, 2.0) + b * xmax + c), ymin, ymax, (double) canvasHeight, (double) 0));
                     canvas.drawPath(p, graphPoints);
                     //calculate the positions of the axis
-                    long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
-                    long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
-                    if (xmin < 0 && xmax > 0) {
-                        canvas.drawLine(yaxis, 0, yaxis, canvasHeight, whiteline);
-                        canvas.drawLine(yaxis - 35, 35, yaxis, 0, whiteline);
-                        canvas.drawLine(yaxis + 35, 35, yaxis, 0, whiteline);
+                    long xaxis = (long) (int) lirp((double) 0, ymin, ymax, (double) canvasHeight, (double) 0);
+                    long yaxis = (long) (int) lirp((double) 0, xmin, xmax, (double) 0, (double) canvasWidth);
+                    if ((double) 0 > xmin && (double) 0 < xmax) {
+                        canvas.drawLine((float) yaxis, (float) 0, (float) yaxis, (float) canvasHeight, whiteline);
+                        canvas.drawLine((float) (yaxis - (long) arrowSize), (float) arrowSize, (float) yaxis, (float) 0, whiteline);
+                        canvas.drawLine((float) (yaxis + (long) arrowSize), (float) arrowSize, (float) yaxis, (float) 0, whiteline);
                     }
-                    if (ymin < 0 && ymax > 0) {
-                        canvas.drawLine(0, xaxis, canvasWidth, xaxis, whiteline);
-                        canvas.drawLine(canvasWidth - 35, xaxis - 35, canvasWidth, xaxis, whiteline);
-                        canvas.drawLine(canvasWidth - 35, xaxis + 35, canvasWidth, xaxis, whiteline);
+                    if ((double) 0 > ymin && (double) 0 < ymax) {
+                        canvas.drawLine((float) 0, (float) xaxis, (float) canvasWidth, (float) xaxis, whiteline);
+                        canvas.drawLine((float) (canvasWidth - arrowSize), (float) (xaxis - (long) arrowSize), (float) canvasWidth, (float) xaxis, whiteline);
+                        canvas.drawLine((float) (canvasWidth - arrowSize), (float) (xaxis + (long) arrowSize), (float) canvasWidth, (float) xaxis, whiteline);
                     }
                     //Scheitelpunkt hervorheben
-                    canvas.drawCircle(Math.round(lirp(scheitelx, xmin, xmax, 0, canvasWidth)), Math.round(lirp(scheitely, ymin, ymax, canvasHeight, 0)), 15, whitePoints);
+                    canvas.drawCircle((float) Math.round(lirp(scheitelx, xmin, xmax, (double) 0, (double) canvasWidth)), (float) Math.round(lirp(scheitely, ymin, ymax, (double) canvasHeight, (double) 0)), (float) highlightCircleRadius, whitePoints);
                     //Nullstellen hervorheben
-                    if (roots > 0) {
-                        canvas.drawCircle(Math.round(lirp(x1, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), 15,  whitePoints);
+                    if ((double) 0 < roots) {
+                        canvas.drawCircle((float) Math.round(lirp(x1, xmin, xmax, (double) 0, (double) canvasWidth)), (float) Math.round(lirp((double) 0, ymin, ymax, (double) canvasHeight, (double) 0)), (float) highlightCircleRadius,  whitePoints);
                     }
-                    if (roots == 2) {
-                        canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), 15, whitePoints);
+                    if (2.0 == roots) {
+                        canvas.drawCircle((float) Math.round(lirp(x2, xmin, xmax, (double) 0, (double) canvasWidth)), (float) Math.round(lirp((double) 0, ymin, ymax, (double) canvasHeight, (double) 0)), (float) highlightCircleRadius, whitePoints);
                     }
                     post(new Runnable() {
                         @Override
                         public void run() {
                             Canvas screenCanvas = holder.lockCanvas();
-                            screenCanvas.drawBitmap(bm, 0, 0, whiteline);
+                            screenCanvas.drawBitmap(bm, (float) 0, (float) 0, whiteline);
                             holder.unlockCanvasAndPost(screenCanvas);
                         }
                     });
@@ -213,21 +216,21 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         if(activity.equals("Tracing")) {
             boolean nearSomething;
             //Check, wether the touch was close enough to one of the roots and if so, put highlight on the corresponding textview (Not sure yet which highlight to pick)
-            if (GraphActivity.roots > 0 && sqrt(Math.pow(event.getX() - lirp(GraphActivity.x1, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
+            if (0 < GraphActivity.roots && (double) touchTolerance > sqrt(Math.pow((double) event.getX() - lirp(GraphActivity.x1, xmin, xmax, (double) 0, (double) canvasWidth), 2.0) + Math.pow((double) event.getY() - lirp((double) 0, ymin, ymax, (double) canvasHeight, (double) 0), 2.0))) {
                 rootTextView1.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
                 rootTextView1.setTextColor(Color.WHITE); //setTypeface(null, Typeface.NORMAL);
                 nearSomething = false;
             }
-            if (GraphActivity.roots == 2 && sqrt(Math.pow(event.getX() - lirp(GraphActivity.x2, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
+            if (2 == GraphActivity.roots && (double) touchTolerance > sqrt(Math.pow((double) event.getX() - lirp(GraphActivity.x2, xmin, xmax, (double) 0, (double) canvasWidth), 2.0) + Math.pow((double) event.getY() - lirp((double) 0, ymin, ymax, (double) canvasHeight, (double) 0), 2.0))) {
                 rootTextView2.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
                 rootTextView2.setTextColor(Color.WHITE);
                 nearSomething = false;
             }
-            if (sqrt(Math.pow(event.getX() - lirp(GraphActivity.scheitelx, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(GraphActivity.scheitely, ymin, ymax, canvasHeight, 0), 2)) < 50) {
+            if ((double) touchTolerance > sqrt(Math.pow((double) event.getX() - lirp(GraphActivity.scheitelx, xmin, xmax, (double) 0, (double) canvasWidth), 2.0) + Math.pow((double) event.getY() - lirp(GraphActivity.scheitely, ymin, ymax, (double) canvasHeight, (double) 0), 2.0))) {
                 apexTextView.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
@@ -240,18 +243,18 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 draw();
             }
         } else {
-            if(event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                lastx = event.getX();
-                lasty = event.getY();
-            } else if(event.getActionMasked() == MotionEvent.ACTION_MOVE || event.getActionMasked() == MotionEvent.ACTION_UP) {
-                double xchange = lirp(event.getX() - lastx, 0, canvasWidth, 0, xmax - xmin);
+            if(MotionEvent.ACTION_DOWN == event.getActionMasked()) {
+                lastx = (double) event.getX();
+                lasty = (double) event.getY();
+            } else if(MotionEvent.ACTION_MOVE == event.getActionMasked() || MotionEvent.ACTION_UP == event.getActionMasked()) {
+                double xchange = lirp((double) event.getX() - lastx, (double) 0, (double) canvasWidth, (double) 0, xmax - xmin);
                 xmin -= xchange;
                 xmax -= xchange;
-                double ychange = lirp(event.getY() - lasty, 0, canvasHeight, 0, ymax - ymin);
+                double ychange = lirp((double) event.getY() - lasty, (double) 0, (double) canvasHeight, (double) 0, ymax - ymin);
                 ymin += ychange;
                 ymax += ychange;
-                lastx = event.getX();
-                lasty = event.getY();
+                lastx = (double) event.getX();
+                lasty = (double) event.getY();
                 activity = "Panning";
                 drawPoint = false;
                 draw();
@@ -264,22 +267,22 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         double xspan = xmax - xmin;
         double yspan = ymax - ymin;
         int magordx = (int) Math.floor(Math.log10(xspan));
-        double powx = Math.pow(10, magordx);
+        double powx = Math.pow(10.0, (double) magordx);
         int magordy = (int) Math.floor(Math.log10(yspan));
-        double powy = Math.pow(10, magordy);
+        double powy = Math.pow(10.0, (double) magordy);
         int spandurchpowx = (int) Math.floor(xspan / powx);
         int spandurchpowy = (int) Math.floor(yspan / powy);
-        if(spandurchpowx == 1) {
-            gridIntervX = powx / 5;
-        } else if (spandurchpowx < 5){
-            gridIntervX = powx / 2;
+        if(1 == spandurchpowx) {
+            gridIntervX = powx / 5.0;
+        } else if (5 > spandurchpowx){
+            gridIntervX = powx / 2.0;
         } else {
             gridIntervX = powx;
         }
-        if(spandurchpowy == 1) {
-            gridIntervY = powy / 5;
-        } else if (spandurchpowy < 5){
-            gridIntervY = powy / 2;
+        if(1 == spandurchpowy) {
+            gridIntervY = powy / 5.0;
+        } else if (5 > spandurchpowy){
+            gridIntervY = powy / 2.0;
         } else {
             gridIntervY = powy;
         }
@@ -287,12 +290,12 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     private void drawGridLines(Canvas canvas) {
         for(double d = gridIntervX * Math.ceil(xmin / gridIntervX); d <= xmax; d += gridIntervX) {
-            long lirped = (int) lirp(d, xmin, xmax, 0, canvasWidth);
-            canvas.drawLine(lirped, 0, lirped, canvasHeight, gridLines);
+            long lirped = (long) (int) lirp(d, xmin, xmax, (double) 0, (double) canvasWidth);
+            canvas.drawLine((float) lirped, (float) 0, (float) lirped, (float) canvasHeight, gridLines);
         }
         for(double d = gridIntervY * Math.ceil(ymin / gridIntervY); d <= ymax; d += gridIntervY) {
-            long lirped = (int) lirp(d, ymin, ymax, canvasHeight, 0);
-            canvas.drawLine(0, lirped, canvasWidth, lirped, gridLines);
+            long lirped = (long) (int) lirp(d, ymin, ymax, (double) canvasHeight, (double) 0);
+            canvas.drawLine((float) 0, (float) lirped, (float) canvasWidth, (float) lirped, gridLines);
         }
     }
 

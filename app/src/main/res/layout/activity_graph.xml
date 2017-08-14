@@ -108,7 +108,6 @@
         app:layout_constraintTop_toBottomOf="@+id/parabel">
 
         <info.hoang8f.android.segmented.SegmentedGroup xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/togglePanTrace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

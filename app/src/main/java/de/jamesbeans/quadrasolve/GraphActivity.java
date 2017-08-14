@@ -28,7 +28,7 @@ public class GraphActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         ActionBar ab = getSupportActionBar();
-        assert ab != null;
+        assert null != ab;
         ab.setDisplayHomeAsUpEnabled(true);
 
         setTitle(getResources().getString(R.string.graph));
@@ -66,8 +66,8 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        scheitely = c - (b * b) / (4 * a);
-        scheitelx = -b / (2 * a);
+        scheitely = c - (b * b) / (4.0 * a);
+        scheitelx = -b / (2.0 * a);
 
         //Pass the TextViews to the GraphView for easy access
         g.rootTextView1 = root1;
@@ -79,45 +79,45 @@ public class GraphActivity extends AppCompatActivity {
         DecimalFormat df = new DecimalFormat("#.####");
         Resources res = getResources();
         apex.setText(res.getString(R.string.fourconcat, apex.getText(), df.format(scheitelx), res.getString(R.string.semicolon), df.format(scheitely)));
-        if(roots == 0) {
+        if(0 == roots) {
             root1.setVisibility(VISIBLE);
-            if(b != 0) {
-                root1.setText(res.getString(R.string.fiveconcat, res.getString(R.string.complexroots), df.format(-b / (2 * a)), res.getString(R.string.spaceplusminus), df.format(Math.sqrt(c / a - Math.pow(b / (2 * a), 2))), res.getString(R.string.i)));
+            if((double) 0 != b) {
+                root1.setText(res.getString(R.string.fiveconcat, res.getString(R.string.complexroots), df.format(-b / (2.0 * a)), res.getString(R.string.spaceplusminus), df.format(Math.sqrt(c / a - Math.pow(b / (2.0 * a), 2.0))), res.getString(R.string.i)));
             } else {
                 root1.setText(res.getString(R.string.fourconcat, res.getString(R.string.complexroots), res.getString(R.string.plusminus), df.format(Math.sqrt(c / a)), res.getString(R.string.i)));
             }
         }
-        if(roots > 0) {
+        if(0 < roots) {
             root1.setVisibility(VISIBLE);
             root1.setText(getResources().getString(R.string.twoconcat, root1.getText(), df.format(x1)));
         }
-        if(roots == 2) {
+        if(2 == roots) {
             root2.setVisibility(VISIBLE);
             root2.setText(getResources().getString(R.string.twoconcat, root2.getText(), df.format(x2)));
         }
 
         CharSequence formula;
-        if(a == 1) {
+        if(1.0 == a) {
             formula = res.getString(R.string.fofxequals) + res.getString(R.string.xsquared);
-        } else if(a == -1) {
+        } else if(-1.0 == a) {
             formula = "f(x) = -x²";
         } else {
             formula = res.getString(R.string.fofxequals) + astr + res.getString(R.string.xsquared);
         }
         //prepare the different parts of the displayed formula regarding signs and integerness
-        if(b != 0) {
-            if(b == 1) {
+        if((double) 0 != b) {
+            if(1.0 == b) {
                 formula = formula + " + x";
-            } else if(b == -1) {
+            } else if(-1.0 == b) {
                 formula = formula + " - x";
-            } else if(b > 0) {
+            } else if((double) 0 < b) {
                 formula = formula + " + " + bstr + res.getString(R.string.x);
             } else {
                 formula = formula + " - " + bstr.substring(1) + res.getString(R.string.x);
             }
         }
-        if(c != 0) {
-            if(c > 0) {
+        if((double) 0 != c) {
+            if((double) 0 < c) {
                 formula = formula + " + " + cstr;
             } else {
                 formula = formula + " - " + cstr.substring(1);

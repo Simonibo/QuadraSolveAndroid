@@ -19,7 +19,7 @@ public class AboutActivity extends AppCompatActivity {
         Toolbar helptoolbar = (Toolbar) findViewById(R.id.helptoolbar);
         setSupportActionBar(helptoolbar);
         ActionBar ab = getSupportActionBar();
-        assert ab != null;
+        assert null != ab;
         ab.setDisplayHomeAsUpEnabled(true);
 
         Button contact = (Button) findViewById(R.id.contact);

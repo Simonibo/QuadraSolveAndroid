@@ -35,7 +35,7 @@ public class HistoryActivity extends AppCompatActivity {
         Toolbar historytoolbar = (Toolbar) findViewById(R.id.historytoolbar);
         setSupportActionBar(historytoolbar);
         ActionBar ab = getSupportActionBar();
-        assert ab != null;
+        assert null != ab;
         ab.setDisplayHomeAsUpEnabled(true);
         //set all the properties of the history list view, like the clicklistener for the elements
         history = (ListView) findViewById(R.id.historylist);
@@ -66,7 +66,7 @@ public class HistoryActivity extends AppCompatActivity {
         SharedPreferences historypref = getSharedPreferences("history", 0);
         int rescount = historypref.getInt("rescount", 0);
         String[] formulae = new String[rescount];
-        for(int i = rescount - 1; i > -1; --i) {
+        for(int i = rescount - 1; -1 < i; --i) {
             formulae[rescount - i - 1] = makeFormulaFromABC(historypref.getString("a" + i, "0"), historypref.getString("b" + i, "0"), historypref.getString("c" + i, "0"));
         }
         history.setAdapter(new ArrayAdapter<>(this, R.layout.list_item_layout, formulae));
@@ -119,10 +119,10 @@ public class HistoryActivity extends AppCompatActivity {
         Resources res = getResources();
         //prepare the different parts of the displayed formula regarding signs and integerness
         formula = res.getString(R.string.fofxequals) + a + res.getString(R.string.xsquared);
-        if(Double.parseDouble(b.replace(',', '.')) != 0) {
+        if((double) 0 != Double.parseDouble(b.replace(',', '.'))) {
             formula = formula + signedString(b) + res.getString(R.string.x);
         }
-        if(Double.parseDouble(c.replace(',', '.')) != 0) {
+        if((double) 0 != Double.parseDouble(c.replace(',', '.'))) {
             formula = formula + signedString(c);
         }
         return formula;
@@ -130,7 +130,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private String signedString(String s) {
         Resources res = getResources();
-        if(s.charAt(0) == '-') {
+        if((int) '-' == (int) s.charAt(0)) {
             return res.getString(R.string.minus) + s.substring(1);
         } else{
             return res.getString(R.string.plus) + s;
