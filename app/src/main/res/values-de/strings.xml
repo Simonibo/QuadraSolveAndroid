@@ -16,27 +16,27 @@
     <string name="helptext1">"Diese App dient dazu, die reellen und komplexen Lösungen von quadratischen Gleichungen zu finden."</string>
     <string name="helptext2">"Was ist eine quadratische Gleichung?"</string>
     <string name="helptext3">
-        "Eine quadratische Gleichung ist eine Gleichung der Form \"ax² + bx + c\", wobei a, b und c reelle Zahlen sind (wie z.B. \"1\", \"2,5\" oder \"-4,6\"). "
-        "a, b, und c (auch Koeffizienten genannt) können auf der Hauptseite beim Start der App eingegeben werden. "
+        "Eine quadratische Gleichung ist eine Gleichung der Form \"ax² + bx + c\", wobei a, b und c reelle Zahlen sind (wie z.B. \"1\", \"2,5\" oder \"-4,6\")."
+        "a, b, und c (auch Koeffizienten genannt) können auf der Hauptseite beim Start der App eingegeben werden."
     </string>
     <string name="helptext4">"Was ist eine \"Lösung\"?"</string>
     <string name="helptext5">
-        "Eine Lösung ist eine reelle oder komplexe Zahl x, sodass beide Seiten der Gleichung gleich 0 sind. "
-        "Als erstes Beispiel nehmen wir die Gleichung \"x² - 9 = 0\". "
-        "Man kann recht schnell sehen, dass 3 und -3 Lösungen der Gleichung sind, da sowohl 3² - 9 als auch (-3)² - 9 gleich null sind. "
-        "Nimmt man jedoch das Beispiel \"4x² + 3x - 9\", ist die Gleichung nicht mehr so einfach zu lösen. "
-        "Doch mit dieser App musst du nur \"4\" in das a-Feld, \"3\" in das b-Feld und \"-9\" in das c-Feld eingeben und auf \"Nullstellen berechnen\" tippen, und schon werden dir die Lösungen der Gleichung unterhalb der Funktionsgleichung angezeigt. "
+        "Eine Lösung ist eine reelle oder komplexe Zahl x, sodass beide Seiten der Gleichung gleich 0 sind."
+        "Als erstes Beispiel nehmen wir die Gleichung \"x² - 9 = 0\"."
+        "Man kann recht schnell sehen, dass 3 und -3 Lösungen der Gleichung sind, da sowohl 3² - 9 als auch (-3)² - 9 gleich null sind."
+        "Nimmt man jedoch das Beispiel \"4x² + 3x - 9\", ist die Gleichung nicht mehr so einfach zu lösen."
+        "Doch mit dieser App musst du nur \"4\" in das a-Feld, \"3\" in das b-Feld und \"-9\" in das c-Feld eingeben und auf \"Nullstellen berechnen\" tippen, und schon werden dir die Lösungen der Gleichung unterhalb der Funktionsgleichung angezeigt."
     </string>
     <string name="helptext5a">"Aber was ist eine komplexe Zahl?</string>
     <string name="helptext5b">
-        "Da manche Gleichungen wie z.B. \"x² + 1 = 0\" keine Lösungen in den reellen Zahlen haben, wurde die sogenannte imaginäre Einheit \"i\" mit der Eigenschaft i² = -1 erfunden. "
-        "Dadurch haben wir zwei Lösungen dieser Gleichung (i und -i) erzeugt, die in vielen Anwendungsbereichen nützlich sind. "
+        "Da manche Gleichungen wie z.B. \"x² + 1 = 0\" keine Lösungen in den reellen Zahlen haben, wurde die sogenannte imaginäre Einheit \"i\" mit der Eigenschaft i² = -1 erfunden."
+        "Dadurch haben wir zwei Lösungen dieser Gleichung (i und -i) erzeugt, die in vielen Anwendungsbereichen nützlich sind."
     </string>
     <string name="helptext6">"Über"</string>
     <string name="helptext7">
-        "Diese App war ein Ein-Mann-Projekt von Simon Bohnen. "
-        "Falls du falsche Übersetungen gefunden hast (was sehr wahrscheinlich ist), kannst du mich über den Button unten kontaktieren. "
-        "Ich wäre besonders dankbar, wenn du diese Hilfeseite in eine andere Sprache übersetzen könntest, da ich (natürlich) nicht alle Sprachen beherrsche. "
+        "Diese App war ein Ein-Mann-Projekt von Simon Bohnen."
+        "Falls du falsche Übersetzungen gefunden hast (was sehr wahrscheinlich ist), kannst du mich über den Button unten kontaktieren."
+        "Ich wäre besonders dankbar, wenn du diese Hilfeseite in eine andere Sprache übersetzen könntest, da ich (natürlich) nicht alle Sprachen beherrsche."
     </string>
     <string name="contactme">"Nachricht schreiben"</string>
     <string name="reset_graph">Graph zurücksetzen</string>

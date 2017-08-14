@@ -21,16 +21,16 @@
     </string>
     <string name="helptext4">"What is a solution?"</string>
     <string name="helptext5">
-        "A solution is a real or complex number x, such that both sides of the equation are equal to 0. "
-        "Let's consider the example \"x² - 9 = 0\". "
-        "It's quite easy to see that both 3 and -3 solve the equation, because 3² - 9 and (-3)² - 9 are both equal to zero. "
-        "If we consider another example like \"4x² + 3x - 9\", the equation isn't as easy to solve anymore. "
+        "A solution is a real or complex number x, such that both sides of the equation are equal to 0."
+        "Let's consider the example \"x² - 9 = 0\"."
+        "It's quite easy to see that both 3 and -3 solve the equation, because 3² - 9 and (-3)² - 9 are both equal to zero."
+        "If we consider another example like \"4x² + 3x - 9\", the equation isn't as easy to solve anymore."
         "But with this app, just enter \"4\" in the field labeled \"a\", \"3\" in the field \"b\" and \"-9\" in the field \"c\" and tap on \"Calculate roots\", and the solutions will show up on the top of the screen below the equation."
     </string>
     <string name="helptext5a">"But what is a complex number?"</string>
     <string name="helptext5b">
-        "Because some equations like \"x² + 1 = 0\" don't have any solutions in the real numbers, we invent the so-called imaginary unit \"i\" which has the property i² = -1. "
-        "Thus, we have created two solutions for this equations (i and -i) which are useful in many scenarios.
+        "Because some equations like \"x² + 1 = 0\" don't have any solutions in the real numbers, we invent the so-called imaginary unit \"i\" which has the property i² = -1."
+        "Thus, we have created two solutions for this equations (i and -i) which are useful in many scenarios."
     </string>
     <string name="helptext6">"About"</string>
     <string name="helptext7">
