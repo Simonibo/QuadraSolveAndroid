@@ -18,7 +18,7 @@ import static java.lang.Math.sqrt;
 
 /**
  * Created by Simon on 14.08.2017.
- * SurfaceView instead of View
+ * The Surfaceview which draws the graph and supports tracing, panning & zooming
  */
 
 public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
@@ -136,8 +136,8 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             //get the current state of the canvas
             canvas.drawBitmap(bmlastdraw, 0, 0, whitePoints);
             //Get the touch points' coordinates in the graph's coordinate system
-            double curx = lirp(touchX, 0, canvas.getWidth(), xmin, xmax);
-            double cury = Graph.a * Math.pow(curx, 2) + Graph.b * curx + Graph.c;
+            final double curx = lirp(touchX, 0, canvasWidth, xmin, xmax);
+            final double cury = Graph.a * Math.pow(curx, 2) + Graph.b * curx + Graph.c;
             if(cury > ymin && cury < ymax) {
                 canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvasHeight, 0), 10, whitePoints);
             }
@@ -146,45 +146,59 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 curpoint.setVisibility(VISIBLE);
             }
             curpoint.setText(getResources().getString(R.string.curpoint) + df.format(curx) + getResources().getString(R.string.semicolon) + df.format(cury));
-            drawPoint = false;
+            Canvas screenCanvas = holder.lockCanvas();
+            screenCanvas.drawBitmap(bm, 0, 0, whiteline);
+            holder.unlockCanvasAndPost(screenCanvas);
         } else {
-            canvas.drawRect(0, 0, canvasWidth, canvasHeight, black);
-            isFirstDrawPoint = true;
-            if(activity.equals("Zooming")) {
-                calculateGridlinePositions();
-            }
-            drawGridLines(canvas);
-            Path p = new Path();
-            float fofx1 = (float) (a * Math.pow(xmin, 2) + b * xmin + c);
-            p.moveTo(0, (float) lirp(fofx1, ymin, ymax, canvasHeight, 0));
-            p.quadTo(canvasWidth / 2, (float) lirp((fofx1 + (2 * xmin * a + b) * (xmax - xmin) / 2), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2) + b * xmax + c), ymin, ymax, canvasHeight, 0));
-            canvas.drawPath(p, graphPoints);
-            //calculate the positions of the axis
-            long xaxis = Math.round(lirp(0, ymin, ymax, canvasHeight, 0));
-            long yaxis = Math.round(lirp(0, xmin, xmax, 0, canvasWidth));
-            if (xmin < 0 && xmax > 0) {
-                canvas.drawLine(yaxis, 0, yaxis, canvasHeight, whiteline);
-                canvas.drawLine(yaxis - 35, 35, yaxis, 0, whiteline);
-                canvas.drawLine(yaxis + 35, 35, yaxis, 0, whiteline);
-            }
-            if (ymin < 0 && ymax > 0) {
-                canvas.drawLine(0, xaxis, canvas.getWidth(), xaxis, whiteline);
-                canvas.drawLine(canvas.getWidth() - 35, xaxis - 35, canvas.getWidth(), xaxis, whiteline);
-                canvas.drawLine(canvas.getWidth() - 35, xaxis + 35, canvas.getWidth(), xaxis, whiteline);
-            }
-            //Scheitelpunkt hervorheben
-            canvas.drawCircle(Math.round(lirp(scheitelx, xmin, xmax, 0, canvas.getWidth())), Math.round(lirp(scheitely, ymin, ymax, canvasHeight, 0)), 15, whitePoints);
-            //Nullstellen hervorheben
-            if (roots > 0) {
-                canvas.drawCircle(Math.round(lirp(x1, xmin, xmax, 0, canvas.getWidth())), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), 15,  whitePoints);
-            }
-            if (roots == 2) {
-                canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvas.getWidth())), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), 15, whitePoints);
-            }
+            //Pre-drawing done in worker thread
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    canvas.drawRect(0, 0, canvasWidth, canvasHeight, black);
+                    isFirstDrawPoint = true;
+                    if(activity.equals("Zooming")) {
+                        calculateGridlinePositions();
+                    }
+                    drawGridLines(canvas);
+                    //draw the actual function
+                    Path p = new Path();
+                    float fofx1 = (float) (a * Math.pow(xmin, 2) + b * xmin + c);
+                    p.moveTo(0, (float) lirp(fofx1, ymin, ymax, canvasHeight, 0));
+                    p.quadTo(canvasWidth / 2, (float) lirp((fofx1 + (2 * xmin * a + b) * (xmax - xmin) / 2), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2) + b * xmax + c), ymin, ymax, canvasHeight, 0));
+                    canvas.drawPath(p, graphPoints);
+                    //calculate the positions of the axis
+                    long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
+                    long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
+                    if (xmin < 0 && xmax > 0) {
+                        canvas.drawLine(yaxis, 0, yaxis, canvasHeight, whiteline);
+                        canvas.drawLine(yaxis - 35, 35, yaxis, 0, whiteline);
+                        canvas.drawLine(yaxis + 35, 35, yaxis, 0, whiteline);
+                    }
+                    if (ymin < 0 && ymax > 0) {
+                        canvas.drawLine(0, xaxis, canvasWidth, xaxis, whiteline);
+                        canvas.drawLine(canvasWidth - 35, xaxis - 35, canvasWidth, xaxis, whiteline);
+                        canvas.drawLine(canvasWidth - 35, xaxis + 35, canvasWidth, xaxis, whiteline);
+                    }
+                    //Scheitelpunkt hervorheben
+                    canvas.drawCircle(Math.round(lirp(scheitelx, xmin, xmax, 0, canvasWidth)), Math.round(lirp(scheitely, ymin, ymax, canvasHeight, 0)), 15, whitePoints);
+                    //Nullstellen hervorheben
+                    if (roots > 0) {
+                        canvas.drawCircle(Math.round(lirp(x1, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), 15,  whitePoints);
+                    }
+                    if (roots == 2) {
+                        canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), 15, whitePoints);
+                    }
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Canvas screenCanvas = holder.lockCanvas();
+                            screenCanvas.drawBitmap(bm, 0, 0, whiteline);
+                            holder.unlockCanvasAndPost(screenCanvas);
+                        }
+                    });
+                }
+            }).start();
         }
-        Canvas screenCanvas = holder.lockCanvas();
-        screenCanvas.drawBitmap(bm, 0, 0, whiteline);
-        holder.unlockCanvasAndPost(screenCanvas);
     }
 
     //maps the value startVal, which ranges from smin to smax, to the range (emin, emax)
@@ -239,6 +253,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 lastx = event.getX();
                 lasty = event.getY();
                 activity = "Panning";
+                drawPoint = false;
                 draw();
             }
         }
@@ -272,12 +287,12 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     private void drawGridLines(Canvas canvas) {
         for(double d = gridIntervX * Math.ceil(xmin / gridIntervX); d <= xmax; d += gridIntervX) {
-            long lirped = Math.round(lirp(d, xmin, xmax, 0, canvas.getWidth()));
+            long lirped = (int) lirp(d, xmin, xmax, 0, canvasWidth);
             canvas.drawLine(lirped, 0, lirped, canvasHeight, gridLines);
         }
         for(double d = gridIntervY * Math.ceil(ymin / gridIntervY); d <= ymax; d += gridIntervY) {
-            long lirped = Math.round(lirp(d, ymin, ymax, canvasHeight, 0));
-            canvas.drawLine(0, lirped, canvas.getWidth(), lirped, gridLines);
+            long lirped = (int) lirp(d, ymin, ymax, canvasHeight, 0);
+            canvas.drawLine(0, lirped, canvasWidth, lirped, gridLines);
         }
     }
 

@@ -14,17 +14,11 @@ import java.text.DecimalFormat;
 import static android.view.View.VISIBLE;
 
 public class Graph extends AppCompatActivity {
-    static double a;
-    static double b;
-    static double c;
-    static String astr;
-    static String bstr;
-    static String cstr;
-    static double x1;
-    static double x2;
+    static double a, b, c;
+    static String astr, bstr, cstr;
+    static double x1, x2;
     static int roots;
     static double scheitelx, scheitely;
-    static boolean inited;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +56,6 @@ public class Graph extends AppCompatActivity {
 
         scheitely = c - (b * b) / (4 * a);
         scheitelx = -b / (2 * a);
-        inited = true;
 
         //Pass the TextViews to the GraphView for easy access
         g.rootTextView1 = root1;
