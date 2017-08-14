@@ -39,4 +39,5 @@
         "Ich wäre besonders dankbar, wenn du diese Hilfeseite in eine andere Sprache übersetzen könntest, da ich (natürlich) nicht alle Sprachen beherrsche. "
     </string>
     <string name="contactme">"Nachricht schreiben"</string>
+    <string name="reset_graph">Graph zurücksetzen</string>
 </resources>

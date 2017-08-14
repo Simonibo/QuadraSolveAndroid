@@ -39,4 +39,7 @@
         "I would be especially thankful if you could translate this help page into another language, as I'm (of course) not able to translate this app into all languages."
     </string>
     <string name="contactme">"Contact me"</string>
+    <string name="pan">Pan</string>
+    <string name="reset_graph">Reset graph</string>
+    <string name="trace">Trace</string>
 </resources>

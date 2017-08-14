@@ -61,7 +61,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     private void init() {
         holder = getHolder();
         holder.addCallback(this);
-        activity = "Panning";
+        activity = "Tracing";
         //configure the different paints
         whiteline.setColor(Color.WHITE);
         whiteline.setStrokeWidth(6); //should be 4

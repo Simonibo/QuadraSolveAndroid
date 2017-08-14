@@ -43,7 +43,6 @@
         android:text="@string/firstroot"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:id="@+id/root1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/function"
@@ -57,7 +56,6 @@
         android:text="@string/secondroot"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/root1"
@@ -84,7 +82,7 @@
     <de.jamesbeans.quadrasolve.GraphSurfaceView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/togglePanTrace"
+        app:layout_constraintBottom_toTopOf="@+id/graphsettings"
         app:layout_constraintTop_toBottomOf="@+id/apex"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -93,36 +91,51 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
-    <info.hoang8f.android.segmented.SegmentedGroup
-        xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/togglePanTrace"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/graphsettings"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/standardMargin"
-        app:layout_constraintBottom_toTopOf="@+id/curpoint"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/curpoint"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parabel"
-        android:orientation="horizontal"
-        segmentedgroup:sc_border_width="1dp"
-        segmentedgroup:sc_corner_radius="10dp"
-        segmentedgroup:sc_tint_color="@color/white"
-        segmentedgroup:sc_checked_text_color="@color/black">
+        app:layout_constraintTop_toBottomOf="@+id/parabel">
 
-        <RadioButton
-            android:id="@+id/trace"
+        <info.hoang8f.android.segmented.SegmentedGroup xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/togglePanTrace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/trace"
-            style="@style/RadioButton" />
+            android:orientation="horizontal"
+            segmentedgroup:sc_border_width="1dp"
+            segmentedgroup:sc_checked_text_color="@color/black"
+            segmentedgroup:sc_corner_radius="10dp"
+            segmentedgroup:sc_tint_color="@color/white">
 
-        <RadioButton
-            android:id="@+id/pan"
+            <RadioButton
+                android:id="@+id/trace"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/trace" />
+
+            <RadioButton
+                android:id="@+id/pan"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pan" />
+        </info.hoang8f.android.segmented.SegmentedGroup>
+
+        <Button
+            android:id="@+id/reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pan"
-            style="@style/RadioButton" />
-    </info.hoang8f.android.segmented.SegmentedGroup>
+            android:textColor="@color/white"
+            android:title="@string/reset_graph" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/curpoint"
@@ -130,7 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/standardMargin"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/togglePanTrace"
+        app:layout_constraintTop_toBottomOf="@+id/graphsettings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@string/curpoint"
