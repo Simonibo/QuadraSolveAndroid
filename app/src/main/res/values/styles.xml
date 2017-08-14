@@ -1,7 +1,7 @@
 <resources>
 
     <style name="DarkQuadraTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:colorBackground">@android:color/background_dark</item>
+        <item name="android:colorBackground">@color/black</item>
     </style>
 
     <style name="DarkQuadraTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

@@ -22,7 +22,7 @@ import static java.lang.Math.sqrt;
  */
 
 public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
-    SurfaceHolder holder;
+    private SurfaceHolder holder;
     public TextView rootTextView1, rootTextView2, apexTextView, curpoint;
     private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint(), black = new Paint();
     private int canvasWidth, canvasHeight;
@@ -35,9 +35,9 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     String activity;
     private double lastx, lasty;
     private Bitmap bm, bmlastdraw;
-    Canvas canvas;
-    boolean isFirstDrawPoint;
-    HashMap<Double, Double> points;
+    private Canvas canvas;
+    private boolean isFirstDrawPoint;
+    private HashMap<Double, Double> points;
 
     public GraphSurfaceView(Context context) {
         super(context);
@@ -61,6 +61,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     private void init() {
         holder = getHolder();
+        holder.addCallback(this);
         activity = "Panning";
         points = new HashMap<>();
         //configure the different paints
@@ -76,21 +77,15 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        draw();
-    }
+    public void surfaceCreated(SurfaceHolder holder) { draw(); }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-    }
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
+    public void surfaceDestroyed(SurfaceHolder holder) { }
 
-    }
-
-    private void draw() {
+    void draw() {
         if(!inited) {
             inited = true;
             Canvas tmp = holder.lockCanvas();

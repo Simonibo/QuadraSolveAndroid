@@ -2,7 +2,6 @@ package de.jamesbeans.quadrasolve;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;

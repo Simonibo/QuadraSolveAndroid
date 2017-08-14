@@ -17,7 +17,10 @@ import java.util.ArrayList;
 import static java.lang.Math.sqrt;
 
 public class GraphView extends View {
-    public TextView rootTextView1, rootTextView2, apexTextView, curpoint;
+    private TextView rootTextView1;
+    private TextView rootTextView2;
+    private TextView apexTextView;
+    private TextView curpoint;
     private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint();
     private int canvasWidth, canvasHeight;
     private boolean drawPoint = false;
@@ -27,7 +30,7 @@ public class GraphView extends View {
     private boolean inited;
     private ArrayList<Double> gridPosHori, gridPosVerti;
     private double powx, powy;
-    boolean tracing;
+    private boolean tracing;
     private double lastx, lasty;
 
     //todolater pannen und zoomen ermöglichen
