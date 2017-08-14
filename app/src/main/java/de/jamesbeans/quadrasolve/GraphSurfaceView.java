@@ -6,51 +6,63 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
+import android.view.SurfaceView;
+import android.view.SurfaceHolder;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import static java.lang.Math.sqrt;
 
-public class GraphView extends View {
+/**
+ * Created by Simon on 14.08.2017.
+ * SurfaceView instead of View
+ */
+
+public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
+    SurfaceHolder holder;
     public TextView rootTextView1, rootTextView2, apexTextView, curpoint;
-    private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint();
+    private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint(), black = new Paint();
     private int canvasWidth, canvasHeight;
     private boolean drawPoint = false;
     private float touchX;
     private double xmin, xmax, ymin, ymax;
     private double a, b, c, x1, x2, roots, scheitelx, scheitely;
     private boolean inited;
-    private ArrayList<Double> gridPosHori, gridPosVerti;
-    private double powx, powy;
-    boolean tracing;
+    private double gridIntervX, gridIntervY, xincr;
+    String activity;
     private double lastx, lasty;
+    private Bitmap bm, bmlastdraw;
+    Canvas canvas;
+    boolean isFirstDrawPoint;
+    HashMap<Double, Double> points;
 
-    //todolater pannen und zoomen ermöglichen
-
-    public GraphView(Context context) {
+    public GraphSurfaceView(Context context) {
         super(context);
         init();
     }
 
-    public GraphView(Context context, AttributeSet attrs) {
+    public GraphSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public GraphView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GraphSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
+    public GraphSurfaceView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
+
     private void init() {
-        setDrawingCacheEnabled(true);
-        gridPosHori = new ArrayList<>();
-        gridPosVerti = new ArrayList<>();
+        holder = getHolder();
+        activity = "Panning";
+        points = new HashMap<>();
         //configure the different paints
         whiteline.setColor(Color.WHITE);
         whiteline.setStrokeWidth(6); //should be 4
@@ -60,14 +72,34 @@ public class GraphView extends View {
         graphPoints.setStrokeWidth(6); //should be 4
         gridLines.setColor(Color.DKGRAY);
         gridLines.setStrokeWidth(2);
+        black.setColor(Color.BLACK);
     }
 
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        draw();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+
+    }
+
+    private void draw() {
         if(!inited) {
             inited = true;
+            Canvas tmp = holder.lockCanvas();
+            canvasWidth = tmp.getWidth();
+            canvasHeight = tmp.getHeight();
+            holder.unlockCanvasAndPost(tmp);
+            bm = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
+            canvas = new Canvas(bm);
             //get the different values from the graph class for easier handling
-            Log.d("Graphing", "Inited?:" + Graph.inited);
             x1 = Graph.x1;
             x2 = Graph.x2;
             a = Graph.a;
@@ -100,13 +132,16 @@ public class GraphView extends View {
                     xmax = -b / (2 * a) + Math.sqrt(Math.pow(b / (2 * a), 2) - (c - ymin) / a);
                 }
             }
-            canvasWidth = canvas.getWidth();
-            canvasHeight = canvas.getHeight();
+            calculateGridlinePositions();
+            xincr = (xmax - xmin) / canvas.getWidth();
         }
         if(drawPoint) {
+            if(isFirstDrawPoint) {
+                bmlastdraw = bm.copy(Bitmap.Config.ARGB_8888, false);
+                isFirstDrawPoint = false;
+            }
             //get the current state of the canvas
-            Bitmap bi = getDrawingCache();
-            canvas.drawBitmap(bi, 0, 0, whitePoints);
+            canvas.drawBitmap(bmlastdraw, 0, 0, whitePoints);
             //Get the touch points' coordinates in the graph's coordinate system
             double curx = lirp(touchX, 0, canvas.getWidth(), xmin, xmax);
             double cury = Graph.a * Math.pow(curx, 2) + Graph.b * curx + Graph.c;
@@ -120,15 +155,24 @@ public class GraphView extends View {
             curpoint.setText(getResources().getString(R.string.curpoint) + df.format(curx) + getResources().getString(R.string.semicolon) + df.format(cury));
             drawPoint = false;
         } else {
+            canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), black);
+            isFirstDrawPoint = true;
+            if(activity.equals("Zooming")) {
+                calculateGridlinePositions();
+            }
             drawGridLines(canvas);
-            //calculate the increment for the x-value per pixel
-            double xincr = (xmax - xmin) / canvas.getWidth();
-            double xval, yval;
+            if(activity.equals("Zooming")) {
+                //calculate the increment for the x-value per pixel
+                xincr = (xmax - xmin) / canvas.getWidth();
+            }
+            double xval;
             //Draw the function
             for (int x = 0; x < canvas.getWidth(); x++) {
                 xval = xmin + x * xincr;
-                yval = a * Math.pow(xval, 2) + b * xval + c;
-                canvas.drawPoint(x, Math.round(lirp(yval, ymin, ymax, canvas.getHeight(), 0)), graphPoints);
+                if(!points.containsKey(xval)) {
+                    points.put(xval, a * Math.pow(xval, 2) + b * xval + c);
+                }
+                canvas.drawPoint(x, Math.round(lirp(points.get(xval), ymin, ymax, canvas.getHeight(), 0)), graphPoints);
             }
             //calculate the positions of the axis
             long xaxis = Math.round(lirp(0, ymin, ymax, canvas.getHeight(), 0));
@@ -154,6 +198,9 @@ public class GraphView extends View {
                 canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvas.getWidth())), Math.round(lirp(0, ymin, ymax, canvas.getHeight(), 0)), 15, whitePoints);
             }
         }
+        Canvas screenCanvas = holder.lockCanvas();
+        screenCanvas.drawBitmap(bm, 0, 0, whiteline);
+        holder.unlockCanvasAndPost(screenCanvas);
     }
 
     //maps the value startVal, which ranges from smin to smax, to the range (emin, emax)
@@ -165,7 +212,7 @@ public class GraphView extends View {
     @SuppressWarnings("UnusedAssignment")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(tracing) {
+        if(activity.equals("Tracing")) {
             boolean nearSomething;
             //Check, wether the touch was close enough to one of the roots and if so, put highlight on the corresponding textview (Not sure yet which highlight to pick)
             if (Graph.roots > 0 && sqrt(Math.pow(event.getX() - lirp(Graph.x1, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
@@ -192,7 +239,7 @@ public class GraphView extends View {
             if (!nearSomething) {
                 touchX = event.getX();
                 drawPoint = true;
-                invalidate();
+                draw();
             }
         } else {
             if(event.getActionMasked() == MotionEvent.ACTION_DOWN) {
@@ -207,43 +254,44 @@ public class GraphView extends View {
                 ymax += ychange;
                 lastx = event.getX();
                 lasty = event.getY();
-                invalidate();
+                activity = "Panning";
+                draw();
             }
         }
         return true;
     }
 
-    private void drawGridLines(Canvas canvas) {
+    private void calculateGridlinePositions() {
         double xspan = xmax - xmin;
         double yspan = ymax - ymin;
         int magordx = (int) Math.floor(Math.log10(xspan));
-        powx = Math.pow(10, magordx);
+        double powx = Math.pow(10, magordx);
         int magordy = (int) Math.floor(Math.log10(yspan));
-        powy = Math.pow(10, magordy);
-        double intervsizex, intervsizey;
+        double powy = Math.pow(10, magordy);
         int spandurchpowx = (int) Math.floor(xspan / powx);
         int spandurchpowy = (int) Math.floor(yspan / powy);
         if(spandurchpowx == 1) {
-            intervsizex = powx / 5;
+            gridIntervX = powx / 5;
         } else if (spandurchpowx < 5){
-            intervsizex = powx / 2;
+            gridIntervX = powx / 2;
         } else {
-            intervsizex = powx;
+            gridIntervX = powx;
         }
         if(spandurchpowy == 1) {
-            intervsizey = powy / 5;
+            gridIntervY = powy / 5;
         } else if (spandurchpowy < 5){
-            intervsizey = powy / 2;
+            gridIntervY = powy / 2;
         } else {
-            intervsizey = powy;
+            gridIntervY = powy;
         }
-        for(double d = intervsizex * Math.ceil(xmin / intervsizex); d <= xmax; d += intervsizex) {
-            gridPosVerti.add(d);
+    }
+
+    private void drawGridLines(Canvas canvas) {
+        for(double d = gridIntervX * Math.ceil(xmin / gridIntervX); d <= xmax; d += gridIntervX) {
             long lirped = Math.round(lirp(d, xmin, xmax, 0, canvas.getWidth()));
             canvas.drawLine(lirped, 0, lirped, canvas.getHeight(), gridLines);
         }
-        for(double d = intervsizey * Math.ceil(ymin / intervsizey); d <= ymax; d += intervsizey) {
-            gridPosHori.add(d);
+        for(double d = gridIntervY * Math.ceil(ymin / gridIntervY); d <= ymax; d += gridIntervY) {
             long lirped = Math.round(lirp(d, ymin, ymax, canvas.getHeight(), 0));
             canvas.drawLine(0, lirped, canvas.getWidth(), lirped, gridLines);
         }

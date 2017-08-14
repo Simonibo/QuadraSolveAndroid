@@ -39,7 +39,7 @@ public class Graph extends AppCompatActivity {
 
         setTitle(getResources().getString(R.string.graph));
         //get the different views
-        final GraphView g = (GraphView)findViewById(R.id.parabel);
+        final GraphSurfaceView g = (GraphSurfaceView) findViewById(R.id.parabel);
         TextView function = (TextView) findViewById(R.id.function);
         TextView root1 = (TextView) findViewById(R.id.root1);
         TextView root2 = (TextView) findViewById(R.id.root2);
@@ -51,13 +51,13 @@ public class Graph extends AppCompatActivity {
         trace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                g.tracing = true;
+                g.activity = "Tracing";
             }
         });
         pan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                g.tracing = false;
+                g.activity = "Panning";
             }
         });
 
