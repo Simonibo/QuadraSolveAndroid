@@ -288,15 +288,15 @@ public class MainActivity extends AppCompatActivity {
 
     //passes values to graph activity and opens it
     private void goToGraph() {
-        Graph.roots = roots;
-        Graph.x1 = x1;
-        Graph.x2 = x2;
-        Graph.a = a;
-        Graph.b = b;
-        Graph.c = c;
-        Graph.astr = astr;
-        Graph.bstr = bstr;
-        Graph.cstr = cstr;
+        GraphActivity.roots = roots;
+        GraphActivity.x1 = x1;
+        GraphActivity.x2 = x2;
+        GraphActivity.a = a;
+        GraphActivity.b = b;
+        GraphActivity.c = c;
+        GraphActivity.astr = astr;
+        GraphActivity.bstr = bstr;
+        GraphActivity.cstr = cstr;
 
         SharedPreferences hist = getSharedPreferences("history", 0);
         int rescount = hist.getInt("rescount", 0);
@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
             histed.putInt("rescount", rescount + 1);
             histed.apply();
         }
-        Intent intent = new Intent(this, Graph.class);
+        Intent intent = new Intent(this, GraphActivity.class);
         startActivity(intent);
     }
 

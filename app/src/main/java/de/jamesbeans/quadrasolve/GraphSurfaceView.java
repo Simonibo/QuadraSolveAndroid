@@ -26,11 +26,11 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     public TextView rootTextView1, rootTextView2, apexTextView, curpoint;
     private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint(), black = new Paint();
     private int canvasWidth, canvasHeight;
-    private boolean drawPoint = false;
+    boolean drawPoint = false;
     private float touchX;
     private double xmin, xmax, ymin, ymax;
     private double a, b, c, x1, x2, roots, scheitelx, scheitely;
-    private boolean inited;
+    boolean inited;
     private double gridIntervX, gridIntervY;
     String activity;
     private double lastx, lasty;
@@ -84,7 +84,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) { }
 
-    private void draw() {
+    void draw() {
         if(!inited) {
             inited = true;
             Canvas tmp = holder.lockCanvas();
@@ -93,15 +93,15 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             holder.unlockCanvasAndPost(tmp);
             bm = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
             canvas = new Canvas(bm);
-            //get the different values from the graph class for easier handling
-            x1 = Graph.x1;
-            x2 = Graph.x2;
-            a = Graph.a;
-            b = Graph.b;
-            c = Graph.c;
-            roots = Graph.roots;
-            scheitelx = Graph.scheitelx;
-            scheitely = Graph.scheitely;
+            //get the different values from the graph class for easier access
+            x1 = GraphActivity.x1;
+            x2 = GraphActivity.x2;
+            a = GraphActivity.a;
+            b = GraphActivity.b;
+            c = GraphActivity.c;
+            roots = GraphActivity.roots;
+            scheitelx = GraphActivity.scheitelx;
+            scheitely = GraphActivity.scheitely;
             //Calculate xmin, xmax, ymin and ymax
             if (roots == 2) {
                 xmin = 1.5 * x1 - 0.5 * x2;
@@ -137,7 +137,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             canvas.drawBitmap(bmlastdraw, 0, 0, whitePoints);
             //Get the touch points' coordinates in the graph's coordinate system
             final double curx = lirp(touchX, 0, canvasWidth, xmin, xmax);
-            final double cury = Graph.a * Math.pow(curx, 2) + Graph.b * curx + Graph.c;
+            final double cury = GraphActivity.a * Math.pow(curx, 2) + GraphActivity.b * curx + GraphActivity.c;
             if(cury > ymin && cury < ymax) {
                 canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvasHeight, 0), 10, whitePoints);
             }
@@ -213,21 +213,21 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         if(activity.equals("Tracing")) {
             boolean nearSomething;
             //Check, wether the touch was close enough to one of the roots and if so, put highlight on the corresponding textview (Not sure yet which highlight to pick)
-            if (Graph.roots > 0 && sqrt(Math.pow(event.getX() - lirp(Graph.x1, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
+            if (GraphActivity.roots > 0 && sqrt(Math.pow(event.getX() - lirp(GraphActivity.x1, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
                 rootTextView1.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
                 rootTextView1.setTextColor(Color.WHITE); //setTypeface(null, Typeface.NORMAL);
                 nearSomething = false;
             }
-            if (Graph.roots == 2 && sqrt(Math.pow(event.getX() - lirp(Graph.x2, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
+            if (GraphActivity.roots == 2 && sqrt(Math.pow(event.getX() - lirp(GraphActivity.x2, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2)) < 50) {
                 rootTextView2.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
                 rootTextView2.setTextColor(Color.WHITE);
                 nearSomething = false;
             }
-            if (sqrt(Math.pow(event.getX() - lirp(Graph.scheitelx, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(Graph.scheitely, ymin, ymax, canvasHeight, 0), 2)) < 50) {
+            if (sqrt(Math.pow(event.getX() - lirp(GraphActivity.scheitelx, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(GraphActivity.scheitely, ymin, ymax, canvasHeight, 0), 2)) < 50) {
                 apexTextView.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {

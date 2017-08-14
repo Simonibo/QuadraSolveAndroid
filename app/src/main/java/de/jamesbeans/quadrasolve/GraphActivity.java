@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -13,7 +14,7 @@ import java.text.DecimalFormat;
 
 import static android.view.View.VISIBLE;
 
-public class Graph extends AppCompatActivity {
+public class GraphActivity extends AppCompatActivity {
     static double a, b, c;
     static String astr, bstr, cstr;
     static double x1, x2;
@@ -33,13 +34,14 @@ public class Graph extends AppCompatActivity {
         setTitle(getResources().getString(R.string.graph));
         //get the different views
         final GraphSurfaceView g = (GraphSurfaceView) findViewById(R.id.parabel);
-        TextView function = (TextView) findViewById(R.id.function);
-        TextView root1 = (TextView) findViewById(R.id.root1);
-        TextView root2 = (TextView) findViewById(R.id.root2);
-        TextView apex = (TextView) findViewById(R.id.apex);
-        TextView curpoint = (TextView) findViewById(R.id.curpoint);
+        final TextView function = (TextView) findViewById(R.id.function);
+        final TextView root1 = (TextView) findViewById(R.id.root1);
+        final TextView root2 = (TextView) findViewById(R.id.root2);
+        final TextView apex = (TextView) findViewById(R.id.apex);
+        final TextView curpoint = (TextView) findViewById(R.id.curpoint);
         RadioButton trace = (RadioButton) findViewById(R.id.trace);
         RadioButton pan = (RadioButton) findViewById(R.id.pan);
+        Button reset = (Button) findViewById(R.id.reset);
 
         trace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,16 @@ public class Graph extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 g.activity = "Panning";
+            }
+        });
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                g.inited = false;
+                g.drawPoint = false;
+                g.draw();
+                curpoint.setText("");
             }
         });
 

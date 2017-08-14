@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Graph"
+            android:name=".GraphActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
 
