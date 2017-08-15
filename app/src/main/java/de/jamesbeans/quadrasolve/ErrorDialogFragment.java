@@ -17,7 +17,7 @@ public class ErrorDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(getArguments().getString("error_message"))
                 .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

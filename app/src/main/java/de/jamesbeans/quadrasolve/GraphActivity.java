@@ -25,9 +25,9 @@ public class GraphActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        final Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        ActionBar ab = getSupportActionBar();
+        final ActionBar ab = getSupportActionBar();
         assert null != ab;
         ab.setDisplayHomeAsUpEnabled(true);
 
@@ -39,9 +39,9 @@ public class GraphActivity extends AppCompatActivity {
         final TextView root2 = (TextView) findViewById(R.id.root2);
         final TextView apex = (TextView) findViewById(R.id.apex);
         final TextView curpoint = (TextView) findViewById(R.id.curpoint);
-        RadioButton trace = (RadioButton) findViewById(R.id.trace);
-        RadioButton pan = (RadioButton) findViewById(R.id.pan);
-        Button reset = (Button) findViewById(R.id.reset);
+        final RadioButton trace = (RadioButton) findViewById(R.id.trace);
+        final RadioButton pan = (RadioButton) findViewById(R.id.pan);
+        final Button reset = (Button) findViewById(R.id.reset);
 
         trace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,12 +76,12 @@ public class GraphActivity extends AppCompatActivity {
         g.curpoint = curpoint;
 
         //write the root and apex coordinates into the textviews
-        DecimalFormat df = new DecimalFormat("#.####");
-        Resources res = getResources();
+        final DecimalFormat df = new DecimalFormat("#.####");
+        final Resources res = getResources();
         apex.setText(res.getString(R.string.fourconcat, apex.getText(), df.format(scheitelx), res.getString(R.string.semicolon), df.format(scheitely)));
         if(0 == roots) {
             root1.setVisibility(VISIBLE);
-            if((double) 0 != b) {
+            if(0 != b) {
                 root1.setText(res.getString(R.string.fiveconcat, res.getString(R.string.complexroots), df.format(-b / (2.0 * a)), res.getString(R.string.spaceplusminus), df.format(Math.sqrt(c / a - Math.pow(b / (2.0 * a), 2.0))), res.getString(R.string.i)));
             } else {
                 root1.setText(res.getString(R.string.fourconcat, res.getString(R.string.complexroots), res.getString(R.string.plusminus), df.format(Math.sqrt(c / a)), res.getString(R.string.i)));
@@ -105,19 +105,19 @@ public class GraphActivity extends AppCompatActivity {
             formula = res.getString(R.string.fofxequals) + astr + res.getString(R.string.xsquared);
         }
         //prepare the different parts of the displayed formula regarding signs and integerness
-        if((double) 0 != b) {
+        if(0 != b) {
             if(1.0 == b) {
                 formula = formula + " + x";
             } else if(-1.0 == b) {
                 formula = formula + " - x";
-            } else if((double) 0 < b) {
+            } else if(0 < b) {
                 formula = formula + " + " + bstr + res.getString(R.string.x);
             } else {
                 formula = formula + " - " + bstr.substring(1) + res.getString(R.string.x);
             }
         }
-        if((double) 0 != c) {
-            if((double) 0 < c) {
+        if(0 != c) {
+            if(0 < c) {
                 formula = formula + " + " + cstr;
             } else {
                 formula = formula + " - " + cstr.substring(1);

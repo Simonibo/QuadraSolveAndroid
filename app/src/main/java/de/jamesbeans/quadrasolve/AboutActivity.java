@@ -16,17 +16,17 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        Toolbar helptoolbar = (Toolbar) findViewById(R.id.helptoolbar);
+        final Toolbar helptoolbar = (Toolbar) findViewById(R.id.helptoolbar);
         setSupportActionBar(helptoolbar);
-        ActionBar ab = getSupportActionBar();
+        final ActionBar ab = getSupportActionBar();
         assert null != ab;
         ab.setDisplayHomeAsUpEnabled(true);
 
-        Button contact = (Button) findViewById(R.id.contact);
+        final Button contact = (Button) findViewById(R.id.contact);
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.simonbohnen.me/contact"));
+                final Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.simonbohnen.me/contact"));
                 startActivity(browserIntent);
             }
         });

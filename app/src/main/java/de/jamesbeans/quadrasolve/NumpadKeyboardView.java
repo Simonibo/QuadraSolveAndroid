@@ -41,22 +41,22 @@ public class NumpadKeyboardView extends KeyboardView {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Keyboard kb = getKeyboard();
-        List<Keyboard.Key> keys = kb.getKeys();
-        Keyboard.Key enterkey = keys.get(7);
-        Keyboard.Key back = keys.get(3);
+        final Keyboard kb = getKeyboard();
+        final List<Keyboard.Key> keys = kb.getKeys();
+        final Keyboard.Key enterkey = keys.get(7);
+        final Keyboard.Key back = keys.get(3);
 
         if(!initialized) {
             initialized = true;
-            posx = enterkey.x + (int) ((double) (enterkey.width - retu.getWidth()) / 2.0);
-            posy = enterkey.y + (int) ((double) (kb.getHeight() - back.height - retu.getHeight()) / 2.0);
+            posx = enterkey.x + (int) ((enterkey.width - retu.getWidth()) / 2.0);
+            posy = enterkey.y + (int) ((kb.getHeight() - back.height - retu.getHeight()) / 2.0);
         }
 
         if(enterkey.pressed) {
-            canvas.drawRect((float) enterkey.x, (float) enterkey.y, (float) (enterkey.x + enterkey.width), (float) (enterkey.y + enterkey.height), paintpressed);
+            canvas.drawRect(enterkey.x, enterkey.y, (enterkey.x + enterkey.width), (enterkey.y + enterkey.height), paintpressed);
         } else {
-            canvas.drawRect((float) enterkey.x, (float) enterkey.y, (float) (enterkey.x + enterkey.width), (float) (enterkey.y + enterkey.height), paint);
+            canvas.drawRect(enterkey.x, enterkey.y, (enterkey.x + enterkey.width), (enterkey.y + enterkey.height), paint);
         }
-        canvas.drawBitmap(retu, (float) posx, (float) posy, paint);
+        canvas.drawBitmap(retu, posx, posy, paint);
     }
 }

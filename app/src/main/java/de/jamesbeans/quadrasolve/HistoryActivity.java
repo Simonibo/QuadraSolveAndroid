@@ -32,9 +32,9 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        Toolbar historytoolbar = (Toolbar) findViewById(R.id.historytoolbar);
+        final Toolbar historytoolbar = (Toolbar) findViewById(R.id.historytoolbar);
         setSupportActionBar(historytoolbar);
-        ActionBar ab = getSupportActionBar();
+        final ActionBar ab = getSupportActionBar();
         assert null != ab;
         ab.setDisplayHomeAsUpEnabled(true);
         //set all the properties of the history list view, like the clicklistener for the elements
@@ -44,8 +44,8 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3)
             {
-                SharedPreferences hist = getSharedPreferences("history", 0);
-                int rescount = hist.getInt("rescount", 0);
+                final SharedPreferences hist = getSharedPreferences("history", 0);
+                final int rescount = hist.getInt("rescount", 0);
                 MainActivity.nexta = hist.getString("a" + (rescount - position - 1), "0");
                 MainActivity.nextb = hist.getString("b" + (rescount - position - 1), "0");
                 MainActivity.nextc = hist.getString("c" + (rescount - position - 1), "0");
@@ -63,9 +63,9 @@ public class HistoryActivity extends AppCompatActivity {
 
     //loads all entries in the history preference into the listview
     private void updateHistoryList() {
-        SharedPreferences historypref = getSharedPreferences("history", 0);
-        int rescount = historypref.getInt("rescount", 0);
-        String[] formulae = new String[rescount];
+        final SharedPreferences historypref = getSharedPreferences("history", 0);
+        final int rescount = historypref.getInt("rescount", 0);
+        final String[] formulae = new String[rescount];
         for(int i = rescount - 1; -1 < i; --i) {
             formulae[rescount - i - 1] = makeFormulaFromABC(historypref.getString("a" + i, "0"), historypref.getString("b" + i, "0"), historypref.getString("c" + i, "0"));
         }
@@ -74,9 +74,9 @@ public class HistoryActivity extends AppCompatActivity {
 
     //changes all history preference entries to have the correct decimal seperator
     static void updateHistoryPref(SharedPreferences historypref) {
-        int rescount = historypref.getInt("rescount", 0);
-        SharedPreferences.Editor histedit = historypref.edit();
-        char decsep = ((DecimalFormat) NumberFormat.getInstance()).getDecimalFormatSymbols().getDecimalSeparator();
+        final int rescount = historypref.getInt("rescount", 0);
+        final SharedPreferences.Editor histedit = historypref.edit();
+        final char decsep = ((DecimalFormat) NumberFormat.getInstance()).getDecimalFormatSymbols().getDecimalSeparator();
         for (int i = 0; i < rescount; ++i) {
             histedit.putString("a" + i, historypref.getString("a" + i, "0").replace(',', decsep).replace('.', decsep));
             histedit.putString("b" + i, historypref.getString("b" + i, "0").replace(',', decsep).replace('.', decsep));
@@ -99,8 +99,8 @@ public class HistoryActivity extends AppCompatActivity {
             case R.id.action_clear:
                 //clear all items
                 history.setAdapter(new ArrayAdapter<>(this, R.layout.list_item_layout, new String[0]));
-                SharedPreferences hist = getSharedPreferences("history", 0);
-                SharedPreferences.Editor histed = hist.edit();
+                final SharedPreferences hist = getSharedPreferences("history", 0);
+                final SharedPreferences.Editor histed = hist.edit();
                 for(int i = 0; i < hist.getInt("rescount", 0); ++i) {
                     histed.remove("a" + i);
                     histed.remove("b" + i);
@@ -116,21 +116,21 @@ public class HistoryActivity extends AppCompatActivity {
 
     private String makeFormulaFromABC(String a, String b, String c) {
         String formula;
-        Resources res = getResources();
+        final Resources res = getResources();
         //prepare the different parts of the displayed formula regarding signs and integerness
         formula = res.getString(R.string.fofxequals) + a + res.getString(R.string.xsquared);
-        if((double) 0 != Double.parseDouble(b.replace(',', '.'))) {
+        if(0 != Double.parseDouble(b.replace(',', '.'))) {
             formula = formula + signedString(b) + res.getString(R.string.x);
         }
-        if((double) 0 != Double.parseDouble(c.replace(',', '.'))) {
+        if(0 != Double.parseDouble(c.replace(',', '.'))) {
             formula = formula + signedString(c);
         }
         return formula;
     }
 
     private String signedString(String s) {
-        Resources res = getResources();
-        if((int) '-' == (int) s.charAt(0)) {
+        final Resources res = getResources();
+        if('-' == s.charAt(0)) {
             return res.getString(R.string.minus) + s.substring(1);
         } else{
             return res.getString(R.string.plus) + s;

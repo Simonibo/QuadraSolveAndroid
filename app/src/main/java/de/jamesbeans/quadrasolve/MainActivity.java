@@ -20,6 +20,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     static int lastYesNoAction;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         cval.setShowSoftInputOnFocus(false);
 
         keyboardView = (NumpadKeyboardView) findViewById(R.id.keyboardView);
-        Keyboard keyboard = new Keyboard(this, R.xml.numpad);
+        final Keyboard keyboard = new Keyboard(this, R.xml.numpad);
         keyboardView.setKeyboard(keyboard);
         keyboardView.setEnabled(true);
         keyboardView.setPreviewEnabled(false);
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         keyboard.getKeys().get(13).label = String.valueOf(sym.getDecimalSeparator());
         keyboardView.invalidateKey(13);
 
-        KeyboardView.OnKeyboardActionListener lkey = new KeyboardView.OnKeyboardActionListener() {
+        final KeyboardView.OnKeyboardActionListener lkey = new KeyboardView.OnKeyboardActionListener() {
             @Override
             public void onPress(int primaryCode) { }
 
@@ -72,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onKey(int primaryCode, int[] keyCodes) {
-                View focusCurrent = MainActivity.this.getWindow().getCurrentFocus();
+                final View focusCurrent = getWindow().getCurrentFocus();
                 if(null == focusCurrent || !(focusCurrent instanceof EditText)) return;
-                EditText edittext = (EditText) focusCurrent;
-                Editable editable = edittext.getText();
-                int start = edittext.getSelectionStart();
+                final EditText edittext = (EditText) focusCurrent;
+                final Editable editable = edittext.getText();
+                final int start = edittext.getSelectionStart();
                 switch(primaryCode) {
                     case 67:
                         //delete
@@ -84,15 +85,15 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 66:
                         //enter
-                        if(focusCurrent == aval) {
+                        if(Objects.equals(focusCurrent, aval)) {
                             //select aval
                             bval.setFocusableInTouchMode(true);
                             bval.requestFocus();
-                        } else if (focusCurrent == bval) {
+                        } else if (Objects.equals(focusCurrent, bval)) {
                             //select cval
                             cval.setFocusableInTouchMode(true);
                             cval.requestFocus();
-                        } else if (focusCurrent == cval) {
+                        } else if (Objects.equals(focusCurrent, cval)) {
                             //compute
                             calculate();
                         }
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         //comma or point
                         assert null != editable;
                         if(!editable.toString().contains(String.valueOf(sym.getDecimalSeparator()))) {
-                            if((int) '.' == (int) sym.getDecimalSeparator()) {
+                            if('.' == sym.getDecimalSeparator()) {
                                 editable.insert(start, ".");
                             } else if(1 < start || (1 == start && Character.isDigit(editable.toString().charAt(0)))){
                                 editable.insert(start, ",");
@@ -135,14 +136,14 @@ public class MainActivity extends AppCompatActivity {
         };
         keyboardView.setOnKeyboardActionListener(lkey);
 
-        View.OnFocusChangeListener lfocus = new View.OnFocusChangeListener() {
+        final View.OnFocusChangeListener lfocus = new View.OnFocusChangeListener() {
             @Override public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus) {
                     showCustomKeyboard(v);
                 } else hideCustomKeyboard();
             }
         };
-        View.OnClickListener lclick = new View.OnClickListener() {
+        final View.OnClickListener lclick = new View.OnClickListener() {
             @Override public void onClick(View v) {
                 showCustomKeyboard(v);
             }
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        Toolbar maintoolbar = (Toolbar) findViewById(R.id.maintoolbar);
+        final Toolbar maintoolbar = (Toolbar) findViewById(R.id.maintoolbar);
         setSupportActionBar(maintoolbar);
 
         vals = getSharedPreferences("vals", 0);
@@ -173,13 +174,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override public void onBackPressed() {
-        if( isCustomKeyboardVisible() ) hideCustomKeyboard(); else this.finish();
+        if( isCustomKeyboardVisible() ) hideCustomKeyboard(); else finish();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences.Editor ed = vals.edit();
+        final SharedPreferences.Editor ed = vals.edit();
         ed.putString("atext", aval.getText().toString());
         ed.putString("btext", bval.getText().toString());
         ed.putString("ctext", cval.getText().toString());
@@ -192,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if(!getSharedPreferences("history", 0).getString("Locale", "").equals(Locale.getDefault().toString())) {
             HistoryActivity.updateHistoryPref(getSharedPreferences("history", 0));
-            char decsep = ((DecimalFormat) NumberFormat.getInstance()).getDecimalFormatSymbols().getDecimalSeparator();
+            final char decsep = ((DecimalFormat) NumberFormat.getInstance()).getDecimalFormatSymbols().getDecimalSeparator();
             aval.setText(aval.getText().toString().replace(',', decsep).replace('.', decsep));
             bval.setText(bval.getText().toString().replace(',', decsep).replace('.', decsep));
             cval.setText(cval.getText().toString().replace(',', decsep).replace('.', decsep));
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if((double) 0 == a) {
+        if(0 == a) {
             displayErrorDialog("a may not be zero!");
             return;
         }
@@ -229,11 +230,11 @@ public class MainActivity extends AppCompatActivity {
         cstr = cval.getText().toString();
 
         //Calculation of p/2, because only that is needed in the calculations
-        double phalbe = (b / a) / 2.0;
+        final double phalbe = (b / a) / 2.0;
         //calculation of q as preparation for the p-q-formula
-        double q = c / a;
+        final double q = c / a;
         //indirect calculation of the number of roots
-        if((double) 0 < phalbe * phalbe - q) {
+        if(0 < phalbe * phalbe - q) {
             //1st root is the left, second the right
             x1 = -phalbe - Math.sqrt(phalbe * phalbe - q);
             x2 = -phalbe + Math.sqrt(phalbe * phalbe - q);
@@ -241,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
             goToGraph();
         } else {
             //check, whether digit1 or 0 roots
-            if((double) 0 == phalbe * phalbe - q) {
+            if(0 == phalbe * phalbe - q) {
                 //p-q-formula simplifies
                 x1 = -phalbe;
                 roots = 1;
@@ -259,8 +260,8 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressWarnings("SameParameterValue")
     private void displayYesNoDialog(String question, String yestext, String notext, int actionId) {
-        YesNoDialogFragment d = new YesNoDialogFragment();
-        Bundle b = new Bundle();
+        final YesNoDialogFragment d = new YesNoDialogFragment();
+        final Bundle b = new Bundle();
         b.putString("question", question);
         b.putString("positive_text", yestext);
         b.putString("negative_text", notext);
@@ -280,8 +281,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Displays an error dialog using the errordialogfragment class, has error message as parameter
     private void displayErrorDialog(String message) {
-        ErrorDialogFragment d = new ErrorDialogFragment();
-        Bundle b = new Bundle();
+        final ErrorDialogFragment d = new ErrorDialogFragment();
+        final Bundle b = new Bundle();
         b.putString("error_message", message);
         d.setArguments(b);
         d.show(getSupportFragmentManager(), "ErrorDialogFragment");
@@ -299,9 +300,11 @@ public class MainActivity extends AppCompatActivity {
         GraphActivity.bstr = bstr;
         GraphActivity.cstr = cstr;
 
-        SharedPreferences hist = getSharedPreferences("history", 0);
-        int rescount = hist.getInt("rescount", 0);
-        String lasta, lastb, lastc;
+        final SharedPreferences hist = getSharedPreferences("history", 0);
+        final int rescount = hist.getInt("rescount", 0);
+        final String lasta;
+        final String lastb;
+        final String lastc;
         if(0 < rescount) {
             lasta = hist.getString("a" + (rescount - 1), "digit1");
             lastb = hist.getString("b" + (rescount - 1), "digit1");
@@ -310,14 +313,14 @@ public class MainActivity extends AppCompatActivity {
             lasta = "0"; lastb = "0"; lastc = "0";
         }
         if(!lasta.equals(astr) || !lastb.equals(bstr) || !lastc.equals(cstr)) {
-            SharedPreferences.Editor histed = hist.edit();
+            final SharedPreferences.Editor histed = hist.edit();
             histed.putString("a" + rescount, astr);
             histed.putString("b" + rescount, bstr);
             histed.putString("c" + rescount, cstr);
             histed.putInt("rescount", rescount + 1);
             histed.apply();
         }
-        Intent intent = new Intent(this, GraphActivity.class);
+        final Intent intent = new Intent(this, GraphActivity.class);
         startActivity(intent);
     }
 
@@ -331,11 +334,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_history:
-                Intent intent = new Intent(this, HistoryActivity.class);
+                final Intent intent = new Intent(this, HistoryActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_help:
-                Intent intent2 = new Intent(this, AboutActivity.class);
+                final Intent intent2 = new Intent(this, AboutActivity.class);
                 startActivity(intent2);
                 return true;
             default:
@@ -365,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
             displayErrorDialog("You need to enter a value for " + name + "!");
             throw new Error();
         }
-        if((int) ',' == (int) str.charAt(0) || (1 < str.length() && str.substring(0, 2).equals("-,"))) {
+        if(',' == str.charAt(0) || (1 < str.length() && str.substring(0, 2).equals("-,"))) {
             displayErrorDialog(name + " must be a number!");
             throw new Error();
         }
