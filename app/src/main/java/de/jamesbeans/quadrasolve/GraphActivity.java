@@ -1,6 +1,7 @@
 package de.jamesbeans.quadrasolve;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -34,6 +35,7 @@ public class GraphActivity extends AppCompatActivity {
         final ActionBar ab = getSupportActionBar();
         assert null != ab;
         ab.setDisplayHomeAsUpEnabled(true);
+
 
         setTitle(getResources().getString(R.string.graph));
         //get the different views
@@ -132,6 +134,9 @@ public class GraphActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.graphmenu, menu);
+        boolean indescale = getSharedPreferences("settings", 0).getBoolean("independentScaling", false);
+        menu.findItem(R.id.zoomType).setChecked(indescale);
+        g.zoomIndependent = indescale;
         return true;
     }
 
@@ -140,6 +145,9 @@ public class GraphActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.zoomType:
                 item.setChecked(!item.isChecked());
+                SharedPreferences.Editor seted = getSharedPreferences("settings", 0).edit();
+                seted.putBoolean("independentScaling", item.isChecked());
+                seted.apply();
                 g.zoomIndependent = !g.zoomIndependent;
                 return true;
             default:
