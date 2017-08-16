@@ -30,14 +30,16 @@ import static java.lang.Math.sqrt;
 public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder;
     public TextView rootTextView1, rootTextView2, apexTextView, curpoint;
-    private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint(), black = new Paint();
+    private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint(), black = new Paint(), labelText = new Paint(), superscript = new Paint();
     private int canvasWidth, canvasHeight;
     boolean drawPoint;
     private float touchX;
     private double xmin, xmax, ymin, ymax;
     private double a, b, c, x1, x2, roots, scheitelx, scheitely;
     boolean inited;
-    private double gridIntervX, gridIntervY;
+    private double gridIntervX, gridIntervY, labelIntervX, labelIntervY, powx, powy;
+    private int magordx, magordy;
+    final DecimalFormat df = new DecimalFormat("#.####");;
     String activity;
     private float lastx, lasty;
     private Bitmap bm, bmlastdraw;
@@ -82,6 +84,10 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         gridLines.setColor(Color.DKGRAY);
         gridLines.setStrokeWidth(2.0F);
         black.setColor(Color.BLACK);
+        labelText.setColor(Color.WHITE);
+        labelText.setTextSize(10);
+        superscript.setColor(Color.WHITE);
+        superscript.setTextSize(5);
     }
 
     @Override
@@ -150,7 +156,6 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             if(cury > ymin && cury < ymax) {
                 canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvasHeight, 0), 10.0F, whitePoints);
             }
-            final DecimalFormat df = new DecimalFormat("#.####");
             if(INVISIBLE == curpoint.getVisibility()) {
                 curpoint.setVisibility(VISIBLE);
             }
@@ -304,10 +309,10 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     private void calculateGridlinePositions() {
         final double xspan = xmax - xmin;
         final double yspan = ymax - ymin;
-        final int magordx = (int) Math.floor(Math.log10(xspan));
-        final double powx = Math.pow(10.0, magordx);
-        final int magordy = (int) Math.floor(Math.log10(yspan));
-        final double powy = Math.pow(10.0, magordy);
+        magordx = (int) Math.floor(Math.log10(xspan));
+        powx = Math.pow(10.0, magordx);
+        magordy = (int) Math.floor(Math.log10(yspan));
+        powy = Math.pow(10.0, magordy);
         final int spandurchpowx = (int) Math.floor(xspan / powx);
         final int spandurchpowy = (int) Math.floor(yspan / powy);
         if(1 == spandurchpowx) {
@@ -338,14 +343,27 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     }
 
     //todo drawAxisLabels schreiben
-    /*
-    private void drawAxisLabels(Canvas canvas) {
-        double lisx, lisy;
-        for(double d = lisx * Math.ceil(xmin / lisx); d <= xmax; d += lisx) {
+    private void calculateLabelPositions() {
 
+    }
+
+    private void drawAxisLabels(Canvas canvas) {
+        final double start = labelIntervX * Math.ceil(xmin / labelIntervX);
+        boolean doScientific = Math.abs(Math.log10(start)) >= 3;
+        //calculate the positions of the axis
+        final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
+        final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
+        for(double d = start; d <= xmax; d += labelIntervX) {
+            final float lirped = (float) lirp(d, xmin, xmax, 0 , canvasWidth);
+            if(doScientific) {
+
+            } else {
+                canvas.drawLine(lirped, xaxis, lirped, xaxis + 10, whiteline);
+                final String n = df.format(d);
+                canvas.drawText(n, lirped - labelText.measureText(n) / 2, xaxis + 15, labelText);
+            }
         }
     }
-    */
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
