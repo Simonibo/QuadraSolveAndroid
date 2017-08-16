@@ -348,17 +348,23 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     }
 
     private void drawAxisLabels(Canvas canvas) {
-        final double start = labelIntervX * Math.ceil(xmin / labelIntervX);
-        boolean doScientific = Math.abs(Math.log10(start)) >= 3;
+        final double startx = labelIntervX * Math.ceil(xmin / labelIntervX);
+        boolean doScientificX = Math.abs(Math.log10(startx)) >= 3;
         //calculate the positions of the axis
         final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
         final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
-        for(double d = start; d <= xmax; d += labelIntervX) {
+        final String supr = Double.toString(powx);
+        for(double d = startx; d <= xmax; d += labelIntervX) {
             final float lirped = (float) lirp(d, xmin, xmax, 0 , canvasWidth);
-            if(doScientific) {
+            canvas.drawLine(lirped, xaxis, lirped, xaxis + 10, whiteline);
+            if(doScientificX) {
+                final String base = df.format(lirped / powx) + "x10";
+                final float baseLength = labelText.measureText(base);
+                float offset = (baseLength + superscript.measureText(supr)) / 2;
+                canvas.drawText(base, lirped - offset, xaxis + 15, labelText);
+                canvas.drawText(supr, lirped - offset + baseLength, (float) (xaxis + 15 - 0.8 * labelText.descent()), superscript);
 
             } else {
-                canvas.drawLine(lirped, xaxis, lirped, xaxis + 10, whiteline);
                 final String n = df.format(d);
                 canvas.drawText(n, lirped - labelText.measureText(n) / 2, xaxis + 15, labelText);
             }
