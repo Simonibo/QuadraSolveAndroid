@@ -52,6 +52,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     final int arrowSize = 35;
     final int touchTolerance = 50;
     final int highlightCircleRadius = 15;
+    final int axislabeldist = 15;
 
     public GraphSurfaceView(Context context) {
         super(context);
@@ -85,9 +86,9 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         gridLines.setStrokeWidth(2.0F);
         black.setColor(Color.BLACK);
         labelText.setColor(Color.WHITE);
-        labelText.setTextSize(10);
+        labelText.setTextSize(40);
         superscript.setColor(Color.WHITE);
-        superscript.setTextSize(5);
+        superscript.setTextSize(25);
     }
 
     @Override
@@ -141,7 +142,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                     xmax = -b / (2.0 * a) + Math.sqrt(Math.pow(b / (2.0 * a), 2.0) - (c - ymin) / a);
                 }
             }
-            calculateGridlinePositions();
+            calculateGridAndLabelPositions();
         }
         if(drawPoint) {
             if(isFirstDrawPoint) {
@@ -165,13 +166,13 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             holder.unlockCanvasAndPost(screenCanvas);
         } else {
             //Pre-drawing done in worker thread
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
+            //new Thread(new Runnable() {
+                //@Override
+                //public void run() {
                     canvas.drawRect(0, 0, canvasWidth, canvasHeight, black);
                     isFirstDrawPoint = true;
                     if(activity.equals("Zooming")) {
-                        calculateGridlinePositions();
+                        calculateGridAndLabelPositions();
                     }
                     drawGridLines(canvas);
                     //draw the actual function
@@ -202,16 +203,17 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                     if (2.0 == roots) {
                         canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), highlightCircleRadius, whitePoints);
                     }
-                    post(new Runnable() {
-                        @Override
-                        public void run() {
+                    drawAxisLabels(canvas);
+                    //post(new Runnable() {
+                        //@Override
+                        //public void run() {
                             final Canvas screenCanvas = holder.lockCanvas();
                             screenCanvas.drawBitmap(bm, 0, 0, whiteline);
                             holder.unlockCanvasAndPost(screenCanvas);
-                        }
-                    });
-                }
-            }).start();
+                    //    }
+                    //});
+                //}
+            //}).start();
         }
     }
 
@@ -306,7 +308,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         return true;
     }
 
-    private void calculateGridlinePositions() {
+    private void calculateGridAndLabelPositions() {
         final double xspan = xmax - xmin;
         final double yspan = ymax - ymin;
         magordx = (int) Math.floor(Math.log10(xspan));
@@ -329,6 +331,8 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         } else {
             gridIntervY = powy;
         }
+        labelIntervX = gridIntervX * 2;
+        labelIntervY = gridIntervY * 2;
     }
 
     private void drawGridLines(Canvas canvas) {
@@ -342,31 +346,47 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         }
     }
 
-    //todo drawAxisLabels schreiben
-    private void calculateLabelPositions() {
-
-    }
-
     private void drawAxisLabels(Canvas canvas) {
         final double startx = labelIntervX * Math.ceil(xmin / labelIntervX);
-        boolean doScientificX = Math.abs(Math.log10(startx)) >= 3;
+        boolean doScientificX = Math.abs(magordx) >= 3;
+        final double starty = labelIntervY * Math.ceil(ymin / labelIntervY);
+        boolean doScientificY = Math.abs(magordy) >= 3;
         //calculate the positions of the axis
         final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
         final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
-        final String supr = Double.toString(powx);
+        final String suprx = Integer.toString(magordx);
+        final String supry = Integer.toString(magordy);
+        final float baseheight = labelText.getFontSpacing();
+        final float xAxisYBase = xaxis + axislabeldist + baseheight * 0.7f;
         for(double d = startx; d <= xmax; d += labelIntervX) {
-            final float lirped = (float) lirp(d, xmin, xmax, 0 , canvasWidth);
-            canvas.drawLine(lirped, xaxis, lirped, xaxis + 10, whiteline);
-            if(doScientificX) {
-                final String base = df.format(lirped / powx) + "x10";
-                final float baseLength = labelText.measureText(base);
-                float offset = (baseLength + superscript.measureText(supr)) / 2;
-                canvas.drawText(base, lirped - offset, xaxis + 15, labelText);
-                canvas.drawText(supr, lirped - offset + baseLength, (float) (xaxis + 15 - 0.8 * labelText.descent()), superscript);
+            if(d != 0) {
+                final float lirped = (float) lirp(d, xmin, xmax, 0, canvasWidth);
+                canvas.drawLine(lirped, xaxis, lirped, xaxis + 10, whiteline);
+                if (doScientificX) {
+                    final String base = df.format(d / powx) + "x10";
+                    final float baseLength = labelText.measureText(base);
+                    float offset = (baseLength + superscript.measureText(suprx)) / 2;
+                    canvas.drawText(base, lirped - offset, xAxisYBase, labelText);
+                    canvas.drawText(suprx, lirped - offset + baseLength, xAxisYBase - 0.8f * baseheight, superscript);
 
-            } else {
-                final String n = df.format(d);
-                canvas.drawText(n, lirped - labelText.measureText(n) / 2, xaxis + 15, labelText);
+                } else {
+                    final String n = df.format(d);
+                    canvas.drawText(n, lirped - labelText.measureText(n) / 2, xAxisYBase, labelText);
+                }
+            }
+        }
+        for(double d = starty; d <= ymax; d += labelIntervY) {
+            if(d != 0) {
+                final float lirped = (float) lirp(d, ymin, ymax, canvasHeight, 0);
+                canvas.drawLine(yaxis, lirped, yaxis + 10, lirped, whiteline);
+                if (doScientificY) {
+                    final String base = df.format(d / powy) + "x10";
+                    final float baseLength = labelText.measureText(base);
+                    canvas.drawText(base, yaxis + axislabeldist, lirped + 0.25f * baseheight, labelText);
+                    canvas.drawText(supry, yaxis + axislabeldist + baseLength, lirped - 0.1f * baseheight, superscript);
+                } else {
+                    canvas.drawText(df.format(d), yaxis + axislabeldist, lirped + 0.25f * baseheight, labelText);
+                }
             }
         }
     }
