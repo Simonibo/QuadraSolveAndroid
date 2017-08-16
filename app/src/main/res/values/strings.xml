@@ -66,4 +66,5 @@
     <string name="trace">Trace</string>
     <string name="pan">Pan</string>
     <string name="reset_graph">Reset graph</string>
+    <string name="howZoom">Independent scaling</string>
 </resources>

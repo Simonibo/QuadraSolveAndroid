@@ -1,10 +1,13 @@
 package de.jamesbeans.quadrasolve;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -20,6 +23,7 @@ public class GraphActivity extends AppCompatActivity {
     static double x1, x2;
     static int roots;
     static double scheitelx, scheitely;
+    GraphSurfaceView g;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class GraphActivity extends AppCompatActivity {
 
         setTitle(getResources().getString(R.string.graph));
         //get the different views
-        final GraphSurfaceView g = (GraphSurfaceView) findViewById(R.id.parabel);
+        g = (GraphSurfaceView) findViewById(R.id.parabel);
         final TextView function = (TextView) findViewById(R.id.function);
         final TextView root1 = (TextView) findViewById(R.id.root1);
         final TextView root2 = (TextView) findViewById(R.id.root2);
@@ -42,7 +46,6 @@ public class GraphActivity extends AppCompatActivity {
         final RadioButton trace = (RadioButton) findViewById(R.id.trace);
         final RadioButton pan = (RadioButton) findViewById(R.id.pan);
         final Button reset = (Button) findViewById(R.id.reset);
-
         trace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,5 +127,23 @@ public class GraphActivity extends AppCompatActivity {
             }
         }
         function.setText(formula);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.graphmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.zoomType:
+                item.setChecked(!item.isChecked());
+                g.zoomIndependent = !g.zoomIndependent;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

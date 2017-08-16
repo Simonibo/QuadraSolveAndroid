@@ -8,12 +8,18 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+import static android.view.MotionEvent.ACTION_CANCEL;
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MASK;
+import static android.view.MotionEvent.ACTION_MOVE;
+import static android.view.MotionEvent.ACTION_UP;
 import static java.lang.Math.sqrt;
 
 /**
@@ -33,37 +39,37 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     boolean inited;
     private double gridIntervX, gridIntervY;
     String activity;
-    private double lastx, lasty;
+    private float lastx, lasty;
     private Bitmap bm, bmlastdraw;
     private Canvas canvas;
     private boolean isFirstDrawPoint;
+    private ScaleGestureDetector sd;
+    private int apid;
+    boolean zoomIndependent;
+    final int ipid = -1;
     final int arrowSize = 35;
     final int touchTolerance = 50;
     final int highlightCircleRadius = 15;
 
     public GraphSurfaceView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public GraphSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public GraphSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
-    public GraphSurfaceView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
-    private void init() {
+    private void init(Context ct) {
         holder = getHolder();
         holder.addCallback(this);
+        sd = new ScaleGestureDetector(ct, new ScaleListener());
         activity = "Tracing";
         //configure the different paints
         whiteline.setColor(Color.WHITE);
@@ -243,21 +249,53 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 draw();
             }
         } else {
-            if(MotionEvent.ACTION_DOWN == event.getActionMasked()) {
-                lastx = event.getX();
-                lasty = event.getY();
-            } else if(MotionEvent.ACTION_MOVE == event.getActionMasked() || MotionEvent.ACTION_UP == event.getActionMasked()) {
-                final double xchange = lirp(event.getX() - lastx, 0, canvasWidth, 0, xmax - xmin);
-                xmin -= xchange;
-                xmax -= xchange;
-                final double ychange = lirp(event.getY() - lasty, 0, canvasHeight, 0, ymax - ymin);
-                ymin += ychange;
-                ymax += ychange;
-                lastx = event.getX();
-                lasty = event.getY();
-                activity = "Panning";
-                drawPoint = false;
-                draw();
+            //let the scaleinspector inspect all touch events
+            sd.onTouchEvent(event);
+            final int action = event.getAction();
+            switch(action & ACTION_MASK) {
+                case ACTION_DOWN:
+                    lastx = event.getX();
+                    lasty = event.getY();
+                    apid = event.getPointerId(0);
+                    break;
+                case ACTION_MOVE:
+                    final int pointerIndex = event.findPointerIndex(apid);
+                    final float x = event.getX(pointerIndex);
+                    final float y = event.getY(pointerIndex);
+                    // Only move if the ScaleGestureDetector isn't processing a gesture.
+                    if (!sd.isInProgress()) {
+                        final double xchange = lirp(x - lastx, 0, canvasWidth, 0, xmax - xmin);
+                        xmin -= xchange;
+                        xmax -= xchange;
+                        final double ychange = lirp(y - lasty, 0, canvasHeight, 0, ymax - ymin);
+                        ymin += ychange;
+                        ymax += ychange;
+                        activity = "Panning";
+                        drawPoint = false;
+                        draw();
+                    }
+                    lastx = event.getX();
+                    lasty = event.getY();
+                    break;
+                case ACTION_UP:
+                    apid = ipid;
+                    break;
+                case ACTION_CANCEL:
+                    apid = ipid;
+                    break;
+                case MotionEvent.ACTION_POINTER_UP:
+                    final int pid = (event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK)
+                            >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+                    final int pointerId = event.getPointerId(pid);
+                    if (pointerId == apid) {
+                        // This was our active pointer going up. Choose a new
+                        // active pointer and adjust accordingly.
+                        final int newPointerIndex = pid == 0 ? 1 : 0;
+                        lastx = event.getX(newPointerIndex);
+                        lasty = event.getY(newPointerIndex);
+                        apid = event.getPointerId(newPointerIndex);
+                    }
+                    break;
             }
         }
         return true;
@@ -308,4 +346,29 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         }
     }
     */
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            final double fx = lirp(detector.getFocusX(), 0, canvasWidth, xmin, xmax);
+            final double fy = lirp(detector.getFocusY(), 0, canvasHeight, ymin, ymax);
+            if(zoomIndependent) {
+                final float bsfx = detector.getPreviousSpanX() / detector.getCurrentSpanX() - 1;
+                final float bsfy = detector.getPreviousSpanY() / detector.getCurrentSpanY() - 1;
+                xmax += (xmax - fx) * bsfx;
+                xmin -= (fx - xmin) * bsfx;
+                ymax += (ymax - fy) * bsfy;
+                ymin -= (fy - ymin) * bsfy;
+            } else {
+                final float bsf = 1 / detector.getScaleFactor() - 1;
+                xmax += (xmax - fx) * bsf;
+                xmin -= (fx - xmin) * bsf;
+                ymax += (ymax - fy) * bsf;
+                ymin -= (fy - ymin) * bsf;
+            }
+            activity = "Zooming";
+            draw();
+            return true;
+        }
+    }
 }
