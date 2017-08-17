@@ -5,10 +5,9 @@
         android:width="2dip"
         android:color="#606060" />
     <corners android:radius="2dip" />
-    <!--
     <padding
-        android:bottom="7dip"
-        android:left="7dip"
-        android:right="7dip"
-        android:top="7dip" /> -->
+        android:left="@dimen/edittextpaddinghori"
+        android:right="@dimen/edittextpaddinghori"
+        android:top="@dimen/edittextpaddingverti"
+        android:bottom="@dimen/edittextpaddingverti" />
 </shape>

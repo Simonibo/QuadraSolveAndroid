@@ -77,16 +77,6 @@
             android:textColor="#ffffff" />
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/calculate_roots"
-        android:layout_below="@+id/tablelayout"
-        android:layout_centerHorizontal="true"
-        android:background="#000000"
-        android:textColor="#ffffff"
-        android:textAllCaps="false"
-        android:onClick="buttonOnClick" />
 
     <TableLayout
         android:id="@+id/tablelayout"
@@ -223,6 +213,17 @@
                 android:focusableInTouchMode="true" />
         </TableRow>
     </TableLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/calculate_roots"
+        android:layout_below="@+id/tablelayout"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/standardbutton"
+        android:textColor="#ffffff"
+        android:textAllCaps="false"
+        android:onClick="buttonOnClick" />
 
     <de.jamesbeans.quadrasolve.NumpadKeyboardView
         android:id="@+id/keyboardView"
