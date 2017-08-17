@@ -115,10 +115,9 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private String makeFormulaFromABC(String a, String b, String c) {
-        String formula;
         final Resources res = getResources();
         //prepare the different parts of the displayed formula regarding signs and integerness
-        formula = res.getString(R.string.fofxequals) + a + res.getString(R.string.xsquared);
+        String formula = res.getString(R.string.fofxequals) + a + res.getString(R.string.xsquared);
         if(0 != Double.parseDouble(b.replace(',', '.'))) {
             formula = formula + signedString(b) + res.getString(R.string.x);
         }

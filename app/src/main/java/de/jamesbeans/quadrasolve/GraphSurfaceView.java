@@ -21,7 +21,6 @@ import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_MASK;
 import static android.view.MotionEvent.ACTION_MOVE;
 import static android.view.MotionEvent.ACTION_UP;
-import static java.lang.Math.sqrt;
 
 /**
  * Created by Simon on 14.08.2017.
@@ -41,7 +40,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     boolean inited;
     private double gridIntervX, gridIntervY, labelIntervX, labelIntervY, powx, powy;
     private int magordx, magordy;
-    final DecimalFormat df = new DecimalFormat("#.####");
+    private final DecimalFormat df = new DecimalFormat("#.####");
     String activity;
     private float lastx, lasty;
     private Bitmap bm, bmlastdraw;
@@ -50,11 +49,6 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     private ScaleGestureDetector sd;
     private int apid;
     boolean zoomIndependent;
-    final int ipid = -1;
-    final int arrowSize = 35;
-    final int touchTolerance = 50;
-    final int highlightCircleRadius = 15;
-    final int axislabeldist = 15;
 
     public GraphSurfaceView(Context context) {
         super(context);
@@ -177,11 +171,12 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             final Path p = new Path();
             final float fofx1 = (float) (a * Math.pow(xmin, 2.0) + b * xmin + c);
             p.moveTo(0, (float) lirp(fofx1, ymin, ymax, canvasHeight, 0));
-            p.quadTo((canvasWidth / 2), (float) lirp((fofx1 + (2.0 * xmin * a + b) * (xmax - xmin) / 2.0), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2.0) + b * xmax + c), ymin, ymax, canvasHeight, 0));
+            p.quadTo(canvasWidth >> 1, (float) lirp((fofx1 + (2.0 * xmin * a + b) * (xmax - xmin) / 2.0), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2.0) + b * xmax + c), ymin, ymax, canvasHeight, 0));
             canvas.drawPath(p, graphPoints);
             //calculate the positions of the axis
             final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
             final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
+            final int arrowSize = 35;
             if (0 > xmin && 0 < xmax) {
                 canvas.drawLine(yaxis, 0, yaxis, canvasHeight, whiteline);
                 canvas.drawLine((yaxis - arrowSize), arrowSize, yaxis, 0, whiteline);
@@ -193,6 +188,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 canvas.drawLine((canvasWidth - arrowSize), (xaxis + arrowSize), canvasWidth, xaxis, whiteline);
             }
             //Scheitelpunkt hervorheben
+            final int highlightCircleRadius = 15;
             canvas.drawCircle(Math.round(lirp(scheitelx, xmin, xmax, 0, canvasWidth)), Math.round(lirp(scheitely, ymin, ymax, canvasHeight, 0)), highlightCircleRadius, whitePoints);
             //Nullstellen hervorheben
             if (0 < roots) {
@@ -209,37 +205,34 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     }
 
     //maps the value startVal, which ranges from smin to smax, to the range (emin, emax)
-    private double lirp(double startVal, double smin, double smax, double emin, double emax) {
+    private static double lirp(double startVal, double smin, double smax, double emin, double emax) {
         return emin + (emax - emin) * ((startVal - smin) / (smax - smin));
     }
 
     //Handles all the touch events on the Graph, which include touching roots, calculated points and the apex
-    @SuppressWarnings("UnusedAssignment")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(activity.equals("Tracing")) {
-            boolean nearSomething;
+            boolean nearSomething = false;
             //Check, wether the touch was close enough to one of the roots and if so, put highlight on the corresponding textview (Not sure yet which highlight to pick)
-            if (0 < GraphActivity.roots && touchTolerance > sqrt(Math.pow(event.getX() - lirp(GraphActivity.x1, xmin, xmax, 0, canvasWidth), 2.0) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2.0))) {
+            final int touchTolerance = 50;
+            if (0 < GraphActivity.roots && touchTolerance > Math.sqrt(Math.pow(event.getX() - lirp(GraphActivity.x1, xmin, xmax, 0, canvasWidth), 2.0) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2.0))) {
                 rootTextView1.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
                 rootTextView1.setTextColor(Color.WHITE); //setTypeface(null, Typeface.NORMAL);
-                nearSomething = false;
             }
-            if (2 == GraphActivity.roots && touchTolerance > sqrt(Math.pow(event.getX() - lirp(GraphActivity.x2, xmin, xmax, 0, canvasWidth), 2.0) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2.0))) {
+            if (2 == GraphActivity.roots && touchTolerance > Math.sqrt(Math.pow(event.getX() - lirp(GraphActivity.x2, xmin, xmax, 0, canvasWidth), 2.0) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2.0))) {
                 rootTextView2.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
                 rootTextView2.setTextColor(Color.WHITE);
-                nearSomething = false;
             }
-            if (touchTolerance > sqrt(Math.pow(event.getX() - lirp(GraphActivity.scheitelx, xmin, xmax, 0, canvasWidth), 2.0) + Math.pow(event.getY() - lirp(GraphActivity.scheitely, ymin, ymax, canvasHeight, 0), 2.0))) {
+            if (touchTolerance > Math.sqrt(Math.pow(event.getX() - lirp(GraphActivity.scheitelx, xmin, xmax, 0, canvasWidth), 2.0) + Math.pow(event.getY() - lirp(GraphActivity.scheitely, ymin, ymax, canvasHeight, 0), 2.0))) {
                 apexTextView.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
                 apexTextView.setTextColor(Color.WHITE);
-                nearSomething = false;
             }
             if (!nearSomething) {
                 touchX = event.getX();
@@ -250,6 +243,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             //let the scaleinspector inspect all touch events
             sd.onTouchEvent(event);
             final int action = event.getAction();
+            final int ipid = -1;
             switch(action & ACTION_MASK) {
                 case ACTION_DOWN:
                     lastx = event.getX();
@@ -339,15 +333,16 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     private void drawAxisLabels(Canvas canvas) {
         final double startx = labelIntervX * Math.ceil(xmin / labelIntervX);
-        boolean doScientificX = Math.abs(magordx) >= 3;
+        final boolean doScientificX = Math.abs(magordx) >= 3;
         final double starty = labelIntervY * Math.ceil(ymin / labelIntervY);
-        boolean doScientificY = Math.abs(magordy) >= 3;
+        final boolean doScientificY = Math.abs(magordy) >= 3;
         //calculate the positions of the axis
         final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
         final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
         final String suprx = Integer.toString(magordx);
         final String supry = Integer.toString(magordy);
         final float baseheight = labelText.getFontSpacing();
+        final int axislabeldist = 15;
         final float xAxisYBase = xaxis + axislabeldist + baseheight * 0.7f;
         for(double d = startx; d <= xmax; d += labelIntervX) {
             if(d != 0) {
@@ -356,7 +351,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 if (doScientificX) {
                     final String base = df.format(d / powx) + "x10";
                     final float baseLength = labelText.measureText(base);
-                    float offset = (baseLength + superscript.measureText(suprx)) / 2;
+                    final float offset = (baseLength + superscript.measureText(suprx)) / 2;
                     canvas.drawText(base, lirped - offset, xAxisYBase, labelText);
                     canvas.drawText(suprx, lirped - offset + baseLength, xAxisYBase - 0.3f * baseheight, superscript);
                 } else {

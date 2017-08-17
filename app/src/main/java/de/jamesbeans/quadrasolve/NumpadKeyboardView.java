@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.support.v4.content.res.ResourcesCompat;
@@ -17,13 +16,13 @@ import java.util.List;
 
 public class NumpadKeyboardView extends KeyboardView {
     private Paint paint,  paintpressed;
-    private TextPaint tp = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+    private final TextPaint tp = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
     private Bitmap retu, backb;
     private int retuposx, retuposy, backX, backY;
     boolean initialized;
-    String[] texts = {"1", "2", "3", "", "4", "5", "6", "", "7", "8", "9", "-", "0", ""};
-    private int[] textheights = new int[14];
-    private int[] xs = new int[14], ys = new int[14];
+    final String[] texts = {"1", "2", "3", "", "4", "5", "6", "", "7", "8", "9", "-", "0", ""};
+    private final int[] xs = new int[14];
+    private final int[] ys = new int[14];
 
     public NumpadKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -64,14 +63,14 @@ public class NumpadKeyboardView extends KeyboardView {
             backY = back.y + (int) ((back.height - backb.getHeight()) / 2.0);
             final float dist = -tp.getFontMetrics().ascent * 0.8f;
             for(int i = 0; i < sz; ++i) {
-                Keyboard.Key k = keys.get(i);
+                final Keyboard.Key k = keys.get(i);
                 xs[i] = k.x + (k.width >> 1);
                 ys[i] = (int) (k.y + (k.height + dist) / 2);
             }
         }
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
         for (int i = 0; i < sz; ++i) {
-            Keyboard.Key k = keys.get(i);
+            final Keyboard.Key k = keys.get(i);
             if(k.pressed) {
                 canvas.drawRect(k.x, k.y, (k.x + k.width), (k.y + k.height), paintpressed);
             }

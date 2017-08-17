@@ -9,15 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-
-import info.hoang8f.android.segmented.SegmentedGroup;
 
 import static android.view.View.VISIBLE;
 
@@ -27,7 +23,7 @@ public class GraphActivity extends AppCompatActivity {
     static double x1, x2;
     static int roots;
     static double scheitelx, scheitely;
-    GraphSurfaceView g;
+    private GraphSurfaceView g;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +47,6 @@ public class GraphActivity extends AppCompatActivity {
         final RadioButton trace = (RadioButton) findViewById(R.id.trace);
         final RadioButton pan = (RadioButton) findViewById(R.id.pan);
         final Button reset = (Button) findViewById(R.id.reset);
-        final SegmentedGroup graphaction = (SegmentedGroup) findViewById(R.id.graphaction);
         trace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,10 +86,10 @@ public class GraphActivity extends AppCompatActivity {
         apex.setText(res.getString(R.string.fourconcat, apex.getText(), df.format(scheitelx), res.getString(R.string.semicolon), df.format(scheitely)));
         if(0 == roots) {
             root1.setVisibility(VISIBLE);
-            if(0 != b) {
-                root1.setText(res.getString(R.string.fiveconcat, res.getString(R.string.complexroots), df.format(-b / (2.0 * a)), res.getString(R.string.spaceplusminus), df.format(Math.sqrt(c / a - Math.pow(b / (2.0 * a), 2.0))), res.getString(R.string.i)));
-            } else {
+            if (0 == b) {
                 root1.setText(res.getString(R.string.fourconcat, res.getString(R.string.complexroots), res.getString(R.string.plusminus), df.format(Math.sqrt(c / a)), res.getString(R.string.i)));
+            } else {
+                root1.setText(res.getString(R.string.fiveconcat, res.getString(R.string.complexroots), df.format(-b / (2.0 * a)), res.getString(R.string.spaceplusminus), df.format(Math.sqrt(c / a - Math.pow(b / (2.0 * a), 2.0))), res.getString(R.string.i)));
             }
         }
         if(0 < roots) {
@@ -127,11 +122,7 @@ public class GraphActivity extends AppCompatActivity {
             }
         }
         if(0 != c) {
-            if(0 < c) {
-                formula = formula + " + " + cstr;
-            } else {
-                formula = formula + " - " + cstr.substring(1);
-            }
+            formula = 0 < c ? formula + " + " + cstr : formula + " - " + cstr.substring(1);
         }
         function.setText(formula);
     }
@@ -139,7 +130,7 @@ public class GraphActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.graphmenu, menu);
-        boolean indescale = getSharedPreferences("settings", 0).getBoolean("independentScaling", false);
+        final boolean indescale = getSharedPreferences("settings", 0).getBoolean("independentScaling", false);
         menu.findItem(R.id.zoomType).setChecked(indescale);
         g.zoomIndependent = indescale;
         return true;
@@ -150,7 +141,7 @@ public class GraphActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.zoomType:
                 item.setChecked(!item.isChecked());
-                SharedPreferences.Editor seted = getSharedPreferences("settings", 0).edit();
+                final SharedPreferences.Editor seted = getSharedPreferences("settings", 0).edit();
                 seted.putBoolean("independentScaling", item.isChecked());
                 seted.apply();
                 g.zoomIndependent = !g.zoomIndependent;

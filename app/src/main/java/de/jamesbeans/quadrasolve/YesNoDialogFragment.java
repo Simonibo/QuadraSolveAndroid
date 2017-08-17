@@ -19,6 +19,7 @@ public class YesNoDialogFragment extends DialogFragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(getArguments().getString("question"))
                 .setPositiveButton(getArguments().getString("positive_text"), new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int id) {
                         MainActivity.lastYesNoAction = getArguments().getInt("actionId");
                         final MainActivity m = (MainActivity) getActivity();
@@ -26,6 +27,7 @@ public class YesNoDialogFragment extends DialogFragment {
                     }
                 })
                 .setNegativeButton(getArguments().getString("negative_text"), new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //Do nothing
                     }

@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onKey(int primaryCode, int[] keyCodes) {
                 final View focusCurrent = getWindow().getCurrentFocus();
-                if(null == focusCurrent || !(focusCurrent instanceof EditText)) return;
+                if(!(focusCurrent instanceof EditText)) return;
                 final EditText edittext = (EditText) focusCurrent;
                 final Editable editable = edittext.getText();
                 final int start = edittext.getSelectionStart();
@@ -210,15 +210,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void calculate() {
         try { a = reallyIsNumber(aval.getText().toString(), "a");
-        } catch (Error e) {
+        } catch (Error ignored) {
             return;
         }
         try { b = reallyIsNumber(bval.getText().toString(), "b");
-        } catch (Error e) {
+        } catch (Error ignored) {
             return;
         }
         try { c = reallyIsNumber(cval.getText().toString(), "c");
-        } catch (Error e) {
+        } catch (Error ignored) {
             return;
         }
 
@@ -256,11 +256,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    public void buttonOnClick(@SuppressWarnings("UnusedParameters") View v) {
+
+    public void buttonOnClick(View v) {
         calculate();
     }
 
-    @SuppressWarnings("SameParameterValue")
     private void displayYesNoDialog(String question, String yestext, String notext, int actionId) {
         final YesNoDialogFragment d = new YesNoDialogFragment();
         final Bundle b = new Bundle();
@@ -367,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
         final Resources res = getResources();
         //All the possible errors
         if(str.isEmpty()) {
-            displayErrorDialog(res.getString(R.string.inputrequested) + name + "!");
+            displayErrorDialog(res.getString(R.string.inputrequested) + name + '!');
             throw new Error();
         }
         if(',' == str.charAt(0) || (1 < str.length() && str.substring(0, 2).equals("-,"))) {
@@ -376,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
         }
         try {
             return Double.parseDouble(str.replace(",", "."));
-        } catch(NumberFormatException nfe) {
+        } catch(NumberFormatException ignored) {
             displayErrorDialog(name + res.getString(R.string.nan));
             throw new Error();
         }
