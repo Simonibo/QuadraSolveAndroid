@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -30,7 +31,8 @@ import static java.lang.Math.sqrt;
 public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder;
     public TextView rootTextView1, rootTextView2, apexTextView, curpoint;
-    private final Paint whiteline = new Paint(), whitePoints = new Paint(), graphPoints = new Paint(), gridLines = new Paint(), black = new Paint(), labelText = new Paint(), superscript = new Paint();
+    private final Paint whiteline = new Paint(), whitePoints = new Paint(Paint.ANTI_ALIAS_FLAG), graphPoints = new Paint(), gridLines = new Paint(), black = new Paint();
+    private final TextPaint labelText = new TextPaint(TextPaint.ANTI_ALIAS_FLAG), superscript = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
     private int canvasWidth, canvasHeight;
     boolean drawPoint;
     private float touchX;
@@ -39,7 +41,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     boolean inited;
     private double gridIntervX, gridIntervY, labelIntervX, labelIntervY, powx, powy;
     private int magordx, magordy;
-    final DecimalFormat df = new DecimalFormat("#.####");;
+    final DecimalFormat df = new DecimalFormat("#.####");
     String activity;
     private float lastx, lasty;
     private Bitmap bm, bmlastdraw;
@@ -86,9 +88,9 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         gridLines.setStrokeWidth(2.0F);
         black.setColor(Color.BLACK);
         labelText.setColor(Color.WHITE);
-        labelText.setTextSize(40);
+        labelText.setTextSize(50);
         superscript.setColor(Color.WHITE);
-        superscript.setTextSize(25);
+        superscript.setTextSize(35);
     }
 
     @Override
@@ -367,8 +369,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                     final float baseLength = labelText.measureText(base);
                     float offset = (baseLength + superscript.measureText(suprx)) / 2;
                     canvas.drawText(base, lirped - offset, xAxisYBase, labelText);
-                    canvas.drawText(suprx, lirped - offset + baseLength, xAxisYBase - 0.8f * baseheight, superscript);
-
+                    canvas.drawText(suprx, lirped - offset + baseLength, xAxisYBase - 0.3f * baseheight, superscript);
                 } else {
                     final String n = df.format(d);
                     canvas.drawText(n, lirped - labelText.measureText(n) / 2, xAxisYBase, labelText);
