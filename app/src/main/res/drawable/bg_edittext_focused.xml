@@ -3,7 +3,7 @@
     <solid android:color="#000" />
     <stroke
         android:width="2dip"
-        android:color="#AAA" />
+        android:color="#777" />
     <corners android:radius="2dip" />
     <padding
         android:left="@dimen/edittextpaddinghori"

@@ -61,8 +61,9 @@ public class MainActivity extends AppCompatActivity {
         keyboardView.setPreviewEnabled(false);
 
         final DecimalFormatSymbols sym = ((DecimalFormat) NumberFormat.getInstance()).getDecimalFormatSymbols();
-        keyboard.getKeys().get(13).label = String.valueOf(sym.getDecimalSeparator());
-        keyboardView.invalidateKey(13);
+        keyboardView.initialized = false;
+        keyboardView.texts[13] = String.valueOf(sym.getDecimalSeparator());
+        keyboardView.invalidate();
 
         final KeyboardView.OnKeyboardActionListener lkey = new KeyboardView.OnKeyboardActionListener() {
             @Override

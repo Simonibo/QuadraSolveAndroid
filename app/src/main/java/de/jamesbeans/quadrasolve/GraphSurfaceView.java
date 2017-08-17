@@ -167,55 +167,44 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             screenCanvas.drawBitmap(bm, 0, 0, whiteline);
             holder.unlockCanvasAndPost(screenCanvas);
         } else {
-            //Pre-drawing done in worker thread
-            //new Thread(new Runnable() {
-                //@Override
-                //public void run() {
-                    canvas.drawRect(0, 0, canvasWidth, canvasHeight, black);
-                    isFirstDrawPoint = true;
-                    if(activity.equals("Zooming")) {
-                        calculateGridAndLabelPositions();
-                    }
-                    drawGridLines(canvas);
-                    //draw the actual function
-                    final Path p = new Path();
-                    final float fofx1 = (float) (a * Math.pow(xmin, 2.0) + b * xmin + c);
-                    p.moveTo(0, (float) lirp(fofx1, ymin, ymax, canvasHeight, 0));
-                    p.quadTo((canvasWidth / 2), (float) lirp((fofx1 + (2.0 * xmin * a + b) * (xmax - xmin) / 2.0), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2.0) + b * xmax + c), ymin, ymax, canvasHeight, 0));
-                    canvas.drawPath(p, graphPoints);
-                    //calculate the positions of the axis
-                    final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
-                    final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
-                    if (0 > xmin && 0 < xmax) {
-                        canvas.drawLine(yaxis, 0, yaxis, canvasHeight, whiteline);
-                        canvas.drawLine((yaxis - arrowSize), arrowSize, yaxis, 0, whiteline);
-                        canvas.drawLine((yaxis + arrowSize), arrowSize, yaxis, 0, whiteline);
-                    }
-                    if (0 > ymin && 0 < ymax) {
-                        canvas.drawLine(0, xaxis, canvasWidth, xaxis, whiteline);
-                        canvas.drawLine((canvasWidth - arrowSize), (xaxis - arrowSize), canvasWidth, xaxis, whiteline);
-                        canvas.drawLine((canvasWidth - arrowSize), (xaxis + arrowSize), canvasWidth, xaxis, whiteline);
-                    }
-                    //Scheitelpunkt hervorheben
-                    canvas.drawCircle(Math.round(lirp(scheitelx, xmin, xmax, 0, canvasWidth)), Math.round(lirp(scheitely, ymin, ymax, canvasHeight, 0)), highlightCircleRadius, whitePoints);
-                    //Nullstellen hervorheben
-                    if (0 < roots) {
-                        canvas.drawCircle(Math.round(lirp(x1, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), highlightCircleRadius,  whitePoints);
-                    }
-                    if (2.0 == roots) {
-                        canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), highlightCircleRadius, whitePoints);
-                    }
-                    drawAxisLabels(canvas);
-                    //post(new Runnable() {
-                        //@Override
-                        //public void run() {
-                            final Canvas screenCanvas = holder.lockCanvas();
-                            screenCanvas.drawBitmap(bm, 0, 0, whiteline);
-                            holder.unlockCanvasAndPost(screenCanvas);
-                    //    }
-                    //});
-                //}
-            //}).start();
+            canvas.drawRect(0, 0, canvasWidth, canvasHeight, black);
+            isFirstDrawPoint = true;
+            if(activity.equals("Zooming")) {
+                calculateGridAndLabelPositions();
+            }
+            drawGridLines(canvas);
+            //draw the actual function
+            final Path p = new Path();
+            final float fofx1 = (float) (a * Math.pow(xmin, 2.0) + b * xmin + c);
+            p.moveTo(0, (float) lirp(fofx1, ymin, ymax, canvasHeight, 0));
+            p.quadTo((canvasWidth / 2), (float) lirp((fofx1 + (2.0 * xmin * a + b) * (xmax - xmin) / 2.0), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2.0) + b * xmax + c), ymin, ymax, canvasHeight, 0));
+            canvas.drawPath(p, graphPoints);
+            //calculate the positions of the axis
+            final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
+            final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
+            if (0 > xmin && 0 < xmax) {
+                canvas.drawLine(yaxis, 0, yaxis, canvasHeight, whiteline);
+                canvas.drawLine((yaxis - arrowSize), arrowSize, yaxis, 0, whiteline);
+                canvas.drawLine((yaxis + arrowSize), arrowSize, yaxis, 0, whiteline);
+            }
+            if (0 > ymin && 0 < ymax) {
+                canvas.drawLine(0, xaxis, canvasWidth, xaxis, whiteline);
+                canvas.drawLine((canvasWidth - arrowSize), (xaxis - arrowSize), canvasWidth, xaxis, whiteline);
+                canvas.drawLine((canvasWidth - arrowSize), (xaxis + arrowSize), canvasWidth, xaxis, whiteline);
+            }
+            //Scheitelpunkt hervorheben
+            canvas.drawCircle(Math.round(lirp(scheitelx, xmin, xmax, 0, canvasWidth)), Math.round(lirp(scheitely, ymin, ymax, canvasHeight, 0)), highlightCircleRadius, whitePoints);
+            //Nullstellen hervorheben
+            if (0 < roots) {
+                canvas.drawCircle(Math.round(lirp(x1, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), highlightCircleRadius,  whitePoints);
+            }
+            if (2.0 == roots) {
+                canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), highlightCircleRadius, whitePoints);
+            }
+            drawAxisLabels(canvas);
+            final Canvas screenCanvas = holder.lockCanvas();
+            screenCanvas.drawBitmap(bm, 0, 0, whiteline);
+            holder.unlockCanvasAndPost(screenCanvas);
         }
     }
 

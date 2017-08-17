@@ -227,15 +227,14 @@
         android:textStyle="normal"
         android:onClick="buttonOnClick" />
 
+    <!--android:keyBackground="@drawable/key_background"-->
     <de.jamesbeans.quadrasolve.NumpadKeyboardView
         android:id="@+id/keyboardView"
         android:visibility="gone"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:keyBackground="@drawable/key_background"
-        android:keyTextColor="@color/black"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
     <!--todolater werbung einbauen-->
 </RelativeLayout>

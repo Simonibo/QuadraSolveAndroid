@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
     android:keyWidth="25%p"
-    android:keyHeight="8%p"
+    android:keyHeight="50dp"
     android:horizontalGap="0px"
     android:verticalGap="0px" >
 
     <Row>
-        <Key android:codes="49" android:keyIcon="@mipmap/digit1big" android:keyEdgeFlags="left" />
-        <Key android:codes="50" android:keyIcon="@mipmap/digit2big" />
-        <Key android:codes="51" android:keyIcon="@mipmap/digit3big" />
-        <Key android:codes="67" android:keyIcon="@mipmap/ic_backspace_black_24dp" android:keyEdgeFlags="right" android:isRepeatable="true" />
+        <Key android:codes="49" />
+        <Key android:codes="50" />
+        <Key android:codes="51" />
+        <Key android:codes="67" android:isRepeatable="true" />
     </Row>
     <Row>
-        <Key android:codes="52" android:keyIcon="@mipmap/digit4big" android:keyEdgeFlags="left" />
-        <Key android:codes="53" android:keyIcon="@mipmap/digit5big" />
-        <Key android:codes="54" android:keyIcon="@mipmap/digit6big" />
-        <Key android:codes="66" android:keyIcon="@mipmap/ic_subdirectory_arrow_left_black_48dp" android:keyHeight="75%" android:keyEdgeFlags="right"/>
+        <Key android:codes="52" />
+        <Key android:codes="53" />
+        <Key android:codes="54" />
+        <Key android:codes="66" android:keyHeight="75%" />
     </Row>
     <Row>
-        <Key android:codes="55" android:keyIcon="@mipmap/digit7big" android:keyEdgeFlags="left" />
-        <Key android:codes="56" android:keyIcon="@mipmap/digit8big" />
-        <Key android:codes="57" android:keyIcon="@mipmap/digit9big" />
+        <Key android:codes="55" />
+        <Key android:codes="56" />
+        <Key android:codes="57" />
     </Row>
     <Row android:rowEdgeFlags="bottom">
-        <Key android:codes="45" android:keyLabel="-" android:keyEdgeFlags="left" />
-        <Key android:codes="48" android:keyIcon="@mipmap/digit0big" />
-        <Key android:codes="46" android:keyLabel="setatruntime" />
+        <Key android:codes="45" />
+        <Key android:codes="48" />
+        <Key android:codes="46" />
     </Row>
 </Keyboard>

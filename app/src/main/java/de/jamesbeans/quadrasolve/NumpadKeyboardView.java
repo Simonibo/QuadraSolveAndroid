@@ -6,19 +6,24 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.support.v4.content.res.ResourcesCompat;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 
 import java.util.List;
 
 public class NumpadKeyboardView extends KeyboardView {
-    private Paint paint;
-    private Paint paintpressed;
-    private Bitmap retu;
-    private int posx;
-    private int posy;
-    private boolean initialized;
+    private Paint paint,  paintpressed;
+    private TextPaint tp = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+    private Bitmap retu, backb;
+    private int retuposx, retuposy, backX, backY;
+    boolean initialized;
+    String[] texts = {"1", "2", "3", "", "4", "5", "6", "", "7", "8", "9", "-", "0", ""};
+    private int[] textheights = new int[14];
+    private int[] xs = new int[14], ys = new int[14];
 
     public NumpadKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,9 +38,11 @@ public class NumpadKeyboardView extends KeyboardView {
     private void init() {
         paint = new Paint();
         paintpressed = new Paint();
-        paint.setColor(Color.rgb(236, 239, 241));
-        paintpressed.setColor(Color.rgb(219, 224, 225));
-        retu = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_subdirectory_arrow_left_black_48dp);
+        paint.setColor(ResourcesCompat.getColor(getResources(), R.color.keyboardbackground, null));
+        paintpressed.setColor(Color.LTGRAY);
+        tp.setColor(Color.WHITE);
+        tp.setTextSize(90);
+        tp.setTextAlign(Paint.Align.CENTER);
     }
 
     @Override
@@ -45,18 +52,32 @@ public class NumpadKeyboardView extends KeyboardView {
         final List<Keyboard.Key> keys = kb.getKeys();
         final Keyboard.Key enterkey = keys.get(7);
         final Keyboard.Key back = keys.get(3);
+        final int sz = keys.size();
 
-        if(!initialized) {
+        if (!initialized) {
             initialized = true;
-            posx = enterkey.x + (int) ((enterkey.width - retu.getWidth()) / 2.0);
-            posy = enterkey.y + (int) ((kb.getHeight() - back.height - retu.getHeight()) / 2.0);
+            retu = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_subdirectory_arrow_left_white_48dp);
+            backb = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_backspace_white_24dp);
+            retuposx = enterkey.x + (int) ((enterkey.width - retu.getWidth()) / 2.0);
+            retuposy = enterkey.y + (int) ((kb.getHeight() - back.height - retu.getHeight()) / 2.0);
+            backX = back.x + (int) ((back.width - backb.getWidth()) / 2.0);
+            backY = back.y + (int) ((back.height - backb.getHeight()) / 2.0);
+            final float dist = -tp.getFontMetrics().ascent * 0.8f;
+            for(int i = 0; i < sz; ++i) {
+                Keyboard.Key k = keys.get(i);
+                xs[i] = k.x + (k.width >> 1);
+                ys[i] = (int) (k.y + (k.height + dist) / 2);
+            }
         }
-
-        if(enterkey.pressed) {
-            canvas.drawRect(enterkey.x, enterkey.y, (enterkey.x + enterkey.width), (enterkey.y + enterkey.height), paintpressed);
-        } else {
-            canvas.drawRect(enterkey.x, enterkey.y, (enterkey.x + enterkey.width), (enterkey.y + enterkey.height), paint);
+        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
+        for (int i = 0; i < sz; ++i) {
+            Keyboard.Key k = keys.get(i);
+            if(k.pressed) {
+                canvas.drawRect(k.x, k.y, (k.x + k.width), (k.y + k.height), paintpressed);
+            }
+            canvas.drawText(texts[i], xs[i], ys[i], tp);
         }
-        canvas.drawBitmap(retu, posx, posy, paint);
+        canvas.drawBitmap(retu, retuposx, retuposy, paint);
+        canvas.drawBitmap(backb, backX, backY, paint);
     }
 }
