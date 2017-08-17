@@ -1,22 +1,23 @@
 package de.jamesbeans.quadrasolve;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+
+import info.hoang8f.android.segmented.SegmentedGroup;
 
 import static android.view.View.VISIBLE;
 
@@ -50,6 +51,7 @@ public class GraphActivity extends AppCompatActivity {
         final RadioButton trace = (RadioButton) findViewById(R.id.trace);
         final RadioButton pan = (RadioButton) findViewById(R.id.pan);
         final Button reset = (Button) findViewById(R.id.reset);
+        final SegmentedGroup graphaction = (SegmentedGroup) findViewById(R.id.graphaction);
         trace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,10 +64,7 @@ public class GraphActivity extends AppCompatActivity {
                 g.activity = "Panning";
             }
         });
-        /*
-        Typeface nice = trace.getTypeface();
-        reset.setTypeface(nice);
-        */
+        reset.setTypeface(trace.getTypeface());
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override

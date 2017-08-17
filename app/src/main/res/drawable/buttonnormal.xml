@@ -6,8 +6,6 @@
         android:color="#FFFFFF" />
     <corners android:radius="10dp" />
     <padding
-        android:left="@dimen/edittextpaddinghori"
-        android:right="@dimen/edittextpaddinghori"
-        android:bottom="-8dp"
-        android:top="-8dp" />
+        android:left="@dimen/buttonpaddinghori"
+        android:right="@dimen/buttonpaddinghori" />
 </shape>

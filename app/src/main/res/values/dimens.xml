@@ -17,4 +17,5 @@
     <dimen name="functiontextsize">25sp</dimen>
     <dimen name="edittextpaddinghori">4dip</dimen>
     <dimen name="edittextpaddingverti">2dip</dimen>
+    <dimen name="buttonpaddinghori">8dip</dimen>
 </resources>

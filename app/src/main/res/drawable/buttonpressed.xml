@@ -5,4 +5,7 @@
         android:width="1dp"
         android:color="#FFFFFF" />
     <corners android:radius="10dp" />
+    <padding
+        android:left="@dimen/buttonpaddinghori"
+        android:right="@dimen/buttonpaddinghori" />
 </shape>
