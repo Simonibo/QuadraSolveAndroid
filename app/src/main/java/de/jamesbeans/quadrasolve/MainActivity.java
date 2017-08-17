@@ -3,6 +3,7 @@ package de.jamesbeans.quadrasolve;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
@@ -362,21 +363,21 @@ public class MainActivity extends AppCompatActivity {
         return View.VISIBLE == keyboardView.getVisibility();
     }
 
-    //todo Strings übersetzen!!!
     private double reallyIsNumber(String str, String name) throws Error {
+        final Resources res = getResources();
         //All the possible errors
         if(str.isEmpty()) {
-            displayErrorDialog("You need to enter a value for " + name + "!");
+            displayErrorDialog(res.getString(R.string.inputrequested) + name + "!");
             throw new Error();
         }
         if(',' == str.charAt(0) || (1 < str.length() && str.substring(0, 2).equals("-,"))) {
-            displayErrorDialog(name + " must be a number!");
+            displayErrorDialog(name + res.getString(R.string.nan));
             throw new Error();
         }
         try {
             return Double.parseDouble(str.replace(",", "."));
         } catch(NumberFormatException nfe) {
-            displayErrorDialog("a must be a number!");
+            displayErrorDialog(name + res.getString(R.string.nan));
             throw new Error();
         }
     }

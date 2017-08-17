@@ -108,7 +108,6 @@
                 android:textColor="#ffffff"
                 android:textSize="@dimen/textSizeMain" />
 
-            <!--todo edittexts schöner machen-->
             <EditText
                 android:id="@+id/aval"
                 android:layout_width="0px"

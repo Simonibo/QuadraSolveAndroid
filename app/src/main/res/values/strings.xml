@@ -1,4 +1,5 @@
 <resources>
+    <!--todo Strings übersetzen!!!-->
     <string name="app_name">QuadraSolve</string>
     <string name="enter">Enter value</string>
     <string name="calculate_roots">Calculate roots</string>
@@ -67,4 +68,6 @@
     <string name="pan">Pan</string>
     <string name="reset_graph">Reset graph</string>
     <string name="howZoom">Independent scaling</string>
+    <string name="inputrequested">"You need to enter a value for "</string>
+    <string name="nan">" must be a number!"</string>
 </resources>
