@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -36,7 +37,8 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     boolean drawPoint;
     private float touchX;
     private double xmin, xmax, ymin, ymax;
-    private double a, b, c, x1, x2, roots, scheitelx, scheitely;
+    private double a, b, c, x1, x2, scheitelx, scheitely;
+    private int roots;
     boolean inited;
     private double gridIntervX, gridIntervY, labelIntervX, labelIntervY, powx, powy;
     private int magordx, magordy;
@@ -72,14 +74,14 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         activity = "Tracing";
         //configure the different paints
         whiteline.setColor(Color.WHITE);
-        whiteline.setStrokeWidth(6.0F); //should be 4
+        whiteline.setStrokeWidth(6); //should be 4
         whitePoints.setColor(Color.WHITE);
-        whitePoints.setStrokeWidth(20.0F);
-        graphPoints.setColor(Color.argb(255, 48, 63, 159));
-        graphPoints.setStrokeWidth(6.0F);
+        whitePoints.setStrokeWidth(20);
+        graphPoints.setColor(ResourcesCompat.getColor(getResources(), R.color.graphpoints, null));
+        graphPoints.setStrokeWidth(6);
         graphPoints.setStyle(Paint.Style.STROKE);  //should be 4
         gridLines.setColor(Color.DKGRAY);
-        gridLines.setStrokeWidth(2.0F);
+        gridLines.setStrokeWidth(2);
         black.setColor(Color.BLACK);
         labelText.setColor(Color.WHITE);
         labelText.setTextSize(50);
@@ -115,27 +117,28 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             scheitelx = GraphActivity.scheitelx;
             scheitely = GraphActivity.scheitely;
             //Calculate xmin, xmax, ymin and ymax
-            if (2.0 == roots) {
-                xmin = 1.5 * x1 - 0.5 * x2;
-                xmax = 1.5 * x2 - 0.5 * x1;
+            if (2 == roots) {
+                xmin = 3 * x1 / 2 - x2 / 2;
+                xmax = 3 * x2 / 2 - x1 / 2;
                 if(0 < a) {
                     ymax = a * xmin * xmin + b * xmin + c;
-                    ymin = -ymax / 2.0;
+                    ymin = -ymax / 2;
                 } else {
                     ymin = a * xmin * xmin + b * xmin + c;
-                    ymax = -ymin / 2.0;
+                    ymax = -ymin / 2;
                 }
             } else {
+                final double povertwo = b / (2 * a);
                 if (0 < a) {
                     ymin = scheitely - a;
-                    ymax = scheitely + 3.0 * a;
-                    xmin = -b / (2.0 * a) - Math.sqrt(Math.pow(b / (2.0 * a), 2.0) - (c - ymax) / a);
-                    xmax = -b / (2.0 * a) + Math.sqrt(Math.pow(b / (2.0 * a), 2.0) - (c - ymax) / a);
+                    ymax = scheitely + 3 * a;
+                    xmin = -povertwo - Math.sqrt(Math.pow(povertwo, 2) - (c - ymax) / a);
+                    xmax = -povertwo + Math.sqrt(Math.pow(povertwo, 2) - (c - ymax) / a);
                 } else {
                     ymax = scheitely - a;
-                    ymin = scheitely + 3.0 * a;
-                    xmin = -b / (2.0 * a) - Math.sqrt(Math.pow(b / (2.0 * a), 2.0) - (c - ymin) / a);
-                    xmax = -b / (2.0 * a) + Math.sqrt(Math.pow(b / (2.0 * a), 2.0) - (c - ymin) / a);
+                    ymin = scheitely + 3 * a;
+                    xmin = -povertwo - Math.sqrt(Math.pow(povertwo, 2) - (c - ymin) / a);
+                    xmax = -povertwo + Math.sqrt(Math.pow(povertwo, 2) - (c - ymin) / a);
                 }
             }
             calculateGridAndLabelPositions();
@@ -151,7 +154,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             final double curx = lirp(touchX, 0, canvasWidth, xmin, xmax);
             final double cury = GraphActivity.a * Math.pow(curx, 2.0) + GraphActivity.b * curx + GraphActivity.c;
             if(cury > ymin && cury < ymax) {
-                canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvasHeight, 0), 10.0F, whitePoints);
+                canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvasHeight, 0), 10, whitePoints);
             }
             if(INVISIBLE == curpoint.getVisibility()) {
                 curpoint.setVisibility(VISIBLE);
@@ -171,7 +174,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             final Path p = new Path();
             final float fofx1 = (float) (a * Math.pow(xmin, 2.0) + b * xmin + c);
             p.moveTo(0, (float) lirp(fofx1, ymin, ymax, canvasHeight, 0));
-            p.quadTo(canvasWidth >> 1, (float) lirp((fofx1 + (2.0 * xmin * a + b) * (xmax - xmin) / 2.0), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2.0) + b * xmax + c), ymin, ymax, canvasHeight, 0));
+            p.quadTo(canvasWidth >> 1, (float) lirp((fofx1 + (2 * xmin * a + b) * (xmax - xmin) / 2), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2) + b * xmax + c), ymin, ymax, canvasHeight, 0));
             canvas.drawPath(p, graphPoints);
             //calculate the positions of the axis
             final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
@@ -194,7 +197,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             if (0 < roots) {
                 canvas.drawCircle(Math.round(lirp(x1, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), highlightCircleRadius,  whitePoints);
             }
-            if (2.0 == roots) {
+            if (2 == roots) {
                 canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), highlightCircleRadius, whitePoints);
             }
             drawAxisLabels(canvas);
@@ -216,19 +219,19 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             boolean nearSomething = false;
             //Check, wether the touch was close enough to one of the roots and if so, put highlight on the corresponding textview (Not sure yet which highlight to pick)
             final int touchTolerance = 50;
-            if (0 < GraphActivity.roots && touchTolerance > Math.sqrt(Math.pow(event.getX() - lirp(GraphActivity.x1, xmin, xmax, 0, canvasWidth), 2.0) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2.0))) {
+            if (0 < GraphActivity.roots && touchTolerance > Math.sqrt(Math.pow(event.getX() - lirp(GraphActivity.x1, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2))) {
                 rootTextView1.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
                 rootTextView1.setTextColor(Color.WHITE); //setTypeface(null, Typeface.NORMAL);
             }
-            if (2 == GraphActivity.roots && touchTolerance > Math.sqrt(Math.pow(event.getX() - lirp(GraphActivity.x2, xmin, xmax, 0, canvasWidth), 2.0) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2.0))) {
+            if (2 == GraphActivity.roots && touchTolerance > Math.sqrt(Math.pow(event.getX() - lirp(GraphActivity.x2, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(0, ymin, ymax, canvasHeight, 0), 2))) {
                 rootTextView2.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
                 rootTextView2.setTextColor(Color.WHITE);
             }
-            if (touchTolerance > Math.sqrt(Math.pow(event.getX() - lirp(GraphActivity.scheitelx, xmin, xmax, 0, canvasWidth), 2.0) + Math.pow(event.getY() - lirp(GraphActivity.scheitely, ymin, ymax, canvasHeight, 0), 2.0))) {
+            if (touchTolerance > Math.sqrt(Math.pow(event.getX() - lirp(GraphActivity.scheitelx, xmin, xmax, 0, canvasWidth), 2) + Math.pow(event.getY() - lirp(GraphActivity.scheitely, ymin, ymax, canvasHeight, 0), 2))) {
                 apexTextView.setTextColor(Color.RED); //setTypeface(null, Typeface.BOLD);
                 nearSomething = true;
             } else {
@@ -297,22 +300,22 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         final double xspan = xmax - xmin;
         final double yspan = ymax - ymin;
         magordx = (int) Math.floor(Math.log10(xspan));
-        powx = Math.pow(10.0, magordx);
+        powx = Math.pow(10, magordx);
         magordy = (int) Math.floor(Math.log10(yspan));
-        powy = Math.pow(10.0, magordy);
+        powy = Math.pow(10, magordy);
         final int spandurchpowx = (int) Math.floor(xspan / powx);
         final int spandurchpowy = (int) Math.floor(yspan / powy);
         if(1 == spandurchpowx) {
-            gridIntervX = powx / 5.0;
+            gridIntervX = powx / 5;
         } else if (5 > spandurchpowx){
-            gridIntervX = powx / 2.0;
+            gridIntervX = powx / 2;
         } else {
             gridIntervX = powx;
         }
         if(1 == spandurchpowy) {
-            gridIntervY = powy / 5.0;
+            gridIntervY = powy / 5;
         } else if (5 > spandurchpowy){
-            gridIntervY = powy / 2.0;
+            gridIntervY = powy / 2;
         } else {
             gridIntervY = powy;
         }

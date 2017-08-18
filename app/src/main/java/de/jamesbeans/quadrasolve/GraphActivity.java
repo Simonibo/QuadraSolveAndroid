@@ -71,8 +71,8 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        scheitely = c - (b * b) / (4.0 * a);
-        scheitelx = -b / (2.0 * a);
+        scheitely = c - (b * b) / (4 * a);
+        scheitelx = -b / (2 * a);
 
         //Pass the TextViews to the GraphView for easy access
         g.rootTextView1 = root1;
@@ -89,7 +89,7 @@ public class GraphActivity extends AppCompatActivity {
             if (0 == b) {
                 root1.setText(res.getString(R.string.fourconcat, res.getString(R.string.complexroots), res.getString(R.string.plusminus), df.format(Math.sqrt(c / a)), res.getString(R.string.i)));
             } else {
-                root1.setText(res.getString(R.string.fiveconcat, res.getString(R.string.complexroots), df.format(-b / (2.0 * a)), res.getString(R.string.spaceplusminus), df.format(Math.sqrt(c / a - Math.pow(b / (2.0 * a), 2.0))), res.getString(R.string.i)));
+                root1.setText(res.getString(R.string.fiveconcat, res.getString(R.string.complexroots), df.format(-b / (2 * a)), res.getString(R.string.spaceplusminus), df.format(Math.sqrt(c / a - Math.pow(b / (2 * a), 2))), res.getString(R.string.i)));
             }
         }
         if(0 < roots) {

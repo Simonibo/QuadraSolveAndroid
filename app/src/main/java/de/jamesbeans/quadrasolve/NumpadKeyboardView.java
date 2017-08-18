@@ -55,12 +55,12 @@ public class NumpadKeyboardView extends KeyboardView {
 
         if (!initialized) {
             initialized = true;
-            retu = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_subdirectory_arrow_left_white_48dp);
-            backb = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_backspace_white_24dp);
-            retuposx = enterkey.x + (int) ((enterkey.width - retu.getWidth()) / 2.0);
-            retuposy = enterkey.y + (int) ((kb.getHeight() - back.height - retu.getHeight()) / 2.0);
-            backX = back.x + (int) ((back.width - backb.getWidth()) / 2.0);
-            backY = back.y + (int) ((back.height - backb.getHeight()) / 2.0);
+            retu = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ic_subdirectory_arrow_left_white_48dp);
+            backb = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ic_backspace_white_24dp);
+            retuposx = enterkey.x + ((enterkey.width - retu.getWidth()) >> 1);
+            retuposy = enterkey.y + ((kb.getHeight() - back.height - retu.getHeight()) >> 1);
+            backX = back.x + ((back.width - backb.getWidth()) >> 1);
+            backY = back.y + ((back.height - backb.getHeight()) >> 1);
             final float dist = -tp.getFontMetrics().ascent * 0.8f;
             for(int i = 0; i < sz; ++i) {
                 final Keyboard.Key k = keys.get(i);
