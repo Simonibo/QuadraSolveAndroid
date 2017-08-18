@@ -5,5 +5,7 @@
     <color name="white">#FFFFFF</color>
     <color name="lightgray">#DDDDDD</color>
     <color name="keyboardbackground">#333</color>
-    <color name="graphpoints">#303f9f</color>
+    <color name="yellow">#FFCB03</color>
+    <color name="blue">#006BDF</color>
+    <color name="red">#FB3C2D</color>
 </resources>

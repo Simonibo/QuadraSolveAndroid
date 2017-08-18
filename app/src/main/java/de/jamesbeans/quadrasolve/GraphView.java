@@ -6,13 +6,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.SurfaceView;
-import android.view.SurfaceHolder;
+import android.view.View;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -24,12 +24,11 @@ import static android.view.MotionEvent.ACTION_MOVE;
 import static android.view.MotionEvent.ACTION_UP;
 
 /**
- * Created by Simon on 14.08.2017.
- * The Surfaceview which draws the graph and supports tracing, panning & zooming
+ * Displays the graph
+ * Created by Simon on 18.08.2017.
  */
 
-public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
-    private SurfaceHolder holder;
+public class GraphView extends View {
     public TextView rootTextView1, rootTextView2, apexTextView, curpoint;
     private final Paint whiteline = new Paint(), whitePoints = new Paint(Paint.ANTI_ALIAS_FLAG), graphPoints = new Paint(), gridLines = new Paint(), black = new Paint();
     private final TextPaint labelText = new TextPaint(TextPaint.ANTI_ALIAS_FLAG), superscript = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
@@ -51,26 +50,24 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     private ScaleGestureDetector sd;
     private int apid;
     boolean zoomIndependent;
-    private float baseheight;
+    private final Path p = new Path();
 
-    public GraphSurfaceView(Context context) {
+    public GraphView(Context context) {
         super(context);
         init(context);
     }
 
-    public GraphSurfaceView(Context context, AttributeSet attrs) {
+    public GraphView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public GraphSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GraphView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     private void init(Context ct) {
-        holder = getHolder();
-        holder.addCallback(this);
         sd = new ScaleGestureDetector(ct, new ScaleListener());
         activity = "Tracing";
         //configure the different paints
@@ -88,25 +85,14 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         labelText.setTextSize(50);
         superscript.setColor(Color.WHITE);
         superscript.setTextSize(35);
-        baseheight = labelText.getFontSpacing();
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) { draw(); }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) { }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) { }
-
-    void draw() {
+    public void onDraw(Canvas actualcanvas) {
         if(!inited) {
             inited = true;
-            final Canvas tmp = holder.lockCanvas();
-            canvasWidth = tmp.getWidth();
-            canvasHeight = tmp.getHeight();
-            holder.unlockCanvasAndPost(tmp);
+            canvasWidth = actualcanvas.getWidth();
+            canvasHeight = actualcanvas.getHeight();
             bm = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
             canvas = new Canvas(bm);
             //get the different values from the graph class for easier access
@@ -151,20 +137,17 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 isFirstDrawPoint = false;
             }
             //get the current state of the canvas
-            canvas.drawBitmap(bmlastdraw, 0, 0, whitePoints);
+            actualcanvas.drawBitmap(bmlastdraw, 0, 0, whitePoints);
             //Get the touch points' coordinates in the graph's coordinate system
             final double curx = lirp(touchX, 0, canvasWidth, xmin, xmax);
             final double cury = GraphActivity.a * Math.pow(curx, 2.0) + GraphActivity.b * curx + GraphActivity.c;
             if(cury > ymin && cury < ymax) {
-                canvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvasHeight, 0), 10, whitePoints);
+                actualcanvas.drawCircle(touchX, (float) lirp(cury, ymin, ymax, canvasHeight, 0), 10, whitePoints);
             }
             if(INVISIBLE == curpoint.getVisibility()) {
                 curpoint.setVisibility(VISIBLE);
             }
             curpoint.setText(getResources().getString(R.string.curpoint) + df.format(curx) + getResources().getString(R.string.semicolon) + df.format(cury));
-            final Canvas screenCanvas = holder.lockCanvas();
-            screenCanvas.drawBitmap(bm, 0, 0, whiteline);
-            holder.unlockCanvasAndPost(screenCanvas);
         } else {
             canvas.drawRect(0, 0, canvasWidth, canvasHeight, black);
             isFirstDrawPoint = true;
@@ -173,13 +156,11 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             }
             drawGridLines(canvas);
             //draw the actual function
-            final Path p = new Path();
             final float fofx1 = (float) (a * Math.pow(xmin, 2.0) + b * xmin + c);
             p.moveTo(0, (float) lirp(fofx1, ymin, ymax, canvasHeight, 0));
-            final float y1 = (float) lirp((fofx1 + (2 * xmin * a + b) * (xmax - xmin) / 2), ymin, ymax, canvasHeight, 0);
-            final float y2 = (float) lirp((a * Math.pow(xmax, 2) + b * xmax + c), ymin, ymax, canvasHeight, 0);
-            p.quadTo(canvasWidth >> 1, y1, canvasWidth, y2);
+            p.quadTo(canvasWidth >> 1, (float) lirp((fofx1 + (2 * xmin * a + b) * (xmax - xmin) / 2), ymin, ymax, canvasHeight, 0), canvasWidth, (float) lirp((a * Math.pow(xmax, 2) + b * xmax + c), ymin, ymax, canvasHeight, 0));
             canvas.drawPath(p, graphPoints);
+            p.reset();
             //calculate the positions of the axis
             final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
             final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
@@ -205,9 +186,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 canvas.drawCircle(Math.round(lirp(x2, xmin, xmax, 0, canvasWidth)), Math.round(lirp(0, ymin, ymax, canvasHeight, 0)), highlightCircleRadius, whitePoints);
             }
             drawAxisLabels(canvas);
-            final Canvas screenCanvas = holder.lockCanvas();
-            screenCanvas.drawBitmap(bm, 0, 0, whiteline);
-            holder.unlockCanvasAndPost(screenCanvas);
+            actualcanvas.drawBitmap(bm, 0, 0, whiteline);
         }
     }
 
@@ -244,7 +223,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             if (!nearSomething) {
                 touchX = event.getX();
                 drawPoint = true;
-                draw();
+                invalidate();
             }
         } else {
             //let the scaleinspector inspect all touch events
@@ -271,7 +250,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                         ymax += ychange;
                         activity = "Panning";
                         drawPoint = false;
-                        draw();
+                        invalidate();
                     }
                     lastx = event.getX();
                     lasty = event.getY();
@@ -348,6 +327,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
         final String suprx = Integer.toString(magordx);
         final String supry = Integer.toString(magordy);
+        final float baseheight = labelText.getFontSpacing();
         final int axislabeldist = 15;
         final float xAxisYBase = xaxis + axislabeldist + baseheight * 0.7f;
         for(double d = startx; d <= xmax; d += labelIntervX) {
@@ -402,7 +382,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 ymin -= (fy - ymin) * bsf;
             }
             activity = "Zooming";
-            draw();
+            invalidate();
             return true;
         }
     }
