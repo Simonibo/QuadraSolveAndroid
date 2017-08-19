@@ -23,7 +23,12 @@ public class YesNoDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         MainActivity.lastYesNoAction = getArguments().getInt("actionId");
                         final MainActivity m = (MainActivity) getActivity();
-                        m.evalYesNo();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                m.evalYesNo();
+                            }
+                        }).start();
                     }
                 })
                 .setNegativeButton(getArguments().getString("negative_text"), new DialogInterface.OnClickListener() {

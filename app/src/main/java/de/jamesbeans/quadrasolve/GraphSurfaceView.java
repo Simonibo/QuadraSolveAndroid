@@ -22,6 +22,9 @@ import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_MASK;
 import static android.view.MotionEvent.ACTION_MOVE;
 import static android.view.MotionEvent.ACTION_UP;
+import static de.jamesbeans.quadrasolve.GraphActivity.PANNING;
+import static de.jamesbeans.quadrasolve.GraphActivity.TRACING;
+import static de.jamesbeans.quadrasolve.GraphActivity.ZOOMING;
 
 /**
  * Created by Simon on 14.08.2017.
@@ -72,7 +75,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         holder = getHolder();
         holder.addCallback(this);
         sd = new ScaleGestureDetector(ct, new ScaleListener());
-        activity = "Tracing";
+        activity = TRACING;
         //configure the different paints
         whiteline.setColor(Color.WHITE);
         whiteline.setStrokeWidth(6); //should be 4
@@ -168,7 +171,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         } else {
             canvas.drawRect(0, 0, canvasWidth, canvasHeight, black);
             isFirstDrawPoint = true;
-            if(activity.equals("Zooming")) {
+            if(activity.equals(ZOOMING)) {
                 calculateGridAndLabelPositions();
             }
             drawGridLines(canvas);
@@ -219,7 +222,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     //Handles all the touch events on the Graph, which include touching roots, calculated points and the apex
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(activity.equals("Tracing")) {
+        if(activity.equals(TRACING)) {
             boolean nearSomething = false;
             //Check, wether the touch was close enough to one of the roots and if so, put highlight on the corresponding textview (Not sure yet which highlight to pick)
             final int touchTolerance = 50;
@@ -269,7 +272,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                         final double ychange = lirp(y - lasty, 0, canvasHeight, 0, ymax - ymin);
                         ymin += ychange;
                         ymax += ychange;
-                        activity = "Panning";
+                        activity = PANNING;
                         drawPoint = false;
                         draw();
                     }
@@ -401,7 +404,7 @@ public class GraphSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                 ymax += (ymax - fy) * bsf;
                 ymin -= (fy - ymin) * bsf;
             }
-            activity = "Zooming";
+            activity = ZOOMING;
             draw();
             return true;
         }

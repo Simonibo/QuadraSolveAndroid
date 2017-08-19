@@ -42,5 +42,7 @@
     <string name="contactme">"Nachricht schreiben"</string>
     <string name="reset_graph">Graph zurücksetzen</string>
     <string name="nan">" muss eine Zahl sein!"</string>
-    <string name="inputrequested">Du musst einen Wert für   eingeben!</string>
+    <string name="inputrequested">Du musst einen Wert für %1$s eingeben!</string>
+    <string name="use_english_version">Englische Version benutzen</string>
+    <string name="pan">Verschieben</string>
 </resources>

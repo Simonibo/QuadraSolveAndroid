@@ -25,6 +25,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Objects;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 public class MainActivity extends AppCompatActivity {
     static int lastYesNoAction;
     //static boolean yesNoDismissed;
@@ -40,10 +42,16 @@ public class MainActivity extends AppCompatActivity {
     private static double x2;
     //the number of roots the function has
     private static int roots;
-
     public static String nexta, nextb, nextc;
     public static boolean comefromhistory;
+    public static boolean offerLanguageChange;
     private NumpadKeyboardView keyboardView;
+
+    public static final String RESCOUNT = "rescount";
+    public static final String USEENGLISH = "useenglish";
+    public static final String ATEXT = "atext";
+    public static final String BTEXT = "btext";
+    public static final String CTEXT = "ctext";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,9 +179,20 @@ public class MainActivity extends AppCompatActivity {
             cval.setText(nextc);
             comefromhistory = false;
         } else {
-            aval.setText(vals.getString("atext", "3"));
-            bval.setText(vals.getString("btext", "2"));
-            cval.setText(vals.getString("ctext", "-6"));
+            aval.setText(vals.getString(ATEXT, "3"));
+            bval.setText(vals.getString(BTEXT, "2"));
+            cval.setText(vals.getString(CTEXT, "-6"));
+        }
+
+        if(offerLanguageChange) {
+            offerLanguageChange = false;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Resources r = getResources();
+                    displayYesNoDialog(r.getString(R.string.useenglish), r.getString(R.string.yes), r.getString(R.string.no), 1);
+                }
+            }).start();
         }
     }
 
@@ -190,9 +209,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         final SharedPreferences.Editor ed = vals.edit();
-        ed.putString("atext", aval.getText().toString());
-        ed.putString("btext", bval.getText().toString());
-        ed.putString("ctext", cval.getText().toString());
+        ed.putString(ATEXT, aval.getText().toString());
+        ed.putString(BTEXT, bval.getText().toString());
+        ed.putString(CTEXT, cval.getText().toString());
         ed.clear();
         ed.apply();
     }
@@ -230,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(0 == a) {
-            displayErrorDialog("a may not be zero!");
+            displayErrorDialog(getResources().getString(R.string.notzero));
             return;
         }
 
@@ -259,7 +278,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 roots = 0;
                 //Dialog sollte angezeigt werden: Soll Graph trotzdem gezeichnet werden?
-                displayYesNoDialog("This quadratic polynomial has no real roots. Do you want to plot the graph anyways?", "Plot graph", "Cancel", 0);
+                final Resources r = getResources();
+                displayYesNoDialog(r.getString(R.string.norealroots), r.getString(R.string.plotgraph), r.getString(R.string.cancel), 0);
             }
         }
     }
@@ -284,6 +304,17 @@ public class MainActivity extends AppCompatActivity {
             //Graph without roots
             case 0:
                 goToGraph();
+                break;
+            case 1:
+                final SharedPreferences.Editor ed = getDefaultSharedPreferences(getBaseContext()).edit();
+                ed.putBoolean(USEENGLISH, true);
+                ed.apply();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recreate();
+                    }
+                });
                 break;
         }
     }
@@ -310,14 +341,14 @@ public class MainActivity extends AppCompatActivity {
         GraphActivity.cstr = cstr;
 
         final SharedPreferences hist = getSharedPreferences("history", 0);
-        final int rescount = hist.getInt("rescount", 0);
+        final int rescount = hist.getInt(RESCOUNT, 0);
         final String lasta;
         final String lastb;
         final String lastc;
         if(0 < rescount) {
-            lasta = hist.getString("a" + (rescount - 1), "digit1");
-            lastb = hist.getString("b" + (rescount - 1), "digit1");
-            lastc = hist.getString("c" + (rescount - 1), "digit1");
+            lasta = hist.getString("a" + (rescount - 1), "impossible");
+            lastb = hist.getString("b" + (rescount - 1), "impossible");
+            lastc = hist.getString("c" + (rescount - 1), "impossible");
         } else {
             lasta = "0"; lastb = "0"; lastc = "0";
         }
@@ -326,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
             histed.putString("a" + rescount, astr);
             histed.putString("b" + rescount, bstr);
             histed.putString("c" + rescount, cstr);
-            histed.putInt("rescount", rescount + 1);
+            histed.putInt(RESCOUNT, rescount + 1);
             histed.apply();
         }
         final Intent intent = new Intent(this, GraphActivity.class);
@@ -336,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mainmenu, menu);
-        menu.findItem(R.id.useenglish).setChecked(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getBoolean("useenglish", false));
+        menu.findItem(R.id.useenglish).setChecked(getDefaultSharedPreferences(getBaseContext()).getBoolean(USEENGLISH, false));
         return true;
     }
 
@@ -353,8 +384,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.useenglish:
                 item.setChecked(!item.isChecked());
-                final SharedPreferences.Editor ed = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit();
-                ed.putBoolean("useenglish", item.isChecked());
+                final SharedPreferences.Editor ed = getDefaultSharedPreferences(getBaseContext()).edit();
+                ed.putBoolean(USEENGLISH, item.isChecked());
                 ed.apply();
                 recreate();
                 return true;
@@ -382,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
         final Resources res = getResources();
         //All the possible errors
         if(str.isEmpty()) {
-            displayErrorDialog(res.getString(R.string.inputrequested) + name + '!');
+            displayErrorDialog(res.getString(R.string.inputrequested, name));
             throw new Error();
         }
         if(',' == str.charAt(0) || (1 < str.length() && str.substring(0, 2).equals("-,"))) {

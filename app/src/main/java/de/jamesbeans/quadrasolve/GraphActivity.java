@@ -25,6 +25,9 @@ public class GraphActivity extends AppCompatActivity {
     static double scheitelx, scheitely;
     private GraphView g;
     private GraphSurfaceView g2;
+    public static final String TRACING = "Tracing";
+    public static final String PANNING = "Panning";
+    public static final String ZOOMING = "Zooming";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +54,15 @@ public class GraphActivity extends AppCompatActivity {
         trace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                g.activity = "Tracing";
-                g2.activity = "Tracing";
+                g.activity = TRACING;
+                g2.activity = TRACING;
             }
         });
         pan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                g.activity = "Panning";
-                g2.activity = "Panning";
+                g.activity = PANNING;
+                g2.activity = PANNING;
             }
         });
         reset.setTypeface(trace.getTypeface());
