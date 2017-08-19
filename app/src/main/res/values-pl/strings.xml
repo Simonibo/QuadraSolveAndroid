@@ -21,4 +21,7 @@
     <string name="trace">Trace</string>
     <string name="use_english_version">Używaj wersji angielskiej</string>
     <string name="yes">Tak</string>
+    <string name="inputrequested">Musisz wprowadzić wartość dla \"%1$s\"!</string>
+    <string name="nan">\"%1$s\" musi być liczbą!</string>
+    <string name="notzero">\"a\" nie może być zerem!</string>
 </resources>

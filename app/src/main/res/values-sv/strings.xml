@@ -21,4 +21,7 @@
     <string name="trace">spår</string>
     <string name="use_english_version">Använd engelsk version</string>
     <string name="yes">Ja</string>
+    <string name="inputrequested">Du måste ange ett värde för \"%1$s\"!</string>
+    <string name="nan">\"%1$s\" måste vara ett nummer!</string>
+    <string name="notzero">\"a\" får inte vara noll!</string>
 </resources>

@@ -21,4 +21,7 @@
     <string name="trace">trag</string>
     <string name="use_english_version">Koristite englesku verziju</string>
     <string name="yes">Da</string>
+    <string name="inputrequested">Morate unijeti vrijednost za \"%1$s\"!</string>
+    <string name="nan">\"%1$s\" mora biti broj!</string>
+    <string name="notzero">\"a\" ne mora biti nula!</string>
 </resources>

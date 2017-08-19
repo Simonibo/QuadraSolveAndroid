@@ -21,4 +21,7 @@
     <string name="trace">iz</string>
     <string name="use_english_version">İngilizce sürümünü kullan</string>
     <string name="yes">Evet</string>
+    <string name="inputrequested">\"%1$s\" için bir değer girmeniz gerekiyor!</string>
+    <string name="nan">\"%1$s\" bir numara olmalıdır!</string>
+    <string name="notzero">\"a\" sıfır olmayabilir!</string>
 </resources>

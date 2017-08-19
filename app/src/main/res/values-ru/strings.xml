@@ -21,4 +21,7 @@
     <string name="reset_graph">Сбросить график</string>
     <string name="use_english_version">Использовать английскую версию</string>
     <string name="yes">да</string>
+    <string name="inputrequested">Вам нужно ввести значение для \"%1$s!\"!</string>
+    <string name="nan">\"%1$s\" должно быть числом!</string>
+    <string name="notzero">\"a\" не может быть нулем!</string>
 </resources>

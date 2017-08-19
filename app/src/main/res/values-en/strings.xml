@@ -43,8 +43,8 @@
     <string name="reset_graph">Reset graph</string>
     <string name="trace">Trace</string>
     <string name="howZoom">Independent scaling</string>
-    <string name="inputrequested">You need to enter a value for %1$s!</string>
-    <string name="nan">" must be a number!"</string>
+    <string name="inputrequested">You need to enter a value for \"%1$s\"!</string>
+    <string name="nan">\"%1$s\" must be a number!</string>
     <string name="use_english_version">Use English version</string>
     <string name="cancel">Cancel</string>
     <string name="no">No</string>

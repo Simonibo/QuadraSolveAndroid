@@ -21,4 +21,7 @@
     <string name="plotgraph">プロットグラフ</string>
     <string name="use_english_version">英語版を使用する</string>
     <string name="yes">はい</string>
+    <string name="inputrequested">\"%1$s\"の値を入力する必要があります。</string>
+    <string name="nan">\"%1$s\"は数字でなければなりません！</string>
+    <string name="notzero">\"a\"はゼロではないかもしれません！</string>
 </resources>

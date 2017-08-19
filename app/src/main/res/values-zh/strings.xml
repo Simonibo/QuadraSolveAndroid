@@ -21,4 +21,7 @@
     <string name="use_english_version">使用英文版</string>
     <string name="trace">追溯</string>
     <string name="yes">好</string>
+    <string name="inputrequested">你需要输入\"%1$s\"的值！</string>
+    <string name="nan">\"%1$s\"必须是数字！</string>
+    <string name="notzero">\"a\"可能不为零！</string>
 </resources>

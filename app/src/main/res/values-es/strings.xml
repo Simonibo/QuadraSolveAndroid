@@ -22,5 +22,6 @@
     <string name="use_english_version">Usar la versión en inglés</string>
     <string name="yes">Si</string>
     <string name="notzero">\"a\" no puede ser cero!</string>
-    <string name="nan">%1$s debe ser un número!</string>
+    <string name="nan">\"%1$s\" debe ser un número!</string>
+    <string name="inputrequested">¡Necesitas ingresar un valor para \"%1$s\"!</string>
 </resources>

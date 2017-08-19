@@ -21,4 +21,7 @@
     <string name="reset_graph">Redefinir gráfico</string>
     <string name="use_english_version">Use a versão em inglês</string>
     <string name="yes">Sim</string>
+    <string name="inputrequested">Você precisa inserir um valor para \"%1$s\"!</string>
+    <string name="nan">\"%1$s\" deve ser um número!</string>
+    <string name="notzero">\"a\" pode não ser zero!</string>
 </resources>
