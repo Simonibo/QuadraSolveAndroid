@@ -42,4 +42,7 @@
     <string name="pan">Pan</string>
     <string name="reset_graph">Reset graph</string>
     <string name="trace">Trace</string>
+    <string name="howZoom">Independent scaling</string>
+    <string name="inputrequested">"You need to enter a value for "</string>
+    <string name="nan">" must be a number!"</string>
 </resources>

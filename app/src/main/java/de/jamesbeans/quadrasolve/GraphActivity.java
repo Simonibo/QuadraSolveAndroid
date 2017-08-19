@@ -36,7 +36,6 @@ public class GraphActivity extends AppCompatActivity {
         assert null != ab;
         ab.setDisplayHomeAsUpEnabled(true);
 
-
         setTitle(getResources().getString(R.string.graph));
         //get the different views
         g = (GraphView) findViewById(R.id.parabel);

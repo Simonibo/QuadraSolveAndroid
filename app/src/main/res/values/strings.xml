@@ -70,4 +70,5 @@
     <string name="howZoom">Independent scaling</string>
     <string name="inputrequested">"You need to enter a value for "</string>
     <string name="nan">" must be a number!"</string>
+    <string name="use_english_version">Use English version</string>
 </resources>

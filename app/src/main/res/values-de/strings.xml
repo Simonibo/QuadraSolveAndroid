@@ -41,4 +41,6 @@
     </string>
     <string name="contactme">"Nachricht schreiben"</string>
     <string name="reset_graph">Graph zurücksetzen</string>
+    <string name="nan">" muss eine Zahl sein!"</string>
+    <string name="inputrequested">Du musst einen Wert für   eingeben!</string>
 </resources>

@@ -13,4 +13,10 @@
         android:title="@string/history"
         app:showAsAction="ifRoom">
     </item>
+    <item
+        android:id="@+id/useenglish"
+        android:title="@string/use_english_version"
+        android:checkable="true"
+        app:showAsAction="never">
+    </item>
 </menu>

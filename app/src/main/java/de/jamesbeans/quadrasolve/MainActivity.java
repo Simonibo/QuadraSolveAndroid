@@ -1,15 +1,20 @@
 package de.jamesbeans.quadrasolve;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -175,6 +180,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
     @Override public void onBackPressed() {
         if( isCustomKeyboardVisible() ) hideCustomKeyboard(); else finish();
     }
@@ -329,6 +339,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mainmenu, menu);
+        menu.findItem(R.id.useenglish).setChecked(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getBoolean("useenglish", false));
         return true;
     }
 
@@ -342,6 +353,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_help:
                 final Intent intent2 = new Intent(this, AboutActivity.class);
                 startActivity(intent2);
+                return true;
+            case R.id.useenglish:
+                item.setChecked(!item.isChecked());
+                final SharedPreferences.Editor ed = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit();
+                ed.putBoolean("useenglish", item.isChecked());
+                ed.apply();
+                recreate();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
