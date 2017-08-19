@@ -46,4 +46,10 @@
     <string name="inputrequested">You need to enter a value for %1$s!</string>
     <string name="nan">" must be a number!"</string>
     <string name="use_english_version">Use English version</string>
+    <string name="cancel">Cancel</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="norealroots">\"This quadratic polynomial has no real roots. Do you want to plot the graph anyways?\"</string>
+    <string name="plotgraph">Plot graph</string>
+    <string name="notzero">\"a\" may not be zero!</string>
 </resources>

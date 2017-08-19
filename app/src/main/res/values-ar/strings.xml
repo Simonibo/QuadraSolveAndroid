@@ -12,4 +12,15 @@
     <string name="histempty">وبطبيعة الحال فارغ</string>
     <string name="history">مجرى النهر</string>
     <string name="secondroot">حقوق الصفر:</string>
+    <string name="cancel">إلغاء</string>
+    <string name="howZoom">التحجيم المستقل</string>
+    <string name="inputrequested">!%1$s تحتاج إلى إدخال قيمة ل </string>
+    <string name="no">لا</string>
+    <string name="notzero">\"a\" قد لا تكون صفرا!</string>
+    <string name="pan">مقلاة</string>
+    <string name="reset_graph">إعادة تعيين الرسم البياني</string>
+    <string name="plotgraph">رسم بياني</string>
+    <string name="trace">زهيدة الاثر</string>
+    <string name="use_english_version">استخدام النسخة الإنجليزية</string>
+    <string name="yes">"نعم "</string>
 </resources>

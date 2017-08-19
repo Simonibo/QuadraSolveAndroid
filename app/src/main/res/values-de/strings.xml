@@ -45,4 +45,12 @@
     <string name="inputrequested">Du musst einen Wert für %1$s eingeben!</string>
     <string name="use_english_version">Englische Version benutzen</string>
     <string name="pan">Verschieben</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="no">Nein</string>
+    <string name="norealroots">Diese Parabel hat keine reellen Nullstellen. Möchtest du trotzdem den Graphen angezeigt bekommen?</string>
+    <string name="yes">Ja</string>
+    <string name="trace">Abtasten</string>
+    <string name="plotgraph">Graph zeichnen</string>
+    <string name="notzero">\"a\" muss ungleich null sein!</string>
+    <string name="howZoom">Unabhängig zoomen</string>
 </resources>

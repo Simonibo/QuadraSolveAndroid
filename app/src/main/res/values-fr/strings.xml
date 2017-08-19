@@ -12,4 +12,13 @@
     <string name="history">cours</string>
     <string name="secondroot">"Zéro droits: "</string>
     <string name="app_name">QuadraSolve</string>
+    <string name="cancel">Annuler</string>
+    <string name="howZoom">Échelle indépendante</string>
+    <string name="no">Non</string>
+    <string name="pan">Pan</string>
+    <string name="plotgraph">Graphique graphique</string>
+    <string name="reset_graph">Réinitialiser graphique</string>
+    <string name="trace">Trace</string>
+    <string name="use_english_version">Utiliser la version anglaise</string>
+    <string name="yes">Oui</string>
 </resources>

@@ -12,4 +12,13 @@
     <string name="histempty">Курс пуст</string>
     <string name="history">курс</string>
     <string name="secondroot">Права нуля:</string>
+    <string name="cancel">Отмена</string>
+    <string name="howZoom">Независимое масштабирование</string>
+    <string name="no">нет</string>
+    <string name="pan">Pan</string>
+    <string name="trace">Trace</string>
+    <string name="plotgraph">График графика</string>
+    <string name="reset_graph">Сбросить график</string>
+    <string name="use_english_version">Использовать английскую версию</string>
+    <string name="yes">да</string>
 </resources>

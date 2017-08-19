@@ -12,4 +12,15 @@
     <string name="histempty">El curso está vacía</string>
     <string name="history">Desarrollo</string>
     <string name="secondroot">"Derechos cero: "</string>
+    <string name="cancel">Cancelar</string>
+    <string name="howZoom">Escala independiente</string>
+    <string name="no">"Sí "</string>
+    <string name="pan">sartén</string>
+    <string name="plotgraph">Gráfico de trazado</string>
+    <string name="reset_graph">Restablecer gráfica</string>
+    <string name="trace">Rastrear</string>
+    <string name="use_english_version">Usar la versión en inglés</string>
+    <string name="yes">Si</string>
+    <string name="notzero">\"a\" no puede ser cero!</string>
+    <string name="nan">%1$s debe ser un número!</string>
 </resources>

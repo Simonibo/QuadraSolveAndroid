@@ -20,7 +20,7 @@ public class NumpadKeyboardView extends KeyboardView {
     private Bitmap retu, backb;
     private int retuposx, retuposy, backX, backY;
     boolean initialized;
-    final String[] texts = {"1", "2", "3", "", "4", "5", "6", "", "7", "8", "9", "-", "0", ""};
+    final String[] texts = {"1", "2", "3", "", "4", "5", "6", "", "7", "8", "9", "−", "0", ""};
     private final int[] xs = new int[14];
     private final int[] ys = new int[14];
 

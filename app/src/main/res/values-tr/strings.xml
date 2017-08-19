@@ -12,4 +12,13 @@
     <string name="histempty">Elbette boş</string>
     <string name="history">kurs</string>
     <string name="secondroot">Hak sıfır:</string>
+    <string name="cancel">İptal etmek</string>
+    <string name="howZoom">Bağımsız ölçeklendirme</string>
+    <string name="no">Hayır</string>
+    <string name="pan">tava</string>
+    <string name="plotgraph">Arsa grafiği</string>
+    <string name="reset_graph">Grafiği sıfırla</string>
+    <string name="trace">iz</string>
+    <string name="use_english_version">İngilizce sürümünü kullan</string>
+    <string name="yes">Evet</string>
 </resources>

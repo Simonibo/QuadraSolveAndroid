@@ -12,4 +12,13 @@
     <string name="histempty">Il corso è vuoto</string>
     <string name="history">corso</string>
     <string name="secondroot">Diritti a zero:</string>
+    <string name="cancel">Annulla</string>
+    <string name="howZoom">Scaling indipendente</string>
+    <string name="no">No</string>
+    <string name="pan">Pan</string>
+    <string name="plotgraph">Grafico del diagramma</string>
+    <string name="reset_graph">Ripristina il grafico</string>
+    <string name="trace">traccia</string>
+    <string name="use_english_version">Utilizza la versione inglese</string>
+    <string name="yes">Sì</string>
 </resources>

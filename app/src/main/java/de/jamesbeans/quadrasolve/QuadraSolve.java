@@ -18,7 +18,7 @@ public class QuadraSolve extends Application {
         final SharedPreferences sd = getSharedPreferences("settings", 0);
         final SharedPreferences.Editor ed = sd.edit();
         final int to = sd.getInt("timesopened", 0);
-        if(to == 1) {
+        if(to == 1 && !LocaleHelper.devicedefault.equals(Locale.GERMAN) && !LocaleHelper.devicedefault.equals(Locale.GERMANY)) {
             MainActivity.offerLanguageChange = true;
         }
         ed.putInt("timesopened", to + 1);

@@ -12,4 +12,13 @@
     <string name="histempty">Tečaj je prazna</string>
     <string name="history">naravno</string>
     <string name="secondroot">Prava nula:</string>
+    <string name="cancel">Otkaži</string>
+    <string name="howZoom">Nezavisno skaliranje</string>
+    <string name="no">Ne</string>
+    <string name="pan">tava</string>
+    <string name="plotgraph">Grafikon grafova</string>
+    <string name="reset_graph">Poništi graf</string>
+    <string name="trace">trag</string>
+    <string name="use_english_version">Koristite englesku verziju</string>
+    <string name="yes">Da</string>
 </resources>

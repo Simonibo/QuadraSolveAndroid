@@ -12,4 +12,13 @@
     <string name="histempty">Kurs jest pusty</string>
     <string name="history">Przebieg</string>
     <string name="secondroot">Prawa zerowe:</string>
+    <string name="cancel">Anuluj</string>
+    <string name="howZoom">Niezależne skalowanie</string>
+    <string name="no">Nie</string>
+    <string name="pan">patelnia</string>
+    <string name="plotgraph">Wykres wykresu</string>
+    <string name="reset_graph">Zresetuj wykres</string>
+    <string name="trace">Trace</string>
+    <string name="use_english_version">Używaj wersji angielskiej</string>
+    <string name="yes">Tak</string>
 </resources>

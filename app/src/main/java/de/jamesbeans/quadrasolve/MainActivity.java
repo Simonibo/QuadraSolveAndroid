@@ -126,7 +126,9 @@ public class MainActivity extends AppCompatActivity {
                         if(0 == start && !editable.toString().contains("-")) editable.insert(0, "-");
                         break;
                     default:
-                        editable.insert(start, Character.toString((char) primaryCode));
+                        if(start != 0 || editable.toString().charAt(0) != '-') {
+                            editable.insert(start, Character.toString((char) primaryCode));
+                        }
                         break;
                 }
             }
@@ -417,13 +419,13 @@ public class MainActivity extends AppCompatActivity {
             throw new Error();
         }
         if(',' == str.charAt(0) || (1 < str.length() && str.substring(0, 2).equals("-,"))) {
-            displayErrorDialog(name + res.getString(R.string.nan));
+            displayErrorDialog(res.getString(R.string.nan, name));
             throw new Error();
         }
         try {
             return Double.parseDouble(str.replace(",", "."));
         } catch(NumberFormatException ignored) {
-            displayErrorDialog(name + res.getString(R.string.nan));
+            displayErrorDialog(res.getString(R.string.nan, name));
             throw new Error();
         }
     }

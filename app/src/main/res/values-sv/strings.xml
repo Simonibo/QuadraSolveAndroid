@@ -12,4 +12,13 @@
     <string name="histempty">Kursen är tom</string>
     <string name="history">Naturligtvis</string>
     <string name="secondroot">Rights noll:</string>
+    <string name="cancel">Avbryt</string>
+    <string name="howZoom">Oberoende skalering</string>
+    <string name="no">Nej</string>
+    <string name="pan">panorera</string>
+    <string name="plotgraph">Plotgraf</string>
+    <string name="reset_graph">Återställ graf</string>
+    <string name="trace">spår</string>
+    <string name="use_english_version">Använd engelsk version</string>
+    <string name="yes">Ja</string>
 </resources>

@@ -12,4 +12,13 @@
     <string name="histempty">O campo está vazia</string>
     <string name="history">curso</string>
     <string name="secondroot">Direitos zero:</string>
+    <string name="cancel">Cancelar</string>
+    <string name="howZoom">Escalação Independente</string>
+    <string name="no">Não</string>
+    <string name="pan">Pan</string>
+    <string name="trace">Trace</string>
+    <string name="plotgraph">Plot gráfico</string>
+    <string name="reset_graph">Redefinir gráfico</string>
+    <string name="use_english_version">Use a versão em inglês</string>
+    <string name="yes">Sim</string>
 </resources>
