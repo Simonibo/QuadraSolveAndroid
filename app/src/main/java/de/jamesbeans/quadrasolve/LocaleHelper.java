@@ -17,15 +17,15 @@ import java.util.Locale;
  * <p/>
  * Created by gunhansancar on 07/10/15.
  */
-public class LocaleHelper {
-    public static Locale devicedefault;
+class LocaleHelper {
+    static Locale devicedefault;
 
-    public static Context onAttach(Context context) {
+    static Context onAttach(Context context) {
         final Locale l = getPreferredLocale(context);
         return setLocale(context, l);
     }
 
-    public static Context setLocale(Context context, Locale locale) {
+    private static Context setLocale(Context context, Locale locale) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return updateResources(context, locale);
         }
