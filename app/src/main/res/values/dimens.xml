@@ -1,5 +1,4 @@
 <resources>
-    <!--todo an andere displaygrößen anpassen?-->
     <dimen name="textSizeMain">32sp</dimen>
     <dimen name="textSizeEquations">37sp</dimen>
     <dimen name="textSizeHelpText">15sp</dimen>

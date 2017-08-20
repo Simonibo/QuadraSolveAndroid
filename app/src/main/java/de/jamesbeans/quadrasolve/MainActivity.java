@@ -7,8 +7,8 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -47,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
     public static boolean offerLanguageChange;
     private NumpadKeyboardView keyboardView;
 
-    public static final String RESCOUNT = "rescount";
-    public static final String USEENGLISH = "useenglish";
-    public static final String ATEXT = "atext";
-    public static final String BTEXT = "btext";
-    public static final String CTEXT = "ctext";
+    private static final String RESCOUNT = "rescount";
+    private static final String USEENGLISH = "useenglish";
+    private static final String ATEXT = "atext";
+    private static final String BTEXT = "btext";
+    private static final String CTEXT = "ctext";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
         aval = (EditText) findViewById(R.id.aval);
         bval = (EditText) findViewById(R.id.bval);
         cval = (EditText) findViewById(R.id.cval);
-        aval.setShowSoftInputOnFocus(false);
-        bval.setShowSoftInputOnFocus(false);
-        cval.setShowSoftInputOnFocus(false);
+        setShowSoftInputOnFocus(aval, false);
+        setShowSoftInputOnFocus(bval, false);
+        setShowSoftInputOnFocus(cval, false);
 
         keyboardView = (NumpadKeyboardView) findViewById(R.id.keyboardView);
         final Keyboard keyboard = new Keyboard(this, R.xml.numpad);
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         if(0 == start && !editable.toString().contains("-")) editable.insert(0, "-");
                         break;
                     default:
-                        if(start != 0 || editable.toString().charAt(0) != '-') {
+                        if(start != 0 || editable.toString().isEmpty() || editable.toString().charAt(0) != '-') {
                             editable.insert(start, Character.toString((char) primaryCode));
                         }
                         break;
@@ -233,6 +234,20 @@ public class MainActivity extends AppCompatActivity {
             bval.setText(nextb);
             cval.setText(nextc);
             comefromhistory = false;
+        }
+    }
+
+    private static void setShowSoftInputOnFocus(EditText e, boolean showit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            e.setShowSoftInputOnFocus(showit);
+        } else {
+            try {
+                final Method method = EditText.class.getMethod("setShowSoftInputOnFocus", boolean.class);
+                method.setAccessible(true);
+                method.invoke(e, showit);
+            } catch (Exception ignore) {
+                // ignore
+            }
         }
     }
 

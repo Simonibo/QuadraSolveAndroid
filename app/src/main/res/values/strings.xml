@@ -1,5 +1,4 @@
 <resources>
-    <!--todo Strings übersetzen!!!-->
     <string name="app_name">QuadraSolve</string>
     <string name="enter">Enter value</string>
     <string name="calculate_roots">Calculate roots</string>
