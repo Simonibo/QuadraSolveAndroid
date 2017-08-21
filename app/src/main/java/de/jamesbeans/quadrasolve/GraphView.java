@@ -346,8 +346,8 @@ public class GraphView extends View {
         final double startx = labelIntervX * Math.ceil(xmin / labelIntervX);
         final double starty = labelIntervY * Math.ceil(ymin / labelIntervY);
         //calculate the positions of the axis
-        final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
-        final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
+        final int xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
+        final int yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
         final int axislabeldist = 15;
         float yAxisXBase;
         if(yaxis < 0) {
@@ -412,7 +412,7 @@ public class GraphView extends View {
                     canvas.drawText(supry, yAxisXBase + baseLength, lirped - yAxisSuperYBaseFactor * baseheight, superscript);
                 } else {
                     final String dstr = df.format(d);
-                    if(yaxis > canvasWidth) {
+                    if(yaxis >= canvasWidth) {
                         yAxisXBase = canvasWidth - labelText.measureText(dstr);
                     }
                     canvas.drawText(dstr, yAxisXBase, lirped + yAxisYBaseFactor * baseheight, labelText);

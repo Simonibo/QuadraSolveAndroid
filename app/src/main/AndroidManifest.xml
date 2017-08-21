@@ -3,7 +3,6 @@
     package="de.jamesbeans.quadrasolve">
 
     <!-- todo screenshots, screenvideos und beschreibung machen -->
-    <!-- todo methoden optimieren (vor allem draw) (sachen nich doppelt rechnen und so) -->
     <!-- todolater alle warnings fixen -->
     <application
         android:name=".QuadraSolve"
