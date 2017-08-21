@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 
 import static android.view.MotionEvent.ACTION_CANCEL;
 import static android.view.MotionEvent.ACTION_DOWN;
@@ -43,7 +44,11 @@ public class GraphView extends View {
     private int roots;
     boolean inited;
     private double gridIntervX, gridIntervY, labelIntervX, labelIntervY, powx, powy;
-    private int magordx, magordy;
+    private String suprx, supry;
+    private float suplengthx, suplengthy, baseheight;
+    private HashMap<Double, Float> baselenghts;
+    private boolean doScientificX, doScientificY;
+    private static final int initialHashMapSize = 50;
     private final DecimalFormat df = new DecimalFormat("#.####");
     String activity;
     private float lastx, lasty;
@@ -77,7 +82,8 @@ public class GraphView extends View {
         whiteline.setColor(Color.WHITE);
         whiteline.setStrokeWidth(6); //should be 4
         whitePoints.setColor(Color.WHITE);
-        whitePoints.setStrokeWidth(20);
+        final int highlightPointsStrokeWidth = 20;
+        whitePoints.setStrokeWidth(highlightPointsStrokeWidth);
         graphPoints.setColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimaryDark, null));
         graphPoints.setStrokeWidth(6);
         graphPoints.setStyle(Paint.Style.STROKE);  //should be 4
@@ -85,9 +91,14 @@ public class GraphView extends View {
         gridLines.setStrokeWidth(2);
         black.setColor(Color.BLACK);
         labelText.setColor(Color.WHITE);
-        labelText.setTextSize(50);
+        final int baseTextSize = 50;
+        labelText.setTextSize(baseTextSize);
+        baseheight = labelText.getFontSpacing();
         superscript.setColor(Color.WHITE);
-        superscript.setTextSize(35);
+        final int superscriptSize = 35;
+        superscript.setTextSize(superscriptSize);
+
+        baselenghts = new HashMap<>(initialHashMapSize);
     }
 
     @Override
@@ -170,13 +181,17 @@ public class GraphView extends View {
             final int arrowSize = 35;
             if (0 > xmin && 0 < xmax) {
                 canvas.drawLine(yaxis, 0, yaxis, canvasHeight, whiteline);
-                canvas.drawLine((yaxis - arrowSize), arrowSize, yaxis, 0, whiteline);
-                canvas.drawLine((yaxis + arrowSize), arrowSize, yaxis, 0, whiteline);
+                if(xaxis >= arrowSize) {
+                    canvas.drawLine((yaxis - arrowSize), arrowSize, yaxis, 0, whiteline);
+                    canvas.drawLine((yaxis + arrowSize), arrowSize, yaxis, 0, whiteline);
+                }
             }
             if (0 > ymin && 0 < ymax) {
                 canvas.drawLine(0, xaxis, canvasWidth, xaxis, whiteline);
-                canvas.drawLine((canvasWidth - arrowSize), (xaxis - arrowSize), canvasWidth, xaxis, whiteline);
-                canvas.drawLine((canvasWidth - arrowSize), (xaxis + arrowSize), canvasWidth, xaxis, whiteline);
+                if(yaxis <= canvasWidth - arrowSize) {
+                    canvas.drawLine((canvasWidth - arrowSize), (xaxis - arrowSize), canvasWidth, xaxis, whiteline);
+                    canvas.drawLine((canvasWidth - arrowSize), (xaxis + arrowSize), canvasWidth, xaxis, whiteline);
+                }
             }
             //Scheitelpunkt hervorheben
             final int highlightCircleRadius = 15;
@@ -285,9 +300,9 @@ public class GraphView extends View {
     private void calculateGridAndLabelPositions() {
         final double xspan = xmax - xmin;
         final double yspan = ymax - ymin;
-        magordx = (int) Math.floor(Math.log10(xspan));
+        final int magordx = (int) Math.floor(Math.log10(xspan));
         powx = Math.pow(10, magordx);
-        magordy = (int) Math.floor(Math.log10(yspan));
+        final int magordy = (int) Math.floor(Math.log10(yspan));
         powy = Math.pow(10, magordy);
         final int spandurchpowx = (int) Math.floor(xspan / powx);
         final int spandurchpowy = (int) Math.floor(yspan / powy);
@@ -307,6 +322,13 @@ public class GraphView extends View {
         }
         labelIntervX = gridIntervX * 2;
         labelIntervY = gridIntervY * 2;
+        doScientificX = Math.abs(magordx) >= 3;
+        doScientificY = Math.abs(magordy) >= 3;
+        suprx = Integer.toString(magordx);
+        supry = Integer.toString(magordy);
+        suplengthx = superscript.measureText(suprx);
+        suplengthy = superscript.measureText(supry);
+        baselenghts = new HashMap<>(initialHashMapSize);
     }
 
     private void drawGridLines(Canvas canvas) {
@@ -322,27 +344,50 @@ public class GraphView extends View {
 
     private void drawAxisLabels(Canvas canvas) {
         final double startx = labelIntervX * Math.ceil(xmin / labelIntervX);
-        final boolean doScientificX = Math.abs(magordx) >= 3;
         final double starty = labelIntervY * Math.ceil(ymin / labelIntervY);
-        final boolean doScientificY = Math.abs(magordy) >= 3;
         //calculate the positions of the axis
         final long xaxis = (int) lirp(0, ymin, ymax, canvasHeight, 0);
         final long yaxis = (int) lirp(0, xmin, xmax, 0, canvasWidth);
-        final String suprx = Integer.toString(magordx);
-        final String supry = Integer.toString(magordy);
-        final float baseheight = labelText.getFontSpacing();
         final int axislabeldist = 15;
-        final float xAxisYBase = xaxis + axislabeldist + baseheight * 0.7f;
-        for(double d = startx; d <= xmax; d += labelIntervX) {
-            if(d != 0) {
+        float yAxisXBase;
+        if(yaxis < 0) {
+            yAxisXBase = 0;
+        } else if(yaxis < canvasWidth) {
+            yAxisXBase = yaxis + axislabeldist;
+        } else {
+            //just to prevent error, is changed in loop
+            yAxisXBase = -1;
+        }
+        final float xAxisYBase;
+        if(xaxis < 0) {
+            xAxisYBase = baseheight * 0.7f;
+        } else if (xaxis > canvasHeight) {
+            xAxisYBase = canvasHeight;
+        } else {
+            xAxisYBase = xaxis + axislabeldist + baseheight * 0.7f;
+        }
+        final boolean xaxisonscreen = xaxis > 0 && xaxis < canvasHeight;
+        final boolean yaxissonscreen = yaxis > 0 && yaxis < canvasWidth;
+        final int markerlength = 10;
+        for (double d = startx; d <= xmax; d += labelIntervX) {
+            if (d != 0) {
                 final float lirped = (float) lirp(d, xmin, xmax, 0, canvasWidth);
-                canvas.drawLine(lirped, xaxis, lirped, xaxis + 10, whiteline);
+                if(xaxisonscreen) {
+                    canvas.drawLine(lirped, xaxis, lirped, xaxis + markerlength, whiteline);
+                }
                 if (doScientificX) {
                     final String base = df.format(d / powx) + "x10";
-                    final float baseLength = labelText.measureText(base);
-                    final float offset = (baseLength + superscript.measureText(suprx)) / 2;
+                    final float baseLength;
+                    if(baselenghts.containsKey(d)) {
+                        baseLength = baselenghts.get(d);
+                    } else {
+                        baseLength = labelText.measureText(base);
+                        baselenghts.put(d, baseLength);
+                    }
+                    final float offset = (baseLength + suplengthx) / 2;
                     canvas.drawText(base, lirped - offset, xAxisYBase, labelText);
-                    canvas.drawText(suprx, lirped - offset + baseLength, xAxisYBase - 0.3f * baseheight, superscript);
+                    final float xAxisSuperYFactor = 0.3f;
+                    canvas.drawText(suprx, lirped - offset + baseLength, xAxisYBase - xAxisSuperYFactor * baseheight, superscript);
                 } else {
                     final String n = df.format(d);
                     canvas.drawText(n, lirped - labelText.measureText(n) / 2, xAxisYBase, labelText);
@@ -352,14 +397,25 @@ public class GraphView extends View {
         for(double d = starty; d <= ymax; d += labelIntervY) {
             if(d != 0) {
                 final float lirped = (float) lirp(d, ymin, ymax, canvasHeight, 0);
-                canvas.drawLine(yaxis, lirped, yaxis + 10, lirped, whiteline);
+                if(yaxissonscreen) {
+                    canvas.drawLine(yaxis, lirped, yaxis + markerlength, lirped, whiteline);
+                }
+                final float yAxisYBaseFactor = 0.25f;
                 if (doScientificY) {
                     final String base = df.format(d / powy) + "x10";
                     final float baseLength = labelText.measureText(base);
-                    canvas.drawText(base, yaxis + axislabeldist, lirped + 0.25f * baseheight, labelText);
-                    canvas.drawText(supry, yaxis + axislabeldist + baseLength, lirped - 0.1f * baseheight, superscript);
+                    if(yaxis >= canvasWidth) {
+                        yAxisXBase = canvasWidth - baseLength - suplengthy;
+                    }
+                    canvas.drawText(base, yAxisXBase, lirped + yAxisYBaseFactor * baseheight, labelText);
+                    final float yAxisSuperYBaseFactor = 0.1f;
+                    canvas.drawText(supry, yAxisXBase + baseLength, lirped - yAxisSuperYBaseFactor * baseheight, superscript);
                 } else {
-                    canvas.drawText(df.format(d), yaxis + axislabeldist, lirped + 0.25f * baseheight, labelText);
+                    final String dstr = df.format(d);
+                    if(yaxis > canvasWidth) {
+                        yAxisXBase = canvasWidth - labelText.measureText(dstr);
+                    }
+                    canvas.drawText(dstr, yAxisXBase, lirped + yAxisYBaseFactor * baseheight, labelText);
                 }
             }
         }

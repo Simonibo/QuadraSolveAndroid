@@ -40,7 +40,8 @@ public class NumpadKeyboardView extends KeyboardView {
         paint.setColor(ResourcesCompat.getColor(getResources(), R.color.keyboardbackground, null));
         paintpressed.setColor(Color.LTGRAY);
         tp.setColor(Color.WHITE);
-        tp.setTextSize(90);
+        final int keyTextSize = 90;
+        tp.setTextSize(keyTextSize);
         tp.setTextAlign(Paint.Align.CENTER);
     }
 

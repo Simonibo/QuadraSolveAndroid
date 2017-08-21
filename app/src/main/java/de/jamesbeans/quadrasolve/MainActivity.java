@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
         final DecimalFormatSymbols sym = ((DecimalFormat) NumberFormat.getInstance()).getDecimalFormatSymbols();
         keyboardView.initialized = false;
-        keyboardView.texts[13] = String.valueOf(sym.getDecimalSeparator());
+        final int seperatorKeyIndex = 13;
+        keyboardView.texts[seperatorKeyIndex] = String.valueOf(sym.getDecimalSeparator());
         keyboardView.invalidate();
 
         final KeyboardView.OnKeyboardActionListener lkey = new KeyboardView.OnKeyboardActionListener() {
