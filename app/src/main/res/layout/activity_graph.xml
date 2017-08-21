@@ -102,23 +102,11 @@
     <de.jamesbeans.quadrasolve.GraphView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/parabel2"
+        app:layout_constraintBottom_toTopOf="@+id/graphsettings"
         app:layout_constraintTop_toBottomOf="@+id/curpoint"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/parabel"
-        android:layout_marginTop="@dimen/standardMargin"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-
-    <de.jamesbeans.quadrasolve.GraphSurfaceView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/graphsettings"
-        app:layout_constraintTop_toBottomOf="@+id/parabel"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/parabel2"
         android:layout_marginTop="@dimen/standardMargin"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
@@ -133,7 +121,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parabel2">
+        app:layout_constraintTop_toBottomOf="@+id/parabel">
 
         <info.hoang8f.android.segmented.SegmentedGroup
             xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"

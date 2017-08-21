@@ -24,7 +24,6 @@ public class GraphActivity extends AppCompatActivity {
     static int roots;
     static double scheitelx, scheitely;
     private GraphView g;
-    private GraphSurfaceView g2;
     public static final String TRACING = "Tracing";
     public static final String PANNING = "Panning";
     public static final String ZOOMING = "Zooming";
@@ -42,7 +41,6 @@ public class GraphActivity extends AppCompatActivity {
         setTitle(getResources().getString(R.string.graph));
         //get the different views
         g = (GraphView) findViewById(R.id.parabel);
-        g2 = (GraphSurfaceView) findViewById(R.id.parabel2);
         final TextView function = (TextView) findViewById(R.id.function);
         final TextView root1 = (TextView) findViewById(R.id.root1);
         final TextView root2 = (TextView) findViewById(R.id.root2);
@@ -55,14 +53,12 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 g.activity = TRACING;
-                g2.activity = TRACING;
             }
         });
         pan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 g.activity = PANNING;
-                g2.activity = PANNING;
             }
         });
         reset.setTypeface(trace.getTypeface());
@@ -73,9 +69,6 @@ public class GraphActivity extends AppCompatActivity {
                 g.inited = false;
                 g.drawPoint = false;
                 g.invalidate();
-                g2.inited = false;
-                g2.drawPoint = false;
-                g2.draw();
                 curpoint.setText("");
             }
         });
@@ -88,11 +81,6 @@ public class GraphActivity extends AppCompatActivity {
         g.rootTextView2 = root2;
         g.apexTextView = apex;
         g.curpoint = curpoint;
-
-        g2.rootTextView1 = root1;
-        g2.rootTextView2 = root2;
-        g2.apexTextView = apex;
-        g2.curpoint = curpoint;
 
         //write the root and apex coordinates into the textviews
         final DecimalFormat df = new DecimalFormat("#.####");
@@ -147,7 +135,6 @@ public class GraphActivity extends AppCompatActivity {
         final boolean indescale = getSharedPreferences("settings", 0).getBoolean("independentScaling", false);
         menu.findItem(R.id.zoomType).setChecked(indescale);
         g.zoomIndependent = indescale;
-        g2.zoomIndependent = indescale;
         return true;
     }
 
@@ -160,7 +147,6 @@ public class GraphActivity extends AppCompatActivity {
                 seted.putBoolean("independentScaling", item.isChecked());
                 seted.apply();
                 g.zoomIndependent = !g.zoomIndependent;
-                g2.zoomIndependent = !g2.zoomIndependent;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
