@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -79,26 +81,28 @@ public class MainActivity extends AppCompatActivity {
 
         final KeyboardView.OnKeyboardActionListener lkey = new KeyboardView.OnKeyboardActionListener() {
             @Override
-            public void onPress(int primaryCode) { }
+            public void onPress(int primaryCode) {
+            }
 
             @Override
-            public void onRelease(int primaryCode) { }
+            public void onRelease(int primaryCode) {
+            }
 
             @Override
             public void onKey(int primaryCode, int[] keyCodes) {
                 final View focusCurrent = getWindow().getCurrentFocus();
-                if(!(focusCurrent instanceof EditText)) return;
+                if (!(focusCurrent instanceof EditText)) return;
                 final EditText edittext = (EditText) focusCurrent;
                 final Editable editable = edittext.getText();
                 final int start = edittext.getSelectionStart();
-                switch(primaryCode) {
+                switch (primaryCode) {
                     case 67:
                         //delete
-                        if(null != editable && 0 < start) editable.delete(start - 1, start);
+                        if (null != editable && 0 < start) editable.delete(start - 1, start);
                         break;
                     case 66:
                         //enter
-                        if(Objects.equals(focusCurrent, aval)) {
+                        if (Objects.equals(focusCurrent, aval)) {
                             //select aval
                             bval.setFocusableInTouchMode(true);
                             bval.requestFocus();
@@ -114,20 +118,21 @@ public class MainActivity extends AppCompatActivity {
                     case 46:
                         //comma or point
                         assert null != editable;
-                        if(!editable.toString().contains(String.valueOf(sym.getDecimalSeparator()))) {
-                            if('.' == sym.getDecimalSeparator()) {
+                        if (!editable.toString().contains(String.valueOf(sym.getDecimalSeparator()))) {
+                            if ('.' == sym.getDecimalSeparator()) {
                                 editable.insert(start, ".");
-                            } else if(1 < start || (1 == start && Character.isDigit(editable.toString().charAt(0)))){
+                            } else if (1 < start || (1 == start && Character.isDigit(editable.toString().charAt(0)))) {
                                 editable.insert(start, ",");
                             }
                         }
                         break;
                     case 45:
                         //minus
-                        if(0 == start && !editable.toString().contains("-")) editable.insert(0, "-");
+                        if (0 == start && !editable.toString().contains("-"))
+                            editable.insert(0, "-");
                         break;
                     default:
-                        if(start != 0 || editable.toString().isEmpty() || editable.toString().charAt(0) != '-') {
+                        if (start != 0 || editable.toString().isEmpty() || editable.toString().charAt(0) != '-') {
                             editable.insert(start, Character.toString((char) primaryCode));
                         }
                         break;
@@ -135,31 +140,38 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onText(CharSequence text) { }
+            public void onText(CharSequence text) {
+            }
 
             @Override
-            public void swipeLeft() { }
+            public void swipeLeft() {
+            }
 
             @Override
-            public void swipeRight() { }
+            public void swipeRight() {
+            }
 
             @Override
-            public void swipeDown() { }
+            public void swipeDown() {
+            }
 
             @Override
-            public void swipeUp() { }
+            public void swipeUp() {
+            }
         };
         keyboardView.setOnKeyboardActionListener(lkey);
 
         final View.OnFocusChangeListener lfocus = new View.OnFocusChangeListener() {
-            @Override public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
                     showCustomKeyboard(v);
                 } else hideCustomKeyboard();
             }
         };
         final View.OnClickListener lclick = new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 showCustomKeyboard(v);
             }
         };
@@ -176,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(maintoolbar);
 
         vals = getSharedPreferences("vals", 0);
-        if(comefromhistory) {
+        if (comefromhistory) {
             aval.setText(nexta);
             bval.setText(nextb);
             cval.setText(nextc);
@@ -187,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
             cval.setText(vals.getString(CTEXT, "-6"));
         }
 
-        if(offerLanguageChange) {
+        if (offerLanguageChange) {
             offerLanguageChange = false;
             new Thread(new Runnable() {
                 @Override
@@ -196,6 +208,13 @@ public class MainActivity extends AppCompatActivity {
                     displayYesNoDialog(r.getString(R.string.useenglish), r.getString(R.string.yes), r.getString(R.string.no), 1);
                 }
             }).start();
+        }
+
+        // ATTENTION: This was auto-generated to handle app links.
+        final Intent appLinkIntent = getIntent();
+        final Uri appLinkData = appLinkIntent.getData();
+        if(appLinkData != null && appLinkData.toString().matches(".*/quadrasolve/run.*")) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.alreadyinstalled), Toast.LENGTH_LONG).show();
         }
     }
 
