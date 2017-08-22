@@ -11,6 +11,7 @@ import android.inputmethodservice.KeyboardView;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import java.util.List;
 
@@ -40,8 +41,6 @@ public class NumpadKeyboardView extends KeyboardView {
         paint.setColor(ResourcesCompat.getColor(getResources(), R.color.keyboardbackground, null));
         paintpressed.setColor(Color.LTGRAY);
         tp.setColor(Color.WHITE);
-        final int keyTextSize = 90;
-        tp.setTextSize(keyTextSize);
         tp.setTextAlign(Paint.Align.CENTER);
     }
 
@@ -56,6 +55,8 @@ public class NumpadKeyboardView extends KeyboardView {
 
         if (!initialized) {
             initialized = true;
+            final float keyTextSize = 0.14876033058f * canvas.getHeight();
+            tp.setTextSize(keyTextSize);
             retu = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ic_subdirectory_arrow_left_white_48dp);
             backb = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ic_backspace_white_24dp);
             retuposx = enterkey.x + ((enterkey.width - retu.getWidth()) >> 1);

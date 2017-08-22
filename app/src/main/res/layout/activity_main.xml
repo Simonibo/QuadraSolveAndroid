@@ -220,7 +220,6 @@
         android:textStyle="normal"
         android:onClick="buttonOnClick" />
 
-    <!--android:keyBackground="@drawable/key_background"-->
     <de.jamesbeans.quadrasolve.NumpadKeyboardView
         android:id="@+id/keyboardView"
         android:visibility="gone"
