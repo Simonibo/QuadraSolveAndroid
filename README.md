@@ -8,3 +8,4 @@ The android porting was a one-man-project by [Simon Bohnen](http://simonbohnen.m
 A few impressions:
 
 ![The main activity of the app](https://raw.githubusercontent.com/Simonibo/QuadraSolveAndroid/master/screenshots/main.png "Main activity of the app")
+![The grapg view](https://raw.githubusercontent.com/Simonibo/QuadraSolveAndroid/master/screenshots/graph1.png "The graph")
