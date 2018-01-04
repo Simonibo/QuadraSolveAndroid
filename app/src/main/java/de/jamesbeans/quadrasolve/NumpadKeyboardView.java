@@ -11,7 +11,6 @@ import android.inputmethodservice.KeyboardView;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import java.util.List;
 

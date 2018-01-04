@@ -52,7 +52,6 @@ class LocaleHelper {
         return context.createConfigurationContext(configuration);
     }
 
-    @SuppressWarnings("deprecation")
     private static Context updateResourcesLegacy(Context context, Locale locale) {
         Locale.setDefault(locale);
         final Resources resources = context.getResources();

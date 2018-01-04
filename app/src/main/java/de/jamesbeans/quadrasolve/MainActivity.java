@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(!getSharedPreferences("history", 0).getString("Locale", "").equals(Locale.getDefault().toString())) {
+        if(!Objects.equals(getSharedPreferences("history", 0).getString("Locale", ""), Locale.getDefault().toString())) {
             HistoryActivity.updateHistoryPref(getSharedPreferences("history", 0));
             final char decsep = ((DecimalFormat) NumberFormat.getInstance()).getDecimalFormatSymbols().getDecimalSeparator();
             aval.setText(aval.getText().toString().replace(',', decsep).replace('.', decsep));
@@ -389,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             lasta = "0"; lastb = "0"; lastc = "0";
         }
-        if(!lasta.equals(astr) || !lastb.equals(bstr) || !lastc.equals(cstr)) {
+        if(!Objects.equals(lasta, astr) || !Objects.equals(lastb, bstr) || !Objects.equals(lastc, cstr)) {
             final SharedPreferences.Editor histed = hist.edit();
             histed.putString("a" + rescount, astr);
             histed.putString("b" + rescount, bstr);
@@ -453,7 +453,7 @@ public class MainActivity extends AppCompatActivity {
             displayErrorDialog(res.getString(R.string.inputrequested, name));
             throw new Error();
         }
-        if(',' == str.charAt(0) || (1 < str.length() && str.substring(0, 2).equals("-,"))) {
+        if(',' == str.charAt(0) || (1 < str.length() && Objects.equals(str.substring(0, 2), "-,"))) {
             displayErrorDialog(res.getString(R.string.nan, name));
             throw new Error();
         }

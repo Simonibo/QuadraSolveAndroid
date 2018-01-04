@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Saves the device locale on applicaiton startup
@@ -18,7 +19,7 @@ public class QuadraSolve extends Application {
         final SharedPreferences sd = getSharedPreferences("settings", 0);
         final SharedPreferences.Editor ed = sd.edit();
         final int to = sd.getInt("timesopened", 0);
-        if(to == 1 && !LocaleHelper.devicedefault.equals(Locale.GERMAN) && !LocaleHelper.devicedefault.equals(Locale.GERMANY)) {
+        if(to == 1 && !Objects.equals(LocaleHelper.devicedefault, Locale.GERMAN) && !Objects.equals(LocaleHelper.devicedefault, Locale.GERMANY)) {
             MainActivity.offerLanguageChange = true;
         }
         ed.putInt("timesopened", to + 1);

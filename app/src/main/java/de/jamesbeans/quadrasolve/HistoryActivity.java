@@ -17,6 +17,7 @@ import android.widget.ListView;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Created by Simon on 02.04.2017.
@@ -55,7 +56,7 @@ public class HistoryActivity extends AppCompatActivity {
         });
         history.setEmptyView(findViewById(R.id.histEmptyText));
         //Change all entries to have the right decimal seperator if the locale has changed
-        if(!getSharedPreferences("history", 0).getString("Locale", "").equals(Locale.getDefault().toString())) {
+        if(!Objects.equals(getSharedPreferences("history", 0).getString("Locale", ""), Locale.getDefault().toString())) {
             updateHistoryPref(getSharedPreferences("history", 0));
         }
         updateHistoryList();

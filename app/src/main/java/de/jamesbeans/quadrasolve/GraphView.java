@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.Objects;
 
 import static android.view.MotionEvent.ACTION_CANCEL;
 import static android.view.MotionEvent.ACTION_DOWN;
@@ -165,7 +166,7 @@ public class GraphView extends View {
         } else {
             canvas.drawRect(0, 0, canvasWidth, canvasHeight, black);
             isFirstDrawPoint = true;
-            if(activity.equals(ZOOMING)) {
+            if(Objects.equals(activity, ZOOMING)) {
                 calculateGridAndLabelPositions();
             }
             drawGridLines(canvas);
@@ -216,7 +217,7 @@ public class GraphView extends View {
     //Handles all the touch events on the Graph, which include touching roots, calculated points and the apex
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(activity.equals(TRACING)) {
+        if(Objects.equals(activity, TRACING)) {
             boolean nearSomething = false;
             //Check, wether the touch was close enough to one of the roots and if so, put highlight on the corresponding textview (Not sure yet which highlight to pick)
             final int touchTolerance = 50;
