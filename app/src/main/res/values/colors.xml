@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryDark">#303f9f</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="lightgray">#DDDDDD</color>
     <color name="keyboardbackground">#333</color>
-    <color name="yellow">#FFCB03</color>
-    <color name="blue">#006BDF</color>
-    <color name="red">#FB3C2D</color>
+    <color name="yellow">#FFCC00</color>
+    <color name="blue">#007AFF</color>
+    <color name="red">#FF3B30</color>
+    <color name="lightblue">#5AC8FA</color>
 </resources>

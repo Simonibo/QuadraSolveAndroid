@@ -12,7 +12,7 @@
         android:id="@+id/maintoolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/black"
         android:theme="@style/Widget.AppCompat.ActionBar"
         android:visibility="visible"
         app:popupTheme="@style/Theme.AppCompat.Light"
@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/maintoolbar"
         android:layout_alignParentStart="false"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:id="@+id/linearLayout">
 
@@ -63,7 +64,7 @@
             android:layout_height="wrap_content"
             android:text="@string/c"
             android:textSize="@dimen/textSizeEquations"
-            android:textColor="@color/blue"
+            android:textColor="@color/lightblue"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginRight="10dp"
@@ -176,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:text="@string/c"
-                android:textColor="@color/blue"
+                android:textColor="@color/lightblue"
                 android:textSize="@dimen/textSizeMain" />
 
             <TextView
@@ -210,7 +211,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_marginTop="@dimen/standardMargin"
+        android:layout_marginTop="20dp"
         android:text="@string/calculate_roots"
         android:layout_below="@+id/tablelayout"
         android:layout_centerHorizontal="true"

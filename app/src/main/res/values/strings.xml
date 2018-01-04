@@ -34,8 +34,8 @@
     </string>
     <string name="helptext6" translatable="false">"About"</string>
     <string name="helptext7" translatable="false">
-        "The android portation of QuadraSolve was a one-man-project by Simon Bohnen."
-        "An iOS version which was developed by Marvin von Hagen and Vincent von Oepen is also available."
+        "The android version of QuadraSolve was a developed by Simon Bohnen."
+        "An iOS version which was developed by Marvin von Hagen is also available."
         "If you found any wrong translations (which is quite likely), you can contact me using the button below."
         "I would be especially thankful if you could translate this help page into another language, as I'm (of course) not able to translate this app into all languages."
     </string>
@@ -48,9 +48,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="equal" translatable="false">=</string>
-    <string name="c" translatable="false">c</string>
+    <string name="c" translatable="false">q</string>
     <string name="defaultb" translatable="false">2</string>
-    <string name="b" translatable="false">b</string>
+    <string name="b" translatable="false">p</string>
     <string name="defaulta" translatable="false">3</string>
     <string name="a" translatable="false">a</string>
     <string name="equalszero" translatable="false">= 0</string>
