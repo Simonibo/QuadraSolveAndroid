@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+import co.ceryle.segmentedbutton.SegmentedButtonGroup;
+
 import static android.view.View.VISIBLE;
 
 public class GraphActivity extends AppCompatActivity {
@@ -46,22 +48,10 @@ public class GraphActivity extends AppCompatActivity {
         final TextView root2 = (TextView) findViewById(R.id.root2);
         final TextView apex = (TextView) findViewById(R.id.apex);
         final TextView curpoint = (TextView) findViewById(R.id.curpoint);
-        final RadioButton trace = (RadioButton) findViewById(R.id.trace);
-        final RadioButton pan = (RadioButton) findViewById(R.id.pan);
+        final SegmentedButtonGroup segmentedButtonGroup = (SegmentedButtonGroup) findViewById(R.id.graphmode);
         final Button reset = (Button) findViewById(R.id.reset);
-        trace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                g.activity = TRACING;
-            }
-        });
-        pan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                g.activity = PANNING;
-            }
-        });
-        reset.setTypeface(trace.getTypeface());
+
+        segmentedButtonGroup.setOnClickedButtonListener(new ModeButtonClickListener(g));
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
