@@ -1,4 +1,4 @@
-# QuadraSolveAndroid
+# QuadraSolve Android
 The android version of Quadrasolve, an app which can compute the real and complex roots of quadratic polynomials.
 
 The app can be found on the Google Play Store [here](https://play.google.com/store/apps/details?id=de.jamesbeans.quadrasolve&hl=en).
