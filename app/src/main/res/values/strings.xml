@@ -11,36 +11,36 @@
     <string name="graph">Graph</string>
     <string name="curpoint">"Cursor: "</string>
     <string name="histempty">No recent calculations</string>
-    <string name="helpandabout" translatable="false">Help and About</string>
-    <string name="helptext1" translatable="false">"This app can be used to find the real and complex solutions of quadratic equations."</string>
-    <string name="helptext2" translatable="false">"What is a quadratic equation?"</string>
-    <string name="helptext3" translatable="false">
+    <string name="helpandabout">Help and About</string>
+    <string name="helptext1">"This app can be used to find the real and complex solutions of quadratic equations."</string>
+    <string name="helptext2">"What is a quadratic equation?"</string>
+    <string name="helptext3">
         "A quadratic equation is an equation of the form \"ax² + px + q = 0\", where a, p and q are real numbers (like 1, 2.5 or -4.6)."
         "You can enter a, p and q (also called coefficients) on the main page when you open the app."
     </string>
-    <string name="helptext4" translatable="false">"What is a solution?"</string>
-    <string name="helptext5" translatable="false">
+    <string name="helptext4">"What is a solution?"</string>
+    <string name="helptext5">
         "A solution is a real or complex number x, such that both sides of the equation are equal to 0."
         "Let's consider the example \"x² - 9 = 0\"."
         "It's quite easy to see that both 3 and -3 solve the equation, because 3² - 9 and (-3)² - 9 are both equal to zero."
         "If we consider another example like \"4x² + 3x - 9\", the equation isn't as easy to solve anymore."
         "But with this app, just enter \"4\" in the field labeled \"a\", \"3\" in the field \"p\" and \"-9\" in the field \"q\" and tap on \"Calculate roots\", and the solutions will show up on the top of the screen below the equation."
     </string>
-    <string name="helptext5a" translatable="false">"But what is a complex number?"</string>
-    <string name="helptext5b" translatable="false">
+    <string name="helptext5a">"But what is a complex number?"</string>
+    <string name="helptext5b">
         "Because some equations like \"x² + 1 = 0\" don't have any solutions in the real numbers, we invent the so-called imaginary unit \"i\" which has the property i² = -1."
         "Thus, we have created two solutions for this equation (i and -i) which are useful in many scenarios."
         "All numbers which contain the imaginary unit are called complex numbers."
     </string>
-    <string name="helptext6" translatable="false">"About"</string>
-    <string name="helptext7" translatable="false">
+    <string name="helptext6">"About"</string>
+    <string name="helptext7">
         "The android version of QuadraSolve was a developed by Simon Bohnen."
         "An iOS version which was developed by Marvin von Hagen is also available."
         "If you found any wrong translations (which is quite likely), you can contact me using the button below."
         "I would be especially thankful if you could translate this help page into another language, as I'm (of course) not able to translate this app into all languages."
     </string>
-    <string name="contactme" translatable="false">"Contact me"</string>
-    <string name="norealroots" translatable="false">"This quadratic polynomial has no real roots. Do you want to plot the graph anyways?"</string>
+    <string name="contactme">"Contact me"</string>
+    <string name="norealroots">"This quadratic polynomial has no real roots. Do you want to plot the graph anyways?"</string>
     <string name="plotgraph">Plot graph</string>
     <string name="cancel">Cancel</string>
     <string name="notzero">\"a\" may not be zero!</string>

@@ -16,8 +16,8 @@ android {
         minSdkVersion 19
         //noinspection OldTargetApi
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.0.2"
+        versionCode 6
+        versionName "1.1"
     }
     buildTypes {
         release {
@@ -28,6 +28,7 @@ android {
     }
     lintOptions {
         abortOnError false
+        disable 'MissingTranslation'
     }
 }
 
