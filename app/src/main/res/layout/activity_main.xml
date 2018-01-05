@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@string/a"
             android:textSize="@dimen/textSizeEquations"
-            android:textColor="@color/yellow" />
+            android:textColor="@color/red" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:text="@string/spaceb"
             android:textSize="@dimen/textSizeEquations"
-            android:textColor="@color/red"
+            android:textColor="@color/yellow"
             android:layout_marginStart="10dp"/>
 
         <TextView
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:text="@string/a"
-                android:textColor="@color/yellow"
+                android:textColor="@color/red"
                 android:textSize="@dimen/textSizeMain" />
 
             <TextView
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:text="@string/b"
-                android:textColor="@color/red"
+                android:textColor="@color/yellow"
                 android:textSize="@dimen/textSizeMain" />
 
             <TextView
