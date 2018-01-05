@@ -276,11 +276,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (Error ignored) {
             return;
         }
-        try { b = reallyIsNumber(bval.getText().toString(), "b");
+        try { b = reallyIsNumber(bval.getText().toString(), "p");
         } catch (Error ignored) {
             return;
         }
-        try { c = reallyIsNumber(cval.getText().toString(), "c");
+        try { c = reallyIsNumber(cval.getText().toString(), "q");
         } catch (Error ignored) {
             return;
         }
