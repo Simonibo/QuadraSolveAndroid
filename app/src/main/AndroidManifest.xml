@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.jamesbeans.quadrasolve">
 
-    <!-- todo screenshots, screenvideos und beschreibung machen -->
+    <!-- todo screenshots und screenvideos machen -->
     <!-- todolater alle warnings fixen -->
     <application
         android:name=".QuadraSolve"

@@ -10,7 +10,7 @@ import static de.jamesbeans.quadrasolve.GraphActivity.*;
  * Created by Simon on 04.01.2018.
  */
 
-public class ModeButtonClickListener implements SegmentedButtonGroup.OnClickedButtonListener {
+class ModeButtonClickListener implements SegmentedButtonGroup.OnClickedButtonListener {
     private static final int TRACING_POSITION = 0;
     private static final int PANNING_POSITION = 1;
     private final GraphView g;
