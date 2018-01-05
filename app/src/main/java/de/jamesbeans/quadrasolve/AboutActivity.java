@@ -43,7 +43,7 @@ public class AboutActivity extends AppCompatActivity {
         codelta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Uri twitteruri = Uri.parse("https://twitter.com/cod3lta");
+                final Uri twitteruri = Uri.parse("twitter://user?screen_name=COD3LTA");
                 final Intent intent = new Intent(Intent.ACTION_VIEW, twitteruri);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
