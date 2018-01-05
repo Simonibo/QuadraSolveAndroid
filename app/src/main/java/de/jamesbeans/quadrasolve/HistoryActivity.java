@@ -1,6 +1,7 @@
 package de.jamesbeans.quadrasolve;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -85,6 +86,11 @@ public class HistoryActivity extends AppCompatActivity {
         }
         histedit.putString("Locale", Locale.getDefault().toString());
         histedit.apply();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
     @Override

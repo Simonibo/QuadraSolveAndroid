@@ -1,5 +1,6 @@
 package de.jamesbeans.quadrasolve;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
@@ -30,5 +31,10 @@ public class AboutActivity extends AppCompatActivity {
                 startActivity(browserIntent);
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 }
