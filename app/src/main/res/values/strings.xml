@@ -80,4 +80,5 @@
     <string name="nan">\"%1$s\" must be a number!</string>
     <string name="use_english_version">Use English version</string>
     <string name="alreadyinstalled" translatable="false">"No need to install if you've already got it!"</string>
+    <string name="codeltadescr">The Codelta logo</string>
 </resources>

@@ -108,11 +108,21 @@
                 android:textColor="@color/white"
                 android:text="@string/helptext6"
                 android:textSize="@dimen/textSizeHelpHeaders"/>
+
+            <ImageView
+                android:id="@+id/cod3lta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/help6"
+                app:srcCompat="@drawable/cod3lta"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/codeltadescr" />
+
             <TextView
                 android:id="@+id/help7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/help6"
+                android:layout_below="@+id/cod3lta"
                 android:layout_marginTop="@dimen/standardMargin"
                 android:textColor="@color/lightgray"
                 android:text="@string/helptext7"

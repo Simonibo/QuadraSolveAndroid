@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -32,6 +33,18 @@ public class AboutActivity extends AppCompatActivity {
                 final String[] address = {"COD3LTA@simonbohnen.me"};
                 intent.putExtra(Intent.EXTRA_EMAIL, address);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "QuadraSolve Support");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+
+        final ImageView codelta = (ImageView) findViewById(R.id.cod3lta);
+        codelta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Uri twitteruri = Uri.parse("https://twitter.com/cod3lta");
+                final Intent intent = new Intent(Intent.ACTION_VIEW, twitteruri);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
