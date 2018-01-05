@@ -27,8 +27,14 @@ public class AboutActivity extends AppCompatActivity {
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.simonbohnen.me/contact"));
-                startActivity(browserIntent);
+                final Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                final String[] address = {"COD3LTA@simonbohnen.me"};
+                intent.putExtra(Intent.EXTRA_EMAIL, address);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "QuadraSolve Support");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
             }
         });
     }

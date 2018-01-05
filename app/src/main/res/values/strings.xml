@@ -34,12 +34,13 @@
     </string>
     <string name="helptext6">"About"</string>
     <string name="helptext7">
-        "The android version of QuadraSolve was a developed by Simon Bohnen."
+        "The android version of QuadraSolve was developed by Simon Bohnen."
         "An iOS version which was developed by Marvin von Hagen is also available."
-        "If you found any wrong translations (which is quite likely), you can contact me using the button below."
-        "I would be especially thankful if you could translate this help page into another language, as I'm (of course) not able to translate this app into all languages."
+        "It puts a special focus on usability for blinds with VoiceOver."
+        "If you found any wrong translations (which is quite likely), you can contact us using the button below."
+        "I would be especially thankful if you could translate this help page into another language."
     </string>
-    <string name="contactme">"Contact me"</string>
+    <string name="contactme">"Contact us"</string>
     <string name="norealroots">"This quadratic polynomial has no real roots. Do you want to plot the graph anyways?"</string>
     <string name="plotgraph">Plot graph</string>
     <string name="cancel">Cancel</string>
