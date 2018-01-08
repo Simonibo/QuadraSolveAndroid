@@ -117,6 +117,8 @@ public class GraphActivity extends AppCompatActivity {
             formula = 0 < c ? formula + " + " + cstr : formula + " - " + cstr.substring(1);
         }
         function.setText(formula);
+
+        MainActivity.comeFromGraph = true;
     }
 
     @Override

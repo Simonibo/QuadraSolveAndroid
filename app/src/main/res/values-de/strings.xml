@@ -56,4 +56,8 @@
     <string name="notzero">\"a\" muss ungleich null sein!</string>
     <string name="howZoom">Unabhängig zoomen</string>
     <string name="codeltadescr">Das Codelta-Logo</string>
+    <string name="ratingquestion">
+        "Du benutzt QuadraSolve häufiger!"
+        "Möchtest du eine Bewertung schreiben?"
+    </string>
 </resources>

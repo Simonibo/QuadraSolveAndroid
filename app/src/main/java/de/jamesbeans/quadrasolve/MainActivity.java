@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,7 +32,8 @@ import java.util.Objects;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
-    static int lastYesNoAction;
+    static int lastQuestionID;
+    static int lastAction;
     //static boolean yesNoDismissed;
     //Holds the last inputs
     private SharedPreferences vals;
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     //the number of roots the function has
     private static int roots;
     public static String nexta, nextb, nextc;
-    public static boolean comefromhistory;
+    static boolean comeFromHistory;
+    static boolean comeFromGraph;
     public static boolean offerLanguageChange;
     private NumpadKeyboardView keyboardView;
 
@@ -189,11 +192,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(maintoolbar);
 
         vals = getSharedPreferences("vals", 0);
-        if (comefromhistory) {
+        if (comeFromHistory) {
             aval.setText(nexta);
             bval.setText(nextb);
             cval.setText(nextc);
-            comefromhistory = false;
+            comeFromHistory = false;
         } else {
             aval.setText(vals.getString(ATEXT, "3"));
             bval.setText(vals.getString(BTEXT, "2"));
@@ -209,6 +212,26 @@ public class MainActivity extends AppCompatActivity {
                     displayYesNoDialog(r.getString(R.string.useenglish), r.getString(R.string.yes), r.getString(R.string.no), 1);
                 }
             }).start();
+        }
+
+        final Button calculate = (Button) findViewById(R.id.calculate);
+        calculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calculate();
+            }
+        });
+
+        if(comeFromGraph) {
+            comeFromGraph = false;
+            final SharedPreferences settings = getSharedPreferences("settings", 0);
+            final int timesUsed = settings.getInt("usedGraph", 0) + 1;
+            final SharedPreferences.Editor sed = settings.edit();
+            sed.putInt("usedGraph", timesUsed);
+            sed.apply();
+            if(timesUsed % 10 == 5) {
+                displayYesNoDialog(getString(R.string.ratingquestion), getString(R.string.yes), getString(R.string.no), 2);
+            }
         }
 
         // ATTENTION: This was auto-generated to handle app links.
@@ -249,11 +272,11 @@ public class MainActivity extends AppCompatActivity {
             bval.setText(bval.getText().toString().replace(',', decsep).replace('.', decsep));
             cval.setText(cval.getText().toString().replace(',', decsep).replace('.', decsep));
         }
-        if(comefromhistory) {
+        if(comeFromHistory) {
             aval.setText(nexta);
             bval.setText(nextb);
             cval.setText(nextc);
-            comefromhistory = false;
+            comeFromHistory = false;
         }
     }
 
@@ -321,10 +344,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void buttonOnClick(View v) {
-        calculate();
-    }
-
     private void displayYesNoDialog(String question, String yestext, String notext, int actionId) {
         final YesNoDialogFragment d = new YesNoDialogFragment();
         final Bundle b = new Bundle();
@@ -337,21 +356,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void evalYesNo() {
-        switch(lastYesNoAction) {
-            //Graph without roots
+        switch(lastQuestionID) {
             case 0:
-                goToGraph();
+                if(lastAction == 1) {
+                    goToGraph();
+                }
                 break;
             case 1:
-                final SharedPreferences.Editor ed = getDefaultSharedPreferences(getBaseContext()).edit();
-                ed.putBoolean(USEENGLISH, true);
-                ed.apply();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        recreate();
+                if(lastAction == 1) {
+                    final SharedPreferences.Editor ed = getDefaultSharedPreferences(getBaseContext()).edit();
+                    ed.putBoolean(USEENGLISH, true);
+                    ed.apply();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recreate();
+                        }
+                    });
+                }
+                break;
+            case 2:
+                if(lastAction == 1) {
+                    final Uri playstoreuri = Uri.parse("https://play.google.com/store/apps/details?id=de.jamesbeans.quadrasolve");
+                    final Intent intent = new Intent(Intent.ACTION_VIEW, playstoreuri);
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(intent);
                     }
-                });
+                }
                 break;
         }
     }

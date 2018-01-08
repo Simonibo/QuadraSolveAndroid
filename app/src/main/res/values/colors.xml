@@ -3,7 +3,8 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="lightgray">#DDDDDD</color>
-    <color name="keyboardbackground">#333</color>
+    <color name="keyboardbackground">#111</color>
+    <color name="keypressedbackground">#444</color>
     <color name="yellow">#FFCC00</color>
     <color name="blue">#007AFF</color>
     <color name="red">#FF3B30</color>

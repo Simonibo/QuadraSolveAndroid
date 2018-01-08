@@ -51,7 +51,7 @@ public class HistoryActivity extends AppCompatActivity {
                 MainActivity.nexta = hist.getString("a" + (rescount - position - 1), "0");
                 MainActivity.nextb = hist.getString("b" + (rescount - position - 1), "0");
                 MainActivity.nextc = hist.getString("c" + (rescount - position - 1), "0");
-                MainActivity.comefromhistory = true;
+                MainActivity.comeFromHistory = true;
                 ((Activity) arg1.getContext()).finish();
             }
         });

@@ -81,4 +81,8 @@
     <string name="use_english_version">Use English version</string>
     <string name="alreadyinstalled" translatable="false">"No need to install if you've already got it!"</string>
     <string name="codeltadescr">The Codelta logo</string>
+    <string name="ratingquestion">
+        "You use QuadraSolve quite a lot!"
+        "Would you like to give it a rating?"
+    </string>
 </resources>

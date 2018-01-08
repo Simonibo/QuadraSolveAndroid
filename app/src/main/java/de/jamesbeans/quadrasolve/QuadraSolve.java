@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Saves the device locale on applicaiton startup
+ * Saves the device locale on application startup
  * Created by Simon on 18.08.2017.
  */
 

@@ -16,7 +16,8 @@ import java.util.List;
 
 public class NumpadKeyboardView extends KeyboardView {
     private Paint paint,  paintpressed;
-    private final TextPaint tp = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+    private final TextPaint digitPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+    private final TextPaint charPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
     private Bitmap retu, backb;
     private int retuposx, retuposy, backX, backY;
     boolean initialized;
@@ -38,9 +39,11 @@ public class NumpadKeyboardView extends KeyboardView {
         paint = new Paint();
         paintpressed = new Paint();
         paint.setColor(ResourcesCompat.getColor(getResources(), R.color.keyboardbackground, null));
-        paintpressed.setColor(Color.LTGRAY);
-        tp.setColor(Color.WHITE);
-        tp.setTextAlign(Paint.Align.CENTER);
+        paintpressed.setColor(ResourcesCompat.getColor(getResources(), R.color.keypressedbackground, null));
+        digitPaint.setColor(Color.WHITE); //getResources().getColor(R.color.blue) was an idea...
+        digitPaint.setTextAlign(Paint.Align.CENTER);
+        charPaint.setColor(Color.WHITE);
+        charPaint.setTextAlign(Paint.Align.CENTER);
     }
 
     @Override
@@ -55,14 +58,15 @@ public class NumpadKeyboardView extends KeyboardView {
         if (!initialized) {
             initialized = true;
             final float keyTextSize = 0.14876033058f * canvas.getHeight();
-            tp.setTextSize(keyTextSize);
+            digitPaint.setTextSize(keyTextSize);
+            charPaint.setTextSize(keyTextSize);
             retu = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ic_subdirectory_arrow_left_white_48dp);
             backb = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ic_backspace_white_24dp);
             retuposx = enterkey.x + ((enterkey.width - retu.getWidth()) >> 1);
             retuposy = enterkey.y + ((kb.getHeight() - back.height - retu.getHeight()) >> 1);
             backX = back.x + ((back.width - backb.getWidth()) >> 1);
             backY = back.y + ((back.height - backb.getHeight()) >> 1);
-            final float dist = -tp.getFontMetrics().ascent * 0.8f;
+            final float dist = -digitPaint.getFontMetrics().ascent * 0.8f;
             for(int i = 0; i < sz; ++i) {
                 final Keyboard.Key k = keys.get(i);
                 xs[i] = k.x + (k.width >> 1);
@@ -75,7 +79,13 @@ public class NumpadKeyboardView extends KeyboardView {
             if(k.pressed) {
                 canvas.drawRect(k.x, k.y, (k.x + k.width), (k.y + k.height), paintpressed);
             }
-            canvas.drawText(texts[i], xs[i], ys[i], tp);
+            if(!texts[i].isEmpty()) {
+                if (Character.isDigit(texts[i].charAt(0))) {
+                    canvas.drawText(texts[i], xs[i], ys[i], digitPaint);
+                } else {
+                    canvas.drawText(texts[i], xs[i], ys[i], charPaint);
+                }
+            }
         }
         canvas.drawBitmap(retu, retuposx, retuposy, paint);
         canvas.drawBitmap(backb, backX, backY, paint);
