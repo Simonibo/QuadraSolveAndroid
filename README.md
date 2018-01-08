@@ -7,4 +7,4 @@ The android version was developed by [Simon Bohnen](http://simonbohnen.me). An i
 
 A few impressions:
 
-<img src="https://raw.githubusercontent.com/Simonibo/QuadraSolveAndroid/master/screenshots/main.png" alt="The main activity of the app" title="Main activity of the app" width="225" height="400">  <img src="https://raw.githubusercontent.com/Simonibo/QuadraSolveAndroid/master/screenshots/graph1.png" title="The graph" alt="The graph view" width="225" height="400">  <img src="https://raw.githubusercontent.com/Simonibo/QuadraSolveAndroid/master/screenshots/history.png" title="History" alt="The history view" width="225" height="400">
+<img src="https://raw.githubusercontent.com/SimonBohnen/QuadraSolveAndroid/master/screenshots/main.png" alt="The main activity of the app" title="Main activity of the app" width="225" height="400">  <img src="https://raw.githubusercontent.com/SimonBohnen/QuadraSolveAndroid/master/screenshots/graph.png" title="The graph" alt="The graph view" width="225" height="400">  <img src="https://raw.githubusercontent.com/SimonBohnen/QuadraSolveAndroid/master/screenshots/history.png" title="History" alt="The history view" width="225" height="400">
