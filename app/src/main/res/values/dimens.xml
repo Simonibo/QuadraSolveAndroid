@@ -1,8 +1,8 @@
 <resources>
     <dimen name="textSizeMain">32sp</dimen>
     <dimen name="textSizeEquations">37sp</dimen>
-    <dimen name="textSizeHelpText">15sp</dimen>
-    <dimen name="textSizeHelpHeaders">25sp</dimen>
+    <dimen name="textSizeHelpText">14sp</dimen>
+    <dimen name="textSizeHelpHeaders">22sp</dimen>
     <dimen name="standardMargin">8dp</dimen>
     <dimen name="infotextsize">16sp</dimen>
     <dimen name="functiontextsize">25sp</dimen>

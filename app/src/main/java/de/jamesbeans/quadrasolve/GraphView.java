@@ -87,7 +87,7 @@ public class GraphView extends View {
         whitePoints.setStrokeWidth(highlightPointsStrokeWidth);
         graphPoints.setColor(ResourcesCompat.getColor(getResources(), R.color.blue, null));
         graphPoints.setStrokeWidth(6);
-        graphPoints.setStyle(Paint.Style.STROKE);  //should be 4
+        graphPoints.setStyle(Paint.Style.STROKE); //should be 4
         gridLines.setColor(Color.DKGRAY);
         gridLines.setStrokeWidth(2);
         black.setColor(Color.BLACK);

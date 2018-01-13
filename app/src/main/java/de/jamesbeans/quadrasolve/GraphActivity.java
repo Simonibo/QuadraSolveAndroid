@@ -83,6 +83,7 @@ public class GraphActivity extends AppCompatActivity {
             } else {
                 root1.setText(res.getString(R.string.fiveconcat, res.getString(R.string.complexroots), df.format(-b / (2 * a)), res.getString(R.string.spaceplusminus), df.format(Math.sqrt(c / a - Math.pow(b / (2 * a), 2))), res.getString(R.string.i)));
             }
+            root1.setText(root1.getText().toString().replace("1i", "i").replace("-1i", "i"));
         }
         if(0 < roots) {
             root1.setVisibility(VISIBLE);

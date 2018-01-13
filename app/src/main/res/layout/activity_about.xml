@@ -38,13 +38,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/black">
+
             <TextView
                 android:id="@+id/help1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/lightgray"
                 android:text="@string/helptext1"
-                android:textSize="@dimen/textSizeHelpText"/>
+                android:textAlignment="gravity"
+                android:textColor="@color/lightgray"
+                android:textSize="@dimen/textSizeHelpText" />
             <TextView
                 android:id="@+id/help2"
                 android:layout_width="match_parent"
@@ -54,15 +56,17 @@
                 android:textColor="@color/white"
                 android:text="@string/helptext2"
                 android:textSize="@dimen/textSizeHelpHeaders"/>
+
             <TextView
                 android:id="@+id/help3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/help2"
                 android:layout_marginTop="@dimen/standardMargin"
-                android:textColor="@color/lightgray"
                 android:text="@string/helptext3"
-                android:textSize="@dimen/textSizeHelpText"/>
+                android:textAlignment="gravity"
+                android:textColor="@color/lightgray"
+                android:textSize="@dimen/textSizeHelpText" />
             <TextView
                 android:id="@+id/help4"
                 android:layout_width="match_parent"
@@ -72,15 +76,17 @@
                 android:textColor="@color/white"
                 android:text="@string/helptext4"
                 android:textSize="@dimen/textSizeHelpHeaders"/>
+
             <TextView
                 android:id="@+id/help5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/help4"
                 android:layout_marginTop="@dimen/standardMargin"
-                android:textColor="@color/lightgray"
                 android:text="@string/helptext5"
-                android:textSize="@dimen/textSizeHelpText"/>
+                android:textAlignment="gravity"
+                android:textColor="@color/lightgray"
+                android:textSize="@dimen/textSizeHelpText" />
             <TextView
                 android:id="@+id/help5a"
                 android:layout_width="match_parent"
@@ -96,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/help5a"
                 android:layout_marginTop="@dimen/standardMargin"
+                android:textAlignment="gravity"
                 android:textColor="@color/lightgray"
                 android:text="@string/helptext5b"
                 android:textSize="@dimen/textSizeHelpText"/>
@@ -124,15 +131,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/cod3lta"
                 android:layout_marginTop="@dimen/standardMargin"
-                android:textColor="@color/lightgray"
                 android:text="@string/helptext7"
-                android:textSize="@dimen/textSizeHelpText"/>
+                android:textAlignment="gravity"
+                android:textColor="@color/lightgray"
+                android:textSize="@dimen/textSizeHelpText" />
             <Button
                 android:id="@+id/contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/help7"
                 android:layout_marginTop="@dimen/standardMargin"
+                android:layout_marginBottom="@dimen/standardMargin"
                 android:background="@color/blue"
                 android:text="@string/contactme"
                 android:textSize="@dimen/textSizeHelpHeaders"
